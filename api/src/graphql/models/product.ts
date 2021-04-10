@@ -6,7 +6,7 @@ const productTypes = {
   PROMOTION: "Promotion",
 };
 
-const ProductSchema = new Schema({
+const IProductSchema = new Schema({
   sku: { type: String, required: true, index: true, unique: true },
   name: { type: String, required: true },
   detail: { type: String },
@@ -18,19 +18,27 @@ const ProductSchema = new Schema({
   type: { type: String, required: true, enum: Object.keys(productTypes) },
 });
 
+const ProductSchema = new Schema({});
 const PromotionSchema = new Schema({
   discountPercentage: { type: Number, required: true },
 });
 
-ProductSchema.set("discriminatorKey", "type");
+IProductSchema.set("discriminatorKey", "type");
 
-export const ProductModel = mongoose.model("Product", ProductSchema);
-export const PromotionModel = ProductModel.discriminator(
+const IProductModel = mongoose.model("Products", IProductSchema);
+export const ProductModel = IProductModel.discriminator(
+  productTypes.PRODUCT,
+  ProductSchema
+);
+export const PromotionModel = IProductModel.discriminator(
   productTypes.PROMOTION,
   PromotionSchema
 );
 
-export const ProductTC = composeWithMongooseDiscriminators(ProductModel);
-export const PromotionTC = ProductTC.discriminator(PromotionModel, {
+const IProductTC = composeWithMongooseDiscriminators(IProductModel);
+export const ProductTC = IProductTC.discriminator(ProductModel, {
+  name: productTypes.PRODUCT,
+});
+export const PromotionTC = IProductTC.discriminator(PromotionModel, {
   name: productTypes.PROMOTION,
 });

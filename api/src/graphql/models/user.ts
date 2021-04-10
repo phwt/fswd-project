@@ -26,11 +26,7 @@ const CustomerSchema = new Schema({
 
 UserSchema.set("discriminatorKey", "role");
 
-const discriminatorOptions = {
-  inputType: {
-    removeFields: ["password"],
-  },
-};
+const discriminatorOptions = {};
 
 const UserModel = mongoose.model("User", UserSchema);
 export const AdminModel = UserModel.discriminator(userRoles.ADMIN, AdminSchema);
@@ -39,9 +35,7 @@ export const CustomerModel = UserModel.discriminator(
   CustomerSchema
 );
 
-const UserTC = composeWithMongooseDiscriminators(UserModel).removeField(
-  "password"
-);
+const UserTC = composeWithMongooseDiscriminators(UserModel);
 export const AdminTC = UserTC.discriminator(AdminModel, {
   name: userRoles.ADMIN,
   ...discriminatorOptions,

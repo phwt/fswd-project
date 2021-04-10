@@ -10,7 +10,9 @@ const orderStatuses = {
 
 const OrderSchema = new Schema({
   status: { type: String, required: true, enum: Object.keys(orderStatuses) },
-  timestamp: { type: Date, required: true, default: new Date() },
+  timestamp: { type: Date, default: new Date() },
+  customerId: { type: String, required: true, ref: "Customer" },
+  productIds: [{ type: String, required: true, ref: "Product" }],
 });
 
 export const OrderModel = mongoose.model("Order", OrderSchema);
