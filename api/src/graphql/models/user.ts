@@ -1,12 +1,52 @@
 import mongoose, { Schema } from "mongoose";
-import { composeWithMongoose } from "graphql-compose-mongoose";
+import { composeWithMongooseDiscriminators } from "graphql-compose-mongoose";
+
+const userRoles = {
+  ADMIN: "Admin",
+  CUSTOMER: "Customer",
+};
 
 const UserSchema = new Schema({
   username: { type: String, required: true, index: true },
-  password: { type: String, require: true },
-  email: { type: String, require: true },
+  password: { type: String, required: true },
+  email: { type: String, required: true },
+  role: {
+    type: String,
+    required: true,
+    enum: Object.keys(userRoles),
+  },
 });
 
-export const UserModel = mongoose.model("User", UserSchema);
-export const UserTC = composeWithMongoose(UserModel).removeField("password");
-export default UserModel;
+const AdminSchema = new Schema({});
+const CustomerSchema = new Schema({
+  billingAddress: { type: String, required: true },
+  shippingAddress: { type: String, required: true },
+  phone: { type: String },
+});
+
+UserSchema.set("discriminatorKey", "role");
+
+const discriminatorOptions = {
+  inputType: {
+    removeFields: ["password"],
+  },
+};
+
+const UserModel = mongoose.model("User", UserSchema);
+export const AdminModel = UserModel.discriminator(userRoles.ADMIN, AdminSchema);
+export const CustomerModel = UserModel.discriminator(
+  userRoles.CUSTOMER,
+  CustomerSchema
+);
+
+const UserTC = composeWithMongooseDiscriminators(UserModel).removeField(
+  "password"
+);
+export const AdminTC = UserTC.discriminator(AdminModel, {
+  name: userRoles.ADMIN,
+  ...discriminatorOptions,
+});
+export const CustomerTC = UserTC.discriminator(CustomerModel, {
+  name: userRoles.CUSTOMER,
+  ...discriminatorOptions,
+});

@@ -1,4 +1,7 @@
-import { UserTC } from "../models";
+import { AdminTC, CustomerTC } from "../models";
 
-export const users = UserTC.getResolver("findMany");
-export const userById = UserTC.getResolver("findById");
+export const admins = AdminTC.getResolver("findMany");
+export const adminById = AdminTC.getResolver("findById");
+
+export const customers = CustomerTC.getResolver("findMany");
+export const customerById = CustomerTC.getResolver("findById");

@@ -1,3 +1,4 @@
-import { UserTC } from "../models";
+import { AdminTC, CustomerTC } from "../models";
 
-export const createUser = UserTC.getResolver("createOne");
+export const createAdmin = AdminTC.getResolver("createOne");
+export const createCustomer = CustomerTC.getResolver("createOne");
