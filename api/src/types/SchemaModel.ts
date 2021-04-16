@@ -14,7 +14,7 @@ export interface Customer extends User {
   billingAddress: string;
   shippingAddress: string;
   phone?: string;
-  orderIds: [string];
+  orderIds: string[];
 }
 
 export interface Admin extends User {}
