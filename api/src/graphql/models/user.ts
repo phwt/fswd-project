@@ -23,6 +23,7 @@ const CustomerSchema = new Schema({
   billingAddress: { type: String, required: true },
   shippingAddress: { type: String, required: true },
   phone: { type: String },
+  orderIds: [{ type: String, required: true, ref: "Order" }],
 });
 
 UserSchema.plugin(bcrypt);

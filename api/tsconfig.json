@@ -7,7 +7,9 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@type/*": ["src/types/*"]
+    }
   },
   "exclude": ["node_modules"]
 }
