@@ -4,6 +4,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { SessionProvider } from "../modules/SessionContext";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
+import BaseContainer from "../components/common/BaseContainer";
 
 const client = new ApolloClient({
   uri: "http://localhost:5001/graphql",
@@ -17,7 +18,9 @@ const App = ({ Component, pageProps }) => {
       <ApolloProvider client={client}>
         <SessionProvider>
           <Header />
-          <Component {...pageProps} />
+          <BaseContainer>
+            <Component {...pageProps} />
+          </BaseContainer>
           <Footer />
         </SessionProvider>
       </ApolloProvider>
