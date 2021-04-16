@@ -36,3 +36,5 @@ api/.env
 .vercel
 
 .idea
+
+graphql/schema.graphql
