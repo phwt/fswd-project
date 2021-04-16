@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "mongoose-bcrypt";
 import { composeWithMongooseDiscriminators } from "graphql-compose-mongoose";
 
 const userRoles = {
@@ -7,9 +8,9 @@ const userRoles = {
 };
 
 const UserSchema = new Schema({
-  username: { type: String, required: true, index: true },
-  password: { type: String, required: true },
-  email: { type: String, required: true },
+  username: { type: String, required: true, index: true, unique: true },
+  password: { type: String, required: true, bcrypt: true },
+  email: { type: String, required: true, unique: true },
   role: {
     type: String,
     required: true,
@@ -24,18 +25,21 @@ const CustomerSchema = new Schema({
   phone: { type: String },
 });
 
+UserSchema.plugin(bcrypt);
 UserSchema.set("discriminatorKey", "role");
 
 const discriminatorOptions = {};
 
-const UserModel = mongoose.model("User", UserSchema);
+export const UserModel = mongoose.model("User", UserSchema);
 export const AdminModel = UserModel.discriminator(userRoles.ADMIN, AdminSchema);
 export const CustomerModel = UserModel.discriminator(
   userRoles.CUSTOMER,
   CustomerSchema
 );
 
-const UserTC = composeWithMongooseDiscriminators(UserModel);
+export const UserTC = composeWithMongooseDiscriminators(UserModel).removeField(
+  "password"
+);
 export const AdminTC = UserTC.discriminator(AdminModel, {
   name: userRoles.ADMIN,
   ...discriminatorOptions,
