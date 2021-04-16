@@ -1,0 +1,9 @@
+overwrite: true
+schema: "http://localhost:5001/graphql"
+documents: null
+generates:
+  src/types/SchemaModel.ts:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+      - "typescript-mongodb"

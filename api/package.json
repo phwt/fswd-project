@@ -5,7 +5,8 @@
   "scripts": {
     "start": "ts-node -r dotenv/config -r @babel/register src/index.ts",
     "dev": "ts-node-dev -r dotenv/config -r @babel/register src/index.ts",
-    "format": "prettier --write './**/*.{js,ts,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,ts,json}' --config ./.prettierrc",
+    "generate-types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@babel/core": "^7.13.10",
@@ -25,6 +26,11 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.13.10",
+    "@graphql-codegen/cli": "1.21.3",
+    "@graphql-codegen/introspection": "1.18.1",
+    "@graphql-codegen/typescript": "1.21.1",
+    "@graphql-codegen/typescript-mongodb": "1.18.1",
+    "@graphql-codegen/typescript-resolvers": "1.19.0",
     "@types/express": "^4.17.11",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.1.0",
