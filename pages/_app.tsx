@@ -6,7 +6,7 @@ import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import BaseContainer from "../components/common/BaseContainer";
 
-const client = new ApolloClient({
+export const apolloClient = new ApolloClient({
   uri: "http://localhost:5001/graphql",
   cache: new InMemoryCache(),
   credentials: "include",
@@ -15,7 +15,7 @@ const client = new ApolloClient({
 const App = ({ Component, pageProps }) => {
   return (
     <CookiesProvider>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <SessionProvider>
           <Header />
           <BaseContainer>
