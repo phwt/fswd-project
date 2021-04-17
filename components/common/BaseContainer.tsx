@@ -8,7 +8,10 @@ interface Props {
 const BaseContainer = ({ children }: Props) => {
   return (
     <>
-      <Container fluid style={{ minHeight: "100vh" }} className="px-5 py-4">
+      <Container
+        style={{ minHeight: "100vh", marginTop: 120 }}
+        className="py-4"
+      >
         {children}
       </Container>
     </>
