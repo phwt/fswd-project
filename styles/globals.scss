@@ -11,13 +11,28 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 99;
 }
 .raleway-6 {
   font-family: "Raleway", sans-serif;
   font-weight: 600;
 }
+.raleway-3 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 0.9em;
+}
 .raleway-3s {
   font-family: "Raleway", sans-serif;
   font-weight: 300;
   font-size: 0.9em;
+}
+body {
+  font-family: "Raleway", sans-serif;
+}
+.border-0{
+  border-radius: 0;
+}
+.bg-t{
+  background: transparent;
 }

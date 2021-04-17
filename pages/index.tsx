@@ -1,5 +1,17 @@
+import { Col, Row, Card, Button, CardDeck } from "react-bootstrap";
+import ProductCard from "../components/common/ProductCard";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <CardDeck>
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+      </CardDeck>
+    </>
+  );
 };
 
 export default Home;
