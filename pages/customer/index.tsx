@@ -2,106 +2,125 @@ import { gql, useQuery } from "@apollo/client";
 
 const CustomerPage = () => {
 
-  const { loading, error, data} = useQuery(gql`
-    query{
-      me{
-        _id
+  const id = "607947d3c50b6e5ed98e612b";
+  const { loading, error, data } = useQuery(
+    gql`
+      query customerById($userId: MongoID!) {
+        customerById(_id: $userId) {
+          _id
+          role
+          username
+          email
+          phone
+          billingAddress
+          shippingAddress
+        }
       }
+    `,
+    {
+      variables: {
+        userId: id,
+      },
     }
-  `);
+  );
 
-  if(loading) {
-    return (<div>Loading...</div>);
+  if (loading) {
+    return <div>Loading...</div>;
   }
-  if(error || !data) {
-    return (<div>Error...</div>);
+  if (error || !data) {
+    return <div>Error...</div>;
   }
 
   return (
     <>
-    <p>{data.me._id}</p>
-    {/* <p>{data.customerById.username}</p> */}
-      <h1 class="mx-5 mb-4 mt-2">Profile</h1>
-      <div class="card mx-5">
-        <h5 class="card-header">Information</h5>
-        <div class="card-body">
-          <div class="row" id="informationTab">
-            <div class="col text-center">
-              <img src="profile.jpg" class="profilePic" width="80%"></img>
+      <h1 className="mx-5 mb-4 mt-2">Profile</h1>
+      <div className="card mx-5">
+        <h5 className="card-header">Information</h5>
+        <div className="card-body">
+          <div className="row" id="informationTab">
+            <div className="col text-center">
+              <img src="profile.jpg" className="profilePic" width="80%"></img>
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="btn btn-warning m-3">
+                  Edit
+                </button>
+                <button type="submit" className="btn btn-danger m-3">
+                  Delete
+                </button>
+              </div>
             </div>
 
-            <div class="col-9">
+            <div className="col-9">
               <form>
-                <div class="row">
-                  <div class="col form-group">
+                <div className="row">
+                  <div className="col form-group">
                     <label>User ID</label>
                     <input
                       type="text"
-                      class="form-control"
-                      placeholder="Customer's ID"
+                      className="form-control-plaintext text-secondary"
+                      value={data.customerById._id}
                       readOnly
                     ></input>
                   </div>
 
-                  <div class="col form-group">
+                  <div className="col form-group">
                     <label>Username</label>
                     <input
                       type="text"
-                      class="form-control"
-                      placeholder="Customer's username"
+                      className="form-control-plaintext text-secondary"
+                      value={data.customerById.username}
                       readOnly
                     ></input>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col form-group">
+                <div className="row">
+                  <div className="col form-group">
                     <label>Role</label>
                     <input
                       type="text"
-                      class="form-control"
-                      placeholder="Serenade Platinum"
+                      className="form-control-plaintext text-secondary"
+                      value={data.customerById.role}
                       readOnly
                     ></input>
                   </div>
 
-                  <div class="col form-group">
+                  <div className="col form-group">
                     <label>Email</label>
                     <input
-                      type="text"
-                      class="form-control"
-                      placeholder="example@example.com"
+                      type="email"
+                      className="form-control"
+                      value={data.customerById.email}
+                      required
                     ></input>
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label>Billing Address</label>
                   <textarea
-                    type="text"
-                    class="form-control"
-                    placeholder="278/23 Billing Rd."
+                    className="form-control"
+                    value={data.customerById.billingAddress}
                   ></textarea>
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label>Shipping Address</label>
                   <textarea
-                    type="text"
-                    class="form-control"
-                    placeholder="278/23 Billing Rd."
+                    className="form-control"
+                    value={data.customerById.shippingAddress}
                   ></textarea>
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label>Phone</label>
                   <input
-                    type="text"
-                    class="form-control"
-                    placeholder="0812345678"
+                    type="tel"
+                    className="form-control"
+                    value={data.customerById.phone}
                   ></input>
                 </div>
-                <button type="submit" class="btn btn-primary my-3 float-right">
+                <button type="submit" className="btn btn-primary my-3 float-right">
                   Save
                 </button>
               </form>
@@ -110,11 +129,11 @@ const CustomerPage = () => {
         </div>
       </div>
 
-      <div class="card m-5">
-        <h5 class="card-header">Password</h5>
-        <div class="card-body">
-          <div class="row">
-            <div class="col d-flex justify-content-center align-items-center">
+      <div className="card m-5">
+        <h5 className="card-header">Password</h5>
+        <div className="card-body">
+          <div className="row">
+            <div className="col d-flex justify-content-center align-items-center">
               <ul>
                 <li>uppercase and lowercase letters.</li>
                 <li>numbers.</li>
@@ -126,32 +145,32 @@ const CustomerPage = () => {
               </ul>
             </div>
 
-            <div class="col">
-              <div class="form-group">
+            <div className="col">
+              <div className="form-group">
                 <label>Old Password</label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Your old password"
                 ></input>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>New Password</label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Your new password"
                 ></input>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>Confirm New Password</label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Confirm new password"
                 ></input>
               </div>
-              <button type="submit" class="btn btn-primary my-3 float-right">
+              <button type="submit" className="btn btn-primary my-3 float-right">
                 Save
               </button>
             </div>
