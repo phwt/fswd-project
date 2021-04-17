@@ -1,6 +1,26 @@
 import { gql, useQuery } from "@apollo/client";
+import { useCallback, useState } from "react";
 
 const CustomerPage = () => {
+
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [billing, setBilling] = useState("");
+  const [shipping, setShipping] = useState("");
+
+  const handleEmailChange = useCallback((e) => {
+    setEmail(e.target.value);
+  }, []);
+  const handlePhoneChange = useCallback((e) => {
+    setPhone(e.target.value);
+  }, []);
+  const handleBillingChange = useCallback((e) => {
+    setBilling(e.target.value);
+  }, []);
+  const handleShippingChange = useCallback((e) => {
+    setShipping(e.target.value);
+  }, []);
+  
 
   const id = "607947d3c50b6e5ed98e612b";
   const { loading, error, data } = useQuery(
@@ -41,11 +61,16 @@ const CustomerPage = () => {
             <div className="col text-center">
               <img src="profile.jpg" className="profilePic" width="80%"></img>
               <div className="d-flex justify-content-center">
-                <button type="submit" className="btn btn-warning m-3">
-                  Edit
+                <button type="submit" className="btn btn-light my-3 mx-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
                 </button>
-                <button type="submit" className="btn btn-danger m-3">
-                  Delete
+                <button type="submit" className="btn btn-light my-3 mx-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg>
                 </button>
               </div>
             </div>
@@ -91,6 +116,7 @@ const CustomerPage = () => {
                       type="email"
                       className="form-control"
                       value={data.customerById.email}
+                      onChange={handleEmailChange}
                       required
                     ></input>
                   </div>
@@ -101,6 +127,7 @@ const CustomerPage = () => {
                   <textarea
                     className="form-control"
                     value={data.customerById.billingAddress}
+                    required
                   ></textarea>
                 </div>
 
@@ -109,6 +136,7 @@ const CustomerPage = () => {
                   <textarea
                     className="form-control"
                     value={data.customerById.shippingAddress}
+                    required
                   ></textarea>
                 </div>
 
@@ -118,9 +146,10 @@ const CustomerPage = () => {
                     type="tel"
                     className="form-control"
                     value={data.customerById.phone}
+                    required
                   ></input>
                 </div>
-                <button type="submit" className="btn btn-primary my-3 float-right">
+                <button type="submit" className="btn btn-light my-3 float-right">
                   Save
                 </button>
               </form>
@@ -152,6 +181,7 @@ const CustomerPage = () => {
                   type="text"
                   className="form-control"
                   placeholder="Your old password"
+                  required
                 ></input>
               </div>
               <div className="form-group">
@@ -160,6 +190,7 @@ const CustomerPage = () => {
                   type="text"
                   className="form-control"
                   placeholder="Your new password"
+                  required
                 ></input>
               </div>
               <div className="form-group">
@@ -168,9 +199,10 @@ const CustomerPage = () => {
                   type="text"
                   className="form-control"
                   placeholder="Confirm new password"
+                  required
                 ></input>
               </div>
-              <button type="submit" className="btn btn-primary my-3 float-right">
+              <button type="submit" className="btn btn-light my-3 float-right">
                 Save
               </button>
             </div>
