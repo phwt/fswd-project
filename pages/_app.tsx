@@ -1,11 +1,11 @@
 import "../styles/globals.scss";
 import { CookiesProvider } from "react-cookie";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { SessionProvider } from "../modules/SessionContext";
-import CommonHeader from "../components/common/Header";
-import BackofficeHeader from "../components/admin/Header";
-import Footer from "../components/common/Footer";
-import BaseContainer from "../components/common/BaseContainer";
+import { SessionProvider } from "@modules/SessionContext";
+import CommonHeader from "@components/common/Header";
+import BackofficeHeader from "@components/admin/Header";
+import Footer from "@components/common/Footer";
+import BaseContainer from "@components/common/BaseContainer";
 import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
 
