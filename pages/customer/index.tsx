@@ -45,6 +45,20 @@ const CustomerPage = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+  else{
+    if(email == ""){
+      setEmail(data.customerById.email);
+    }
+    if(phone == ""){
+      setPhone(data.customerById.phone);
+      }
+    if(billing == ""){
+      setBilling(data.customerById.billingAddress);
+    }
+    if(shipping == ""){
+      setShipping(data.customerById.shippingAddress);
+    }
+  }
   if (error || !data) {
     return <div>Error...</div>;
   }
@@ -130,7 +144,7 @@ const CustomerPage = () => {
                     <input
                       type="email"
                       className="form-control"
-                      value={data.customerById.email}
+                      value={email}
                       onChange={handleEmailChange}
                       required
                     ></input>
@@ -141,7 +155,8 @@ const CustomerPage = () => {
                   <label>Billing Address</label>
                   <textarea
                     className="form-control"
-                    value={data.customerById.billingAddress}
+                    value={billing}
+                    onChange={handleBillingChange}
                     required
                   ></textarea>
                 </div>
@@ -150,7 +165,8 @@ const CustomerPage = () => {
                   <label>Shipping Address</label>
                   <textarea
                     className="form-control"
-                    value={data.customerById.shippingAddress}
+                    value={shipping}
+                    onChange={handleShippingChange}
                     required
                   ></textarea>
                 </div>
@@ -160,7 +176,8 @@ const CustomerPage = () => {
                   <input
                     type="tel"
                     className="form-control"
-                    value={data.customerById.phone}
+                    value={phone}
+                    onChange={handlePhoneChange}
                     required
                   ></input>
                 </div>
@@ -179,52 +196,54 @@ const CustomerPage = () => {
       <div className="card m-5">
         <h5 className="card-header">Password</h5>
         <div className="card-body">
-          <div className="row">
-            <div className="col d-flex justify-content-center align-items-center">
-              <ul>
-                <li>uppercase and lowercase letters.</li>
-                <li>numbers.</li>
-                <li>special symbols, such as ./@#! %():</li>
-                <li>at least 12 characters long.</li>
-                <li>doesn't contain memorable keyboard paths.</li>
-                <li>doesn't have your personal information.</li>
-                <li>unique for each account you have.</li>
-              </ul>
-            </div>
+          <form>
+            <div className="row">
+              <div className="col d-flex justify-content-center align-items-center">
+                <ul>
+                  <li>uppercase and lowercase letters.</li>
+                  <li>numbers.</li>
+                  <li>special symbols, such as ./@#! %():</li>
+                  <li>at least 12 characters long.</li>
+                  <li>doesn't contain memorable keyboard paths.</li>
+                  <li>doesn't have your personal information.</li>
+                  <li>unique for each account you have.</li>
+                </ul>
+              </div>
 
-            <div className="col">
-              <div className="form-group">
-                <label>Old Password</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Your old password"
-                  required
-                ></input>
+              <div className="col">
+                <div className="form-group">
+                  <label>Old Password</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Your old password"
+                    required
+                  ></input>
+                </div>
+                <div className="form-group">
+                  <label>New Password</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Your new password"
+                    required
+                  ></input>
+                </div>
+                <div className="form-group">
+                  <label>Confirm New Password</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Confirm new password"
+                    required
+                  ></input>
+                </div>
               </div>
-              <div className="form-group">
-                <label>New Password</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Your new password"
-                  required
-                ></input>
-              </div>
-              <div className="form-group">
-                <label>Confirm New Password</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Confirm new password"
-                  required
-                ></input>
-              </div>
-              <button type="submit" className="btn btn-light my-3 float-right">
-                Save
-              </button>
             </div>
-          </div>
+            <button type="submit" className="btn btn-light my-3 float-right">
+              Save
+            </button>
+          </form>
         </div>
       </div>
     </>
