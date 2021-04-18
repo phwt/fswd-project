@@ -1,9 +1,13 @@
 import ProductForm from "@components/admin/product/ProductForm";
-import { Product } from "@type/SchemaModel";
-import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { gql } from "@apollo/client/core";
+import { useRouter } from "next/router";
+import { useCallback } from "react";
 
 const AdminProductCreatePage = () => {
-  const [product, setProduct] = useState<Product>({
+  const router = useRouter();
+
+  const initialProduct = {
     _id: "",
     detail: "",
     name: "",
@@ -11,15 +15,44 @@ const AdminProductCreatePage = () => {
     sku: "",
     stock: 0,
     weight: 0,
-  });
+  };
+
+  const [addProduct] = useMutation(
+    gql`
+      mutation createProduct($productInput: CreateOneProductInput!) {
+        createProduct(record: $productInput) {
+          recordId
+        }
+      }
+    `
+  );
+
+  const handleProductCreation = useCallback(
+    async (product) => {
+      delete product["_id"];
+
+      Object.keys(product).map((key) => {
+        if (["price", "stock", "weight"].includes(key))
+          product[key] = parseFloat(product[key]);
+      });
+
+      await addProduct({
+        variables: {
+          productInput: product,
+        },
+      });
+
+      await router.push("/admin/products");
+    },
+    [addProduct]
+  );
 
   return (
-    <ProductForm
-      product={product}
-      onSubmit={(product) => {
-        console.log(product); // TODO: Send API
-      }}
-    />
+    <>
+      <h2>Create Product</h2>
+      <hr />
+      <ProductForm product={initialProduct} onSubmit={handleProductCreation} />
+    </>
   );
 };
 
