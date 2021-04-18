@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
+import axios from "axios";
 
 const AdminProductCreatePage = () => {
   const router = useRouter();
@@ -15,7 +16,6 @@ const AdminProductCreatePage = () => {
     sku: "",
     stock: 0,
     weight: 0,
-    image: null,
   };
 
   const [addProduct] = useMutation(
@@ -37,21 +37,26 @@ const AdminProductCreatePage = () => {
           product[key] = parseFloat(product[key]);
       });
 
-      const toBase64 = (file) =>
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (error) => reject(error);
+      if (product["image"]) {
+        const formData = new FormData();
+        const imageFile: File = product["image"];
+        delete product["image"];
+
+        formData.append("variables", JSON.stringify(product));
+        formData.append("file", imageFile);
+
+        const { data } = await axios.post("/api/admin/product/new", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
-
-      product["image"] = await toBase64(product["image"]);
-
-      await addProduct({
-        variables: {
-          productInput: product,
-        },
-      });
+      } else {
+        await addProduct({
+          variables: {
+            productInput: product,
+          },
+        });
+      }
 
       await router.push("/admin/products");
     },

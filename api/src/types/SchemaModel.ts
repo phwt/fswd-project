@@ -99,7 +99,7 @@ export type CreateOneProductInput = {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type CreateOneProductPayload = {
@@ -121,7 +121,7 @@ export type CreateOnePromotionInput = {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage: Scalars['Float'];
 };
 
@@ -243,7 +243,7 @@ export type FilterFindManyProductInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
   /** List of *indexed* fields that can be filtered via operators. */
   _operators?: Maybe<FilterFindManyProductsOperatorsInput>;
   OR?: Maybe<Array<FilterFindManyProductsInput>>;
@@ -260,7 +260,7 @@ export type FilterFindManyProductsInput = {
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
   type?: Maybe<EnumDKeyProductsType>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
   _id?: Maybe<Scalars['MongoID']>;
   /** List of *indexed* fields that can be filtered via operators. */
   _operators?: Maybe<FilterFindManyProductsOperatorsInput>;
@@ -307,7 +307,7 @@ export type FilterFindManyPromotionInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage?: Maybe<Scalars['Float']>;
   /** List of *indexed* fields that can be filtered via operators. */
   _operators?: Maybe<FilterFindManyProductsOperatorsInput>;
@@ -521,7 +521,7 @@ export type Product = ProductsInterface & {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type Products = ProductsInterface & {
@@ -536,7 +536,7 @@ export type Products = ProductsInterface & {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type ProductsInterface = {
@@ -550,7 +550,7 @@ export type ProductsInterface = {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type Promotion = ProductsInterface & {
@@ -565,7 +565,7 @@ export type Promotion = ProductsInterface & {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage: Scalars['Float'];
 };
 
@@ -800,7 +800,7 @@ export type UpdateByIdProductInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type UpdateByIdProductPayload = {
@@ -822,7 +822,7 @@ export type UpdateByIdPromotionInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
-  image?: Maybe<Scalars['String']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage?: Maybe<Scalars['Float']>;
 };
 
@@ -1278,7 +1278,7 @@ export type ProductResolvers<ContextType = any, ParentType extends ResolversPare
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1293,7 +1293,7 @@ export type ProductsResolvers<ContextType = any, ParentType extends ResolversPar
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1309,7 +1309,7 @@ export type ProductsInterfaceResolvers<ContextType = any, ParentType extends Res
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
 export type PromotionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Promotion'] = ResolversParentTypes['Promotion']> = {
@@ -1323,7 +1323,7 @@ export type PromotionResolvers<ContextType = any, ParentType extends ResolversPa
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   discountPercentage?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
