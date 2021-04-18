@@ -16,6 +16,7 @@ const IProductSchema = new Schema({
   created: { type: Date, default: new Date() },
   modified: { type: Date, default: new Date() },
   type: { type: String, required: true, enum: Object.keys(productTypes) },
+  image: { type: String, required: false },
 });
 
 const ProductSchema = new Schema({});

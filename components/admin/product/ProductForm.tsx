@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { Product } from "@type//SchemaModel";
+import { Product } from "@type/SchemaModel";
 
 const ControlUnit = ({ label, unit, name, value, onChange }) => {
   return (
@@ -103,6 +103,21 @@ const ProductForm = ({ product, onSubmit }: Props) => {
             name="stock"
             value={localProduct.stock}
             onChange={changeHandler}
+          />
+        </Col>
+
+        <Col md={12} className="mt-2">
+          <Form.Label>Product Image</Form.Label>
+          <Form.File
+            label="Choose file"
+            custom
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setLocalProduct({
+                ...localProduct,
+                // @ts-ignore
+                image: Array.from(e.target.files)[0],
+              });
+            }}
           />
         </Col>
 

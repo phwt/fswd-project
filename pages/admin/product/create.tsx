@@ -15,6 +15,7 @@ const AdminProductCreatePage = () => {
     sku: "",
     stock: 0,
     weight: 0,
+    image: null,
   };
 
   const [addProduct] = useMutation(
@@ -35,6 +36,16 @@ const AdminProductCreatePage = () => {
         if (["price", "stock", "weight"].includes(key))
           product[key] = parseFloat(product[key]);
       });
+
+      const toBase64 = (file) =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
+
+      product["image"] = await toBase64(product["image"]);
 
       await addProduct({
         variables: {
