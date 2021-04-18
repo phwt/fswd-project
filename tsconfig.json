@@ -17,7 +17,7 @@
     "paths": {
       "@modules/*": ["modules/*"],
       "@components/*": ["components/*"],
-      "@type/*": ["api/src/types*"]
+      "@type/*": ["api/src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
