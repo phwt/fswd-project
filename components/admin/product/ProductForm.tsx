@@ -1,6 +1,25 @@
 import { useCallback, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Product } from "@type//SchemaModel";
+
+const ControlUnit = ({ label, unit, name, value, onChange }) => {
+  return (
+    <>
+      <Form.Label>{label}</Form.Label>
+      <InputGroup>
+        <Form.Control
+          className="text-center"
+          value={value}
+          onChange={onChange}
+          name={name}
+        />
+        <InputGroup.Append>
+          <InputGroup.Text>{unit}</InputGroup.Text>
+        </InputGroup.Append>
+      </InputGroup>
+    </>
+  );
+};
 
 interface Props {
   product: Product;
@@ -28,7 +47,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
   return (
     <form onSubmit={submitHandler}>
       <Row>
-        <Col md={6} className="mt-2">
+        <Col md={4} className="mt-2">
           <Form.Label>SKU</Form.Label>
           <Form.Control
             value={localProduct.sku}
@@ -37,7 +56,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
           />
         </Col>
 
-        <Col md={6} className="mt-2">
+        <Col md={8} className="mt-2">
           <Form.Label>Name</Form.Label>
           <Form.Control
             value={localProduct.name}
@@ -58,29 +77,32 @@ const ProductForm = ({ product, onSubmit }: Props) => {
         </Col>
 
         <Col md={4} className="mt-2">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
+          <ControlUnit
+            label="Price"
+            unit="฿"
+            name="price"
             value={localProduct.price}
             onChange={changeHandler}
-            name="price"
           />
         </Col>
 
         <Col md={4} className="mt-2">
-          <Form.Label>Weight</Form.Label>
-          <Form.Control
+          <ControlUnit
+            label="Weight"
+            unit="g"
+            name="weight"
             value={localProduct.weight}
             onChange={changeHandler}
-            name="weight"
           />
         </Col>
 
         <Col md={4} className="mt-2">
-          <Form.Label>Stock</Form.Label>
-          <Form.Control
+          <ControlUnit
+            label="Stock"
+            unit="pcs"
+            name="stock"
             value={localProduct.stock}
             onChange={changeHandler}
-            name="stock"
           />
         </Col>
 
