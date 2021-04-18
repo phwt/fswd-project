@@ -1,7 +1,8 @@
 import { useSession } from "../../modules/SessionContext";
 import Link from "next/link";
-import { Col, Row, Nav } from "react-bootstrap";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Col, Row, Nav, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const { loading, user, logout: handleLogout } = useSession();
@@ -10,9 +11,12 @@ const Header = () => {
     <div className="p-3 bg-0 sticky">
       <Row>
         <Col></Col>
+        <Col></Col>
+        <Col></Col>
         <Col>
           <h3 className="text-center raleway-6">FSWD</h3>
         </Col>
+        <Col></Col>
         <Col className="text-right">
           {loading && <span>Loading</span>}
           {user && (
@@ -28,18 +32,27 @@ const Header = () => {
           )}
           {!user && (
             <>
-              <Link href="/login">Login</Link>
-              <span className="mx-2">or</span>
-              <Link href="/register">Register</Link>
+              <a className="raleway-3s">
+                <Link href="/login">LOGIN</Link>
+              </a>
+              <span className="mx-2">/</span>
+              <a className="raleway-3s">
+                <Link href="/register">REGISTER</Link>
+              </a>
             </>
           )}
-          {/* <FontAwesomeIcon icon={["fal", "cart"]} /> */}
+          &nbsp;&nbsp;
+          <Button size="sm" variant="light">
+            <FontAwesomeIcon icon={faShoppingCart} />
+          </Button>
         </Col>
+
+        <Col></Col>
       </Row>
 
       <Nav className="justify-content-center" activeKey="/home">
         <Nav.Item>
-          <Nav.Link href="/home" className="raleway-3s">
+          <Nav.Link href="/" className="raleway-3s">
             ALL PRODUCTS
           </Nav.Link>
         </Nav.Item>
@@ -60,7 +73,7 @@ const Header = () => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/" className="raleway-3s">
-            SALE
+            PROMOTION
           </Nav.Link>
         </Nav.Item>
       </Nav>
