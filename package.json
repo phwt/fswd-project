@@ -9,7 +9,7 @@
     "dev:api": "cd api/ && npm run dev",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --write './**/*.{js,ts,tsx,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,ts,tsx,json,css,scss}' --config ./.prettierrc"
   },
   "dependencies": {
     "@apollo/client": "^3.3.15",
