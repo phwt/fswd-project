@@ -1,7 +1,8 @@
 import { useSession } from "../../modules/SessionContext";
 import Link from "next/link";
 import { Col, Row, Nav } from "react-bootstrap";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const { loading, user, logout: handleLogout } = useSession();
@@ -33,7 +34,8 @@ const Header = () => {
               <Link href="/register">Register</Link>
             </>
           )}
-          {/* <FontAwesomeIcon icon={["fal", "cart"]} /> */}
+          &nbsp;&nbsp;
+          <FontAwesomeIcon icon={faShoppingCart} />
         </Col>
       </Row>
 
