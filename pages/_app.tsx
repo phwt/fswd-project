@@ -5,7 +5,8 @@ import { SessionProvider } from "@modules/SessionContext";
 import CommonHeader from "@components/common/Header";
 import BackofficeHeader from "@components/admin/Header";
 import Footer from "@components/common/Footer";
-import BaseContainer from "@components/common/BaseContainer";
+import CommonBaseContainer from "@components/common/BaseContainer";
+import BackofficeBaseContainer from "@components/admin/BaseContainer";
 import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
 
@@ -25,7 +26,11 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
   return (
     <>
       {isBackoffice ? <BackofficeHeader /> : <CommonHeader />}
-      <BaseContainer>{children}</BaseContainer>
+      {isBackoffice ? (
+        <BackofficeBaseContainer>{children}</BackofficeBaseContainer>
+      ) : (
+        <CommonBaseContainer>{children}</CommonBaseContainer>
+      )}
       <Footer />
     </>
   );
