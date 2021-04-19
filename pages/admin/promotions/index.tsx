@@ -46,7 +46,7 @@ const AdminPromotionsPage = () => {
   });
 
   return (
-    <div className="content-admin">
+    <>
       <h2>Admin Page</h2>
       <table className="table">
         <thead>
@@ -62,7 +62,7 @@ const AdminPromotionsPage = () => {
         </thead>
         <tbody>{renderTablePromotions}</tbody>
       </table>
-    </div>
+    </>
   );
 };
 

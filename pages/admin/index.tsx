@@ -26,7 +26,7 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="content-admin">
+    <>
       <h2>Admin Page</h2>
       <table className="table">
         <tbody>
@@ -44,7 +44,7 @@ const AdminPage = () => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
 

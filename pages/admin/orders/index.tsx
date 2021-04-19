@@ -40,7 +40,7 @@ const AdminOrdersPage = () => {
   });
 
   return (
-    <div className="content-admin">
+    <>
       <h2>Admin Page</h2>
       <table className="table">
         <thead>
@@ -54,7 +54,7 @@ const AdminOrdersPage = () => {
         </thead>
         <tbody>{renderTableOrder}</tbody>
       </table>
-    </div>
+    </>
   );
 };
 

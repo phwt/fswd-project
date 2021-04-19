@@ -42,7 +42,7 @@ const AdminProductsPage = () => {
   });
 
   return (
-    <div className="content-admin">
+    <>
       <h2>Admin Page</h2>
       <table className="table">
         <thead>
@@ -57,7 +57,7 @@ const AdminProductsPage = () => {
         </thead>
         <tbody>{renderTableProducts}</tbody>
       </table>
-    </div>
+    </>
   );
 };
 
