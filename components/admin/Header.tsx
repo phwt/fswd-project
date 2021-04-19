@@ -8,7 +8,10 @@ const Header = () => {
     <div className="p-4 bg-0 sticky-1">
       <div className="smartphone-menu-trigger" />
       <header className="avatar">
-        <h2 className="font-weight-bold">Dashboard</h2>
+        <Nav.Link href="/admin/">
+          <h2 className="font-weight-bold">Dashboard</h2>
+        </Nav.Link>
+
         <h6>
           {user && (
             <>

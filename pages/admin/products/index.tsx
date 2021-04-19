@@ -1,5 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import { Nav, Button } from "react-bootstrap";
+import { Nav,Button } from "react-bootstrap";
 
 const AdminProductsPage = () => {
   const { loading, error, data } = useQuery(
@@ -32,18 +32,14 @@ const AdminProductsPage = () => {
         <td>{products.detail}</td>
         <td>{products.price}</td>
         <td>{products.stock}</td>
-        <td>
-          <Button variant="outline-dark">
-            <Nav.Link href={"/admin/products/" + products._id}>View</Nav.Link>
-          </Button>
-        </td>
+        <td><Button variant="outline-dark"><Nav.Link href={"/admin/products/"+products._id}>View</Nav.Link></Button></td>
       </tr>
     );
   });
 
   return (
-    <>
-      <h2>Admin Page</h2>
+    <div className="content-admin">
+      <h2>Products</h2>
       <table className="table">
         <thead>
           <tr>
@@ -55,9 +51,11 @@ const AdminProductsPage = () => {
             <th></th>
           </tr>
         </thead>
-        <tbody>{renderTableProducts}</tbody>
+        <tbody>
+          {renderTableProducts}
+        </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

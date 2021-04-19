@@ -47,7 +47,7 @@ const AdminPromotionsPage = () => {
 
   return (
     <>
-      <h2>Admin Page</h2>
+      <h2>Promotions</h2>
       <table className="table">
         <thead>
           <tr>

@@ -27,7 +27,7 @@ const AdminPage = () => {
 
   return (
     <>
-      <h2>Admin Page</h2>
+      <h2>Dashboard</h2>
       <table className="table">
         <tbody>
           <tr>
