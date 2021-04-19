@@ -1,23 +1,22 @@
 import { useQuery, gql } from "@apollo/client";
 
-
 const AdminPage = () => {
   const { loading, error, data } = useQuery(
     gql`
-    {
-      products {
-        _id
+      {
+        products {
+          _id
+        }
+        users {
+          _id
+        }
+        promotions {
+          _id
+        }
       }
-      users {
-        _id
-      }
-      promotions {
-        _id
-      }
-    }
     `
   );
-  console.log(data)
+  console.log(data);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -25,7 +24,6 @@ const AdminPage = () => {
   if (error || !data) {
     return <div>Error...</div>;
   }
-
 
   return (
     <div className="content-admin">

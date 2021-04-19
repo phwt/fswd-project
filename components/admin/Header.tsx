@@ -8,19 +8,19 @@ const Header = () => {
     <div className="p-3 bg-0 sticky-1">
       <div className="smartphone-menu-trigger"></div>
       <header className="avatar">
-        <h2>DashBoard</h2>
+        <h2>Dashboard</h2>
       </header>
 
-      <Nav  className="flex-column" activeKey="/home">
-          <Nav.Link href="/admin/products" className="raleway-3s">
-            Products
-          </Nav.Link>
-          <Nav.Link href="/admin/orders" className="raleway-3s">
-            Orders
-          </Nav.Link>
-          <Nav.Link href="/admin/promotions" className="raleway-3s">
-            Promotions
-          </Nav.Link>
+      <Nav className="flex-column" activeKey="/home">
+        <Nav.Link href="/admin/products" className="raleway-3s">
+          Products
+        </Nav.Link>
+        <Nav.Link href="/admin/orders" className="raleway-3s">
+          Orders
+        </Nav.Link>
+        <Nav.Link href="/admin/promotions" className="raleway-3s">
+          Promotions
+        </Nav.Link>
       </Nav>
 
       {/* <ul className="nav flex-column">

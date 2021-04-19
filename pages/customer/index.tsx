@@ -44,18 +44,17 @@ const CustomerPage = () => {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-  else{
-    if(email == ""){
+  } else {
+    if (email == "") {
       setEmail(data.customerById.email);
     }
-    if(phone == ""){
+    if (phone == "") {
       setPhone(data.customerById.phone);
-      }
-    if(billing == ""){
+    }
+    if (billing == "") {
       setBilling(data.customerById.billingAddress);
     }
-    if(shipping == ""){
+    if (shipping == "") {
       setShipping(data.customerById.shippingAddress);
     }
   }

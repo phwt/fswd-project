@@ -1,6 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import { Nav,Button } from "react-bootstrap";
-
+import { Nav, Button } from "react-bootstrap";
 
 const AdminPromotionsPage = () => {
   const { loading, error, data } = useQuery(
@@ -35,7 +34,13 @@ const AdminPromotionsPage = () => {
         <td>{promotion.price}</td>
         <td>{promotion.stock}</td>
         <td>{promotion.discountPercentage}</td>
-        <td><Button variant="outline-dark"><Nav.Link href={"/admin/promotions/"+promotion._id}>View</Nav.Link></Button></td>
+        <td>
+          <Button variant="outline-dark">
+            <Nav.Link href={"/admin/promotions/" + promotion._id}>
+              View
+            </Nav.Link>
+          </Button>
+        </td>
       </tr>
     );
   });
@@ -55,9 +60,7 @@ const AdminPromotionsPage = () => {
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {renderTablePromotions}
-        </tbody>
+        <tbody>{renderTablePromotions}</tbody>
       </table>
     </div>
   );

@@ -78,7 +78,7 @@ const CustomerOrdersPage = () => {
               <b>Total:</b> {calPrice(order.products)} THB
             </h5>
           </div>
-          <a href={"/customer/order/"+order._id}>
+          <a href={"/customer/order/" + order._id}>
             <button className="btn btn-light my-3 float-right">Detail</button>
           </a>
         </div>
