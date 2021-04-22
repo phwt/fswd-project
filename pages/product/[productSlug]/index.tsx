@@ -6,8 +6,8 @@ const ProductPage = () => {
   const { query } = useRouter();
   const { loading, error, data } = useQuery(
     gql`
-      query productById($id: MongoID!) {
-        productById(_id: $id) {
+      query product($sku: String!) {
+        productFindOne(filter: { sku: $sku }) {
           name
           detail
           price
@@ -17,20 +17,20 @@ const ProductPage = () => {
     `,
     {
       variables: {
-        id: query.productSlug,
+        sku: query.productSlug,
       },
     }
   );
 
   return (
     <>
-      {!loading && data && data.productById && (
+      {!loading && data && data.productFindOne && (
         <>
           <ProductDetail
-            name={data.productById.name}
-            price={data.productById.price}
-            detail={data.productById.detail}
-            id={data.productById._id}
+            name={data.productFindOne.name}
+            price={data.productFindOne.price}
+            detail={data.productFindOne.detail}
+            id={data.productFindOne._id}
             imgurl="../product-xl.jpg"
           />
         </>
