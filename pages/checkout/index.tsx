@@ -7,8 +7,10 @@ import { gql } from "@apollo/client/core";
 import { formatPrice, productTotal } from "@modules/Utils";
 import Link from "next/link";
 import { getCartItems } from "@modules/Cart";
+import { useRouter } from "next/router";
 
 const CheckoutPage = () => {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
 
   const { loading: meLoading, error: meError, data: meData } = useQuery(
@@ -54,7 +56,12 @@ const CheckoutPage = () => {
   }, [loading]);
 
   if (loading || meLoading) {
-    return <p>Loading</p>;
+    return <p>Loading...</p>;
+  } else {
+    if (!meData.me) {
+      router.push("/login");
+      return <p>Redirecting...</p>;
+    }
   }
 
   return (
