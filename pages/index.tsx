@@ -7,13 +7,13 @@ import { faPercentage } from "@fortawesome/free-solid-svg-icons";
 const Home = () => {
   const query = gql`
     query {
-      products(limit: 5) {
+      products(limit: 5, sort: _ID_DESC) {
         _id
         name
         detail
         price
       }
-      promotions(limit: 4) {
+      promotions(limit: 4, sort: _ID_DESC) {
         _id
         name
         detail
