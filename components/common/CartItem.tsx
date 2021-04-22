@@ -1,6 +1,7 @@
 import { Product } from "@type/SchemaModel";
 import { Card, Col, Row } from "react-bootstrap";
 import { removeCartItem } from "@modules/Cart";
+import { formatPrice } from "@modules/Utils";
 
 interface Props {
   product: Product;
@@ -43,7 +44,7 @@ const CartItem = ({ product, noRemove = false, onRemove }: Props) => {
           )}
         </Col>
         <Col md={3} className="text-right">
-          <h3 className="mb-0">{product.price}</h3>
+          <h3 className="mb-0">{formatPrice(product.price)}</h3>
           <small className="text-muted">THB</small>
         </Col>
       </Row>

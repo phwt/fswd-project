@@ -9,7 +9,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
-import { productTotal } from "@modules/Utils";
+import { formatPrice, productTotal } from "@modules/Utils";
 import { Product } from "@type/SchemaModel";
 import Link from "next/link";
 import { getCartItems } from "@modules/Cart";
@@ -152,7 +152,7 @@ const PaymentPage = () => {
             <h5 className="d-inline mr-3">Total</h5>
           </Col>
           <Col className="text-right">
-            <h2 className="d-inline mr-1">{total}</h2>
+            <h2 className="d-inline mr-1">{formatPrice(total)}</h2>
             <small className="text-muted">THB</small>
           </Col>
 

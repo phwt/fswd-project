@@ -7,3 +7,6 @@ export const productTotal = (products: Product[]) => {
       .reduce((acc, cur) => acc + cur);
   return 0;
 };
+
+export const formatPrice = (price: number) =>
+  new Intl.NumberFormat("en-IN").format(price);
