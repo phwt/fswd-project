@@ -24,9 +24,8 @@ const ProductPage = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading && data && data.productById && (
         <>
-          {/* Product Page {query.productSlug} */}
           <ProductDetail
             name={data.productById.name}
             price={data.productById.price}
