@@ -42,9 +42,11 @@ const Header = () => {
             </>
           )}
           &nbsp;&nbsp;
-          <Button size="sm" variant="light">
-            <FontAwesomeIcon icon={faShoppingCart} />
-          </Button>
+          <Link href="/cart">
+            <Button size="sm" variant="light">
+              <FontAwesomeIcon icon={faShoppingCart} />
+            </Button>
+          </Link>
         </Col>
 
         <Col></Col>

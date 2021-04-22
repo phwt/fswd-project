@@ -30,7 +30,7 @@ const ProductPage = () => {
             name={data.productById.name}
             price={data.productById.price}
             detail={data.productById.detail}
-            id={data.productById.id}
+            id={data.productById._id}
             imgurl="../product-xl.jpg"
           />
         </>
