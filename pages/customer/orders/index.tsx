@@ -1,11 +1,10 @@
 import { useQuery, gql } from "@apollo/client";
 
 const CustomerOrdersPage = () => {
-  const id = "607947d3c50b6e5ed98e612b";
   const { loading, error, data } = useQuery(
     gql`
-      query customerById($userId: MongoID!) {
-        customerById(_id: $userId) {
+      query {
+        me {
           _id
           shippingAddress
           orders {
@@ -19,12 +18,7 @@ const CustomerOrdersPage = () => {
           }
         }
       }
-    `,
-    {
-      variables: {
-        userId: id,
-      },
-    }
+    `
   );
 
   if (loading) {
@@ -38,7 +32,7 @@ const CustomerOrdersPage = () => {
     return products.map((product) => product.price).reduce((a, b) => a + b, 0);
   };
 
-  const renderOrderCards = data.customerById.orders.map((order) => {
+  const renderOrderCards = data.me.orders.map((order) => {
     return (
       <div className="card my-5">
         <div className="card-header">
