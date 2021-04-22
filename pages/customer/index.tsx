@@ -1,7 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
-import { useCallback, useState } from "react";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { useCallback, useEffect, useState } from "react";
+import { apolloClient } from "app-apollo-client";
 
 const CustomerPage = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [billing, setBilling] = useState("");
@@ -20,8 +22,17 @@ const CustomerPage = () => {
     setShipping(e.target.value);
   }, []);
 
-  const id = "607947d3c50b6e5ed98e612b";
-  const { loading, error, data } = useQuery(
+  const { loading: meLoading, error: meError, data: meData } = useQuery(
+    gql`
+      query {
+        me {
+          _id
+        }
+      }
+    `
+  );
+
+  const [getUser, { loading, error, data }] = useLazyQuery(
     gql`
       query customerById($userId: MongoID!) {
         customerById(_id: $userId) {
@@ -34,32 +45,29 @@ const CustomerPage = () => {
           shippingAddress
         }
       }
-    `,
-    {
-      variables: {
-        userId: id,
-      },
-    }
+    `
   );
+
+  useEffect(() => {
+    if (!meLoading && !meError) {
+      getUser({
+        variables: {
+          userId: meData.me._id,
+        },
+      });
+    }
+  }, [meLoading]);
 
   if (loading) {
     return <div>Loading...</div>;
-  } else {
-    if (email == "") {
-      setEmail(data.customerById.email);
-    }
-    if (phone == "") {
-      setPhone(data.customerById.phone);
-    }
-    if (billing == "") {
-      setBilling(data.customerById.billingAddress);
-    }
-    if (shipping == "") {
-      setShipping(data.customerById.shippingAddress);
-    }
   }
-  if (error || !data) {
-    return <div>Error...</div>;
+
+  if (data && data.customerById) {
+    if (username == "") setUsername(data.customerById.username);
+    if (email == "") setEmail(data.customerById.email);
+    if (phone == "") setPhone(data.customerById.phone);
+    if (billing == "") setBilling(data.customerById.billingAddress);
+    if (shipping == "") setShipping(data.customerById.shippingAddress);
   }
 
   return (
@@ -107,35 +115,13 @@ const CustomerPage = () => {
               <form>
                 <div className="row">
                   <div className="col form-group">
-                    <label>User ID</label>
-                    <input
-                      type="text"
-                      className="form-control-plaintext text-secondary"
-                      value={data.customerById._id}
-                      readOnly
-                    ></input>
-                  </div>
-
-                  <div className="col form-group">
                     <label>Username</label>
                     <input
                       type="text"
                       className="form-control-plaintext text-secondary"
-                      value={data.customerById.username}
+                      value={username}
                       readOnly
-                    ></input>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col form-group">
-                    <label>Role</label>
-                    <input
-                      type="text"
-                      className="form-control-plaintext text-secondary"
-                      value={data.customerById.role}
-                      readOnly
-                    ></input>
+                    />
                   </div>
 
                   <div className="col form-group">
@@ -146,10 +132,9 @@ const CustomerPage = () => {
                       value={email}
                       onChange={handleEmailChange}
                       required
-                    ></input>
+                    />
                   </div>
                 </div>
-
                 <div className="form-group">
                   <label>Billing Address</label>
                   <textarea
@@ -157,7 +142,7 @@ const CustomerPage = () => {
                     value={billing}
                     onChange={handleBillingChange}
                     required
-                  ></textarea>
+                  />
                 </div>
 
                 <div className="form-group">
@@ -167,7 +152,7 @@ const CustomerPage = () => {
                     value={shipping}
                     onChange={handleShippingChange}
                     required
-                  ></textarea>
+                  />
                 </div>
 
                 <div className="form-group">
@@ -178,7 +163,7 @@ const CustomerPage = () => {
                     value={phone}
                     onChange={handlePhoneChange}
                     required
-                  ></input>
+                  />
                 </div>
                 <button
                   type="submit"
