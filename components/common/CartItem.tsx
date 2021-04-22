@@ -1,12 +1,14 @@
 import { Product } from "@type/SchemaModel";
 import { Card, Col, Row } from "react-bootstrap";
+import { removeCartItem } from "@modules/Cart";
 
 interface Props {
   product: Product;
   noRemove?: boolean;
+  onRemove?: (products: Product[]) => void;
 }
 
-const CartItem = ({ product, noRemove = false }: Props) => {
+const CartItem = ({ product, noRemove = false, onRemove }: Props) => {
   return (
     <Card className="mb-3 p-3">
       <Row>
@@ -27,7 +29,14 @@ const CartItem = ({ product, noRemove = false }: Props) => {
               : "No detail"}
           </p>
           {!noRemove && (
-            <a href="" className="text-danger">
+            <a
+              href=""
+              className="text-danger"
+              onClick={(e) => {
+                e.preventDefault();
+                onRemove(removeCartItem(product._id));
+              }}
+            >
               <i className="fa fa-trash mr-2" />
               Remove
             </a>

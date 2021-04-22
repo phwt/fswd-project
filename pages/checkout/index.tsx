@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import { productTotal } from "@modules/Utils";
 import Link from "next/link";
+import { getCartItems } from "@modules/Cart";
 
 const CheckoutPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -35,11 +36,7 @@ const CheckoutPage = () => {
     `,
     {
       variables: {
-        productIds: [
-          "607bfd4fe6e50c1acfe46f85",
-          "607a8b13fcf9f204efe28e7a",
-          "607a8b28fcf9f204efe28e7b",
-        ],
+        productIds: getCartItems(),
       },
     }
   );

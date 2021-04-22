@@ -2,10 +2,11 @@ import { Button, Col, Row } from "react-bootstrap";
 import { Product } from "@type/SchemaModel";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import CartItem from "@components/common/CartItem";
 import { productTotal } from "@modules/Utils";
 import Link from "next/link";
+import { getCartItems } from "@modules/Cart";
 
 const SummaryBlock = ({ products }: { products: Product[] }) => {
   const items = useMemo(() => {
@@ -63,11 +64,7 @@ const CartPage = () => {
     `,
     {
       variables: {
-        productIds: [
-          "607bfd4fe6e50c1acfe46f85",
-          "607a8b13fcf9f204efe28e7a",
-          "607a8b28fcf9f204efe28e7b",
-        ],
+        productIds: getCartItems(),
       },
     }
   );
@@ -75,6 +72,10 @@ const CartPage = () => {
   useEffect(() => {
     if (!loading && data) setProducts(data.productByIds);
   }, [loading]);
+
+  const handleRemove = useCallback((products: Product[]) => {
+    setProducts(products);
+  }, []);
 
   return (
     <>
@@ -86,7 +87,11 @@ const CartPage = () => {
         </Col>
         <Col md={8}>
           {products.map((product) => (
-            <CartItem key={product._id} product={product} />
+            <CartItem
+              key={product._id}
+              product={product}
+              onRemove={handleRemove}
+            />
           ))}
         </Col>
         <Col md={4}>
