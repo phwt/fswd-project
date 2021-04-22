@@ -179,20 +179,10 @@ const PasswordCard = () => {
 const CustomerPage = () => {
   const [customer, setCustomer] = useState<Customer>();
 
-  const { loading: meLoading, error: meError, data: meData } = useQuery(
+  const { loading, error, data } = useQuery(
     gql`
       query {
         me {
-          _id
-        }
-      }
-    `
-  );
-
-  const [getUser, { loading, error, data }] = useLazyQuery(
-    gql`
-      query customerById($userId: MongoID!) {
-        customerById(_id: $userId) {
           _id
           username
           email
@@ -204,18 +194,8 @@ const CustomerPage = () => {
     `
   );
 
-  useEffect(() => {
-    if (!meLoading && !meError) {
-      getUser({
-        variables: {
-          userId: meData.me._id,
-        },
-      });
-    }
-  }, [meLoading]);
-
-  if (!loading && data && data.customerById && !customer) {
-    setCustomer(data.customerById);
+  if (!loading && data && data.me && !customer) {
+    setCustomer(data.me);
   }
 
   const handleChange = useCallback(
