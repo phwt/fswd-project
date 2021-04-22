@@ -1,4 +1,4 @@
-import { AdminTC, CustomerTC, UserModel, UserTC } from "../models";
+import { AdminTC, CustomerModel, CustomerTC, UserTC } from "../models";
 import { schemaComposer } from "graphql-compose";
 
 export const users = UserTC.getResolver("findMany");
@@ -12,12 +12,12 @@ export const customerById = CustomerTC.getResolver("findById");
 
 export const me = schemaComposer.createResolver({
   name: "me",
-  type: UserTC.getType(),
+  type: CustomerTC.getType(),
   resolve: async ({ context }) => {
     if (!context.user) {
       return null;
     }
     const { _id } = context.user;
-    return UserModel.findById(_id);
+    return CustomerModel.findById(_id);
   },
 });

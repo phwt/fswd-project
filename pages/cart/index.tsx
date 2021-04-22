@@ -1,42 +1,11 @@
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { Product } from "@type/SchemaModel";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import { useEffect, useMemo, useState } from "react";
-
-const CartItem = ({ product }: { product: Product }) => {
-  return (
-    <Card className="mb-3 p-3">
-      <Row>
-        <Col className="text-center">
-          <img
-            className="img-fluid"
-            src="https://via.placeholder.com/200x300"
-            style={{
-              height: 150,
-            }}
-          />
-        </Col>
-        <Col md={6}>
-          <h4>{product.name}</h4>
-          <p className="text-muted">
-            {product.detail && product.detail !== ""
-              ? product.detail
-              : "No detail"}
-          </p>
-          <a href="" className="text-danger">
-            <i className="fa fa-trash mr-2" />
-            Remove
-          </a>
-        </Col>
-        <Col md={3} className="text-right">
-          <h3 className="mb-0">{product.price}</h3>
-          <small className="text-muted">THB</small>
-        </Col>
-      </Row>
-    </Card>
-  );
-};
+import CartItem from "@components/common/CartItem";
+import { productTotal } from "@modules/Utils";
+import Link from "next/link";
 
 const SummaryBlock = ({ products }: { products: Product[] }) => {
   const items = useMemo(() => {
@@ -44,11 +13,7 @@ const SummaryBlock = ({ products }: { products: Product[] }) => {
   }, [products]);
 
   const total = useMemo(() => {
-    if (products.length)
-      return products
-        .map((product) => product.price)
-        .reduce((acc, cur) => acc + cur);
-    return 0;
+    return productTotal(products);
   }, [products]);
 
   return (
@@ -69,10 +34,12 @@ const SummaryBlock = ({ products }: { products: Product[] }) => {
           <h4 className="d-inline ml-1">{total}</h4>
         </Col>
         <Col md={12}>
-          <Button variant="success" block className="mt-2">
-            <i className="fa fa-shopping-cart mr-2" />
-            Checkout
-          </Button>
+          <Link href="/checkout">
+            <Button variant="success" block className="mt-2">
+              <i className="fa fa-shopping-cart mr-2" />
+              Checkout
+            </Button>
+          </Link>
         </Col>
       </Row>
     </>
