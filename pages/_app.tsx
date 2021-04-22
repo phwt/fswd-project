@@ -12,7 +12,9 @@ import { ReactNode, useMemo } from "react";
 
 export const apolloClient = new ApolloClient({
   uri: "http://localhost:5001/graphql",
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    addTypename: false,
+  }),
   credentials: "include",
 });
 
