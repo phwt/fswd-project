@@ -14,6 +14,7 @@ const Home = () => {
         name
         detail
         price
+        type
       }
       promotions(limit: 4, sort: _ID_DESC) {
         _id
@@ -21,6 +22,7 @@ const Home = () => {
         name
         detail
         price
+        type
       }
     }
   `;
@@ -48,7 +50,7 @@ const Home = () => {
             <b> PROMOTION</b>
           </h3>
           <CardDeck>
-            {data.products.slice(1).map((d: Product) => {
+            {data.promotions.slice(1).map((d: Product) => {
               return <ProductCard key={d.name.toString()} size="18" product={d} />;
             })}
           </CardDeck>
