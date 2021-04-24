@@ -1,20 +1,26 @@
 import { Button, Col, Row } from "react-bootstrap";
-import { Product } from "@type/SchemaModel";
+import { Product, Promotion } from "@type/SchemaModel";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import CartItem from "@components/common/CartItem";
-import { formatPrice, productTotal } from "@modules/Utils";
+import { formatPrice, productTotal, promotionTotal } from "@modules/Utils";
 import Link from "next/link";
 import { getCartItems } from "@modules/Cart";
 
-const SummaryBlock = ({ products }: { products: Product[] }) => {
+const SummaryBlock = ({
+  products,
+  promotions,
+}: {
+  products: Product[];
+  promotions: Promotion[];
+}) => {
   const items = useMemo(() => {
-    return products.length;
-  }, [products]);
+    return products.length + promotions.length;
+  }, [products, promotions]);
 
   const total = useMemo(() => {
-    return productTotal(products);
+    return productTotal(products) + promotionTotal(promotions);
   }, [products]);
 
   return (
@@ -54,8 +60,9 @@ const SummaryBlock = ({ products }: { products: Product[] }) => {
 
 const CartPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
 
-  const { loading, error, data } = useQuery(
+  const { loading: productsLoading, data: productsData } = useQuery(
     gql`
       query productByIds($productIds: [MongoID!]!) {
         productByIds(_ids: $productIds) {
@@ -74,12 +81,42 @@ const CartPage = () => {
     }
   );
 
-  useEffect(() => {
-    if (!loading && data) setProducts(data.productByIds);
-  }, [loading]);
+  const { loading: promotionsLoading, data: promotionsData } = useQuery(
+    gql`
+      query promotionByIds($promotionIds: [MongoID!]!) {
+        promotionByIds(_ids: $promotionIds) {
+          _id
+          name
+          detail
+          price
+          imageLocation
+          discountPercentage
+        }
+      }
+    `,
+    {
+      variables: {
+        promotionIds: getCartItems("PROMOTION"),
+      },
+    }
+  );
 
-  const handleRemove = useCallback((products: Product[]) => {
+  useEffect(() => {
+    if (!productsLoading && productsData)
+      setProducts(productsData.productByIds);
+  }, [productsLoading]);
+
+  useEffect(() => {
+    if (!promotionsLoading && promotionsData)
+      setPromotions(promotionsData.promotionByIds);
+  }, [promotionsLoading]);
+
+  const handleProductRemove = useCallback((products: Product[]) => {
     setProducts(products);
+  }, []);
+
+  const handlePromotionRemove = useCallback((promotions: Promotion[]) => {
+    setPromotions(promotions);
   }, []);
 
   return (
@@ -105,12 +142,28 @@ const CartPage = () => {
             <CartItem
               key={product._id}
               product={product}
-              onRemove={handleRemove}
+              onRemove={handleProductRemove}
+            />
+          ))}
+
+          {Boolean(promotions.length) && (
+            <>
+              <h4 className="mt-4">Promotions</h4>
+              <hr className="mt-1" />
+            </>
+          )}
+
+          {promotions.map((product) => (
+            <CartItem
+              key={product._id}
+              product={product}
+              onRemove={handlePromotionRemove}
+              isPromotion
             />
           ))}
         </Col>
         <Col md={4}>
-          <SummaryBlock products={products} />
+          <SummaryBlock products={products} promotions={promotions} />
         </Col>
       </Row>
     </>
