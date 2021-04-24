@@ -3,18 +3,21 @@ import { Col, Row, Card, Button, CardDeck, Image } from "react-bootstrap";
 import ProductCard from "../components/common/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPercentage } from "@fortawesome/free-solid-svg-icons";
+import { Product } from "@type/SchemaModel";
 
 const Home = () => {
   const query = gql`
     query {
-      products(limit: 5) {
+      products(limit: 5, sort: _ID_DESC) {
         _id
+        sku
         name
         detail
         price
       }
-      promotions(limit: 4) {
+      promotions(limit: 4, sort: _ID_DESC) {
         _id
+        sku
         name
         detail
         price
@@ -30,32 +33,13 @@ const Home = () => {
           <Row>
             <Col></Col>
             <Col>
-              <ProductCard
-                size="40"
-                name={data.products[0].name}
-                price={data.products[0].price}
-                detail={data.products[0].detail}
-                id={data.products[0]._id}
-                type="product"
-                imgurl="product-xl.jpg"
-              />
+              <ProductCard size="40" product={data.products[0]} />
             </Col>
             <Col></Col>
           </Row>
           <CardDeck>
             {data.products.slice(1).map((d) => {
-              return (
-                <ProductCard
-                  key={d.name.toString()}
-                  size="18"
-                  name={d.name}
-                  price={d.price}
-                  detail={d.detail}
-                  id={d._id}
-                  type="product"
-                  imgurl="product.jpg"
-                />
-              );
+              return <ProductCard key={d.name.toString()} size="18" product={d} />;
             })}
           </CardDeck>
 
@@ -64,19 +48,8 @@ const Home = () => {
             <b> PROMOTION</b>
           </h3>
           <CardDeck>
-            {data.promotions.slice(1).map((d) => {
-              return (
-                <ProductCard
-                  key={d.name.toString()}
-                  size="18"
-                  name={d.name}
-                  price={d.price}
-                  detail={d.detail}
-                  id={d._id}
-                  type="promotion"
-                  imgurl="promotion.jpg"
-                />
-              );
+            {data.products.slice(1).map((d: Product) => {
+              return <ProductCard key={d.name.toString()} size="18" product={d} />;
             })}
           </CardDeck>
         </>

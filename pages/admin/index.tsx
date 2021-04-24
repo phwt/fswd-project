@@ -1,23 +1,22 @@
 import { useQuery, gql } from "@apollo/client";
 
-
 const AdminPage = () => {
   const { loading, error, data } = useQuery(
     gql`
-    {
-      products {
-        _id
+      {
+        products {
+          _id
+        }
+        users {
+          _id
+        }
+        promotions {
+          _id
+        }
       }
-      users {
-        _id
-      }
-      promotions {
-        _id
-      }
-    }
     `
   );
-  console.log(data)
+  console.log(data);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -26,10 +25,9 @@ const AdminPage = () => {
     return <div>Error...</div>;
   }
 
-
   return (
-    <div className="content-admin">
-      <h2>Admin Page</h2>
+    <>
+      <h2>Dashboard</h2>
       <table className="table">
         <tbody>
           <tr>
@@ -46,7 +44,7 @@ const AdminPage = () => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
 

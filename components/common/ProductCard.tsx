@@ -1,37 +1,31 @@
 import { Card, Button } from "react-bootstrap";
 import Link from "next/link";
 import { formatPrice } from "@modules/Utils";
+import { Product } from "@type/SchemaModel";
 
-const ProductCard = ({ size, name, price, detail, imgurl, id, type }) => {
+interface Props {
+  product: Product;
+  size: string;
+}
+const ProductCard = ({ product, size }: Props) => {
   return (
     <Card style={{ width: `${size}rem` }} className="bg-t border-0">
-      {/* {type === "product" && (
-        <Link href={`/product/${id}`}>
-      )}
-      {type === "promotion" && (
-        <Link href={`/product/${id}`}>
-      )}
-        <a>
-          <Card.Img variant="top" src={imgurl} className="border-0" />
-
-          <Card.Body className="p-0">
-            <p className="m-0 upper">{name}</p>
-            <p className="m-0">{detail}</p>
-            <p>{price} THB</p>
-          </Card.Body>
-        </a>
-      </Link> */}
-
       <Link
-        href={`/product/${id}${type === "product" ? "" : "?type=promotion"}`}
+        href={`/product/${product.sku}${
+          product.type === "product" ? "" : "?type=promotion"
+        }`}
       >
         <a>
-          <Card.Img variant="top" src={imgurl} className="border-0" />
+          <Card.Img
+            variant="top"
+            src={product.imageLocation ?? "promotion.jpg"}
+            className="border-0"
+          />
 
           <Card.Body className="p-0">
-            <p className="m-0 upper">{name}</p>
-            <p className="m-0">{detail}</p>
-            <p>{formatPrice(price)} THB</p>
+            <p className="m-0 upper">{product.name}</p>
+            <p className="m-0">{product.detail}</p>
+            <p>{formatPrice(product.price)} THB</p>
           </Card.Body>
         </a>
       </Link>

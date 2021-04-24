@@ -1,29 +1,40 @@
 @import "~@forevolve/bootstrap-dark/scss/bootstrap-dark";
 @import "~bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap");
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
 .profilePic {
   border-radius: 50%;
 }
+
 .bg-0 {
   background-color: black;
 }
+
 .sticky {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 99;
 }
+
 .sticky-1 {
   position: fixed;
   top: 0;
-  left:0;
+  left: 0;
   width: 20%;
   height: 100%;
   z-index: 99;
 }
-.content-admin{
-  margin-left:20%
+
+.content-admin {
+  margin-left: 20%;
 }
+
 .raleway-6 {
   font-family: "Raleway", sans-serif;
   font-weight: 600;

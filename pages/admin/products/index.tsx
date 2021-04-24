@@ -39,7 +39,7 @@ const AdminProductsPage = () => {
 
   return (
     <div className="content-admin">
-      <h2>Admin Page</h2>
+      <h2>Products</h2>
       <table className="table">
         <thead>
           <tr>

@@ -78,6 +78,7 @@ export type CreateOneOrderInput = {
   timestamp?: Maybe<Scalars['Date']>;
   customerId: Scalars['String'];
   productIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  promotionIds?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type CreateOneOrderPayload = {
@@ -99,6 +100,7 @@ export type CreateOneProductInput = {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type CreateOneProductPayload = {
@@ -120,6 +122,7 @@ export type CreateOnePromotionInput = {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage: Scalars['Float'];
 };
 
@@ -208,6 +211,7 @@ export type FilterFindManyOrderInput = {
   timestamp?: Maybe<Scalars['Date']>;
   customerId?: Maybe<Scalars['String']>;
   productIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  promotionIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   _id?: Maybe<Scalars['MongoID']>;
   /** List of *indexed* fields that can be filtered via operators. */
   _operators?: Maybe<FilterFindManyOrderOperatorsInput>;
@@ -241,6 +245,7 @@ export type FilterFindManyProductInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
   /** List of *indexed* fields that can be filtered via operators. */
   _operators?: Maybe<FilterFindManyProductsOperatorsInput>;
   OR?: Maybe<Array<FilterFindManyProductsInput>>;
@@ -257,6 +262,7 @@ export type FilterFindManyProductsInput = {
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
   type?: Maybe<EnumDKeyProductsType>;
+  imageLocation?: Maybe<Scalars['String']>;
   _id?: Maybe<Scalars['MongoID']>;
   /** List of *indexed* fields that can be filtered via operators. */
   _operators?: Maybe<FilterFindManyProductsOperatorsInput>;
@@ -303,6 +309,7 @@ export type FilterFindManyPromotionInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage?: Maybe<Scalars['Float']>;
   /** List of *indexed* fields that can be filtered via operators. */
   _operators?: Maybe<FilterFindManyProductsOperatorsInput>;
@@ -362,6 +369,88 @@ export type FilterFindManyUser_IdOperatorsInput = {
   in?: Maybe<Array<Maybe<Scalars['MongoID']>>>;
   nin?: Maybe<Array<Maybe<Scalars['MongoID']>>>;
   exists?: Maybe<Scalars['Boolean']>;
+};
+
+export type FilterFindOneProductInput = {
+  _id?: Maybe<Scalars['MongoID']>;
+  sku?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  detail?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  weight?: Maybe<Scalars['Float']>;
+  stock?: Maybe<Scalars['Float']>;
+  created?: Maybe<Scalars['Date']>;
+  modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
+  /** List of *indexed* fields that can be filtered via operators. */
+  _operators?: Maybe<FilterFindOneProductsOperatorsInput>;
+  OR?: Maybe<Array<FilterFindOneProductsInput>>;
+  AND?: Maybe<Array<FilterFindOneProductsInput>>;
+};
+
+export type FilterFindOneProductsInput = {
+  sku?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  detail?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  weight?: Maybe<Scalars['Float']>;
+  stock?: Maybe<Scalars['Float']>;
+  created?: Maybe<Scalars['Date']>;
+  modified?: Maybe<Scalars['Date']>;
+  type?: Maybe<EnumDKeyProductsType>;
+  imageLocation?: Maybe<Scalars['String']>;
+  _id?: Maybe<Scalars['MongoID']>;
+  /** List of *indexed* fields that can be filtered via operators. */
+  _operators?: Maybe<FilterFindOneProductsOperatorsInput>;
+  OR?: Maybe<Array<FilterFindOneProductsInput>>;
+  AND?: Maybe<Array<FilterFindOneProductsInput>>;
+};
+
+/** For performance reason this type contains only *indexed* fields. */
+export type FilterFindOneProductsOperatorsInput = {
+  sku?: Maybe<FilterFindOneProductsSkuOperatorsInput>;
+  _id?: Maybe<FilterFindOneProducts_IdOperatorsInput>;
+};
+
+export type FilterFindOneProductsSkuOperatorsInput = {
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  ne?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nin?: Maybe<Array<Maybe<Scalars['String']>>>;
+  regex?: Maybe<Scalars['RegExpAsString']>;
+  exists?: Maybe<Scalars['Boolean']>;
+};
+
+export type FilterFindOneProducts_IdOperatorsInput = {
+  gt?: Maybe<Scalars['MongoID']>;
+  gte?: Maybe<Scalars['MongoID']>;
+  lt?: Maybe<Scalars['MongoID']>;
+  lte?: Maybe<Scalars['MongoID']>;
+  ne?: Maybe<Scalars['MongoID']>;
+  in?: Maybe<Array<Maybe<Scalars['MongoID']>>>;
+  nin?: Maybe<Array<Maybe<Scalars['MongoID']>>>;
+  exists?: Maybe<Scalars['Boolean']>;
+};
+
+export type FilterFindOnePromotionInput = {
+  _id?: Maybe<Scalars['MongoID']>;
+  sku?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  detail?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  weight?: Maybe<Scalars['Float']>;
+  stock?: Maybe<Scalars['Float']>;
+  created?: Maybe<Scalars['Date']>;
+  modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
+  discountPercentage?: Maybe<Scalars['Float']>;
+  /** List of *indexed* fields that can be filtered via operators. */
+  _operators?: Maybe<FilterFindOneProductsOperatorsInput>;
+  OR?: Maybe<Array<FilterFindOneProductsInput>>;
+  AND?: Maybe<Array<FilterFindOneProductsInput>>;
 };
 
 
@@ -493,15 +582,23 @@ export type Order = {
   timestamp?: Maybe<Scalars['Date']>;
   customerId: Scalars['String'];
   productIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  promotionIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   _id: Scalars['MongoID'];
   orderedBy?: Maybe<Customer>;
   products: Array<Product>;
+  promotions: Array<Promotion>;
 };
 
 
 export type OrderProductsArgs = {
   limit?: Maybe<Scalars['Int']>;
   sort?: Maybe<SortFindByIdsProductInput>;
+};
+
+
+export type OrderPromotionsArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  sort?: Maybe<SortFindByIdsPromotionInput>;
 };
 
 export type Product = ProductsInterface & {
@@ -516,6 +613,7 @@ export type Product = ProductsInterface & {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type Products = ProductsInterface & {
@@ -530,6 +628,7 @@ export type Products = ProductsInterface & {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type ProductsInterface = {
@@ -543,6 +642,7 @@ export type ProductsInterface = {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type Promotion = ProductsInterface & {
@@ -557,6 +657,7 @@ export type Promotion = ProductsInterface & {
   stock: Scalars['Float'];
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage: Scalars['Float'];
 };
 
@@ -564,15 +665,19 @@ export type Query = {
   __typename?: 'Query';
   products: Array<Product>;
   productById?: Maybe<Product>;
+  productByIds: Array<Product>;
+  productFindOne?: Maybe<Product>;
   promotions: Array<Promotion>;
   promotionById?: Maybe<Promotion>;
+  promotionByIds: Array<Promotion>;
+  promotionFindOne?: Maybe<Promotion>;
   users?: Maybe<Array<Maybe<UserInterface>>>;
   userById?: Maybe<UserInterface>;
   admins: Array<Admin>;
   adminById?: Maybe<Admin>;
   customers: Array<Customer>;
   customerById?: Maybe<Customer>;
-  me?: Maybe<User>;
+  me?: Maybe<Customer>;
   orders: Array<Order>;
   orderById?: Maybe<Order>;
 };
@@ -591,6 +696,20 @@ export type QueryProductByIdArgs = {
 };
 
 
+export type QueryProductByIdsArgs = {
+  _ids: Array<Scalars['MongoID']>;
+  limit?: Maybe<Scalars['Int']>;
+  sort?: Maybe<SortFindByIdsProductInput>;
+};
+
+
+export type QueryProductFindOneArgs = {
+  filter?: Maybe<FilterFindOneProductInput>;
+  skip?: Maybe<Scalars['Int']>;
+  sort?: Maybe<SortFindOneProductInput>;
+};
+
+
 export type QueryPromotionsArgs = {
   filter?: Maybe<FilterFindManyPromotionInput>;
   skip?: Maybe<Scalars['Int']>;
@@ -601,6 +720,20 @@ export type QueryPromotionsArgs = {
 
 export type QueryPromotionByIdArgs = {
   _id: Scalars['MongoID'];
+};
+
+
+export type QueryPromotionByIdsArgs = {
+  _ids: Array<Scalars['MongoID']>;
+  limit?: Maybe<Scalars['Int']>;
+  sort?: Maybe<SortFindByIdsPromotionInput>;
+};
+
+
+export type QueryPromotionFindOneArgs = {
+  filter?: Maybe<FilterFindOnePromotionInput>;
+  skip?: Maybe<Scalars['Int']>;
+  sort?: Maybe<SortFindOnePromotionInput>;
 };
 
 
@@ -699,6 +832,13 @@ export enum SortFindByIdsProductInput {
   SkuDesc = 'SKU_DESC'
 }
 
+export enum SortFindByIdsPromotionInput {
+  IdAsc = '_ID_ASC',
+  IdDesc = '_ID_DESC',
+  SkuAsc = 'SKU_ASC',
+  SkuDesc = 'SKU_DESC'
+}
+
 export enum SortFindManyAdminInput {
   IdAsc = '_ID_ASC',
   IdDesc = '_ID_DESC',
@@ -745,6 +885,20 @@ export enum SortFindManyUserInput {
   EmailDesc = 'EMAIL_DESC'
 }
 
+export enum SortFindOneProductInput {
+  IdAsc = '_ID_ASC',
+  IdDesc = '_ID_DESC',
+  SkuAsc = 'SKU_ASC',
+  SkuDesc = 'SKU_DESC'
+}
+
+export enum SortFindOnePromotionInput {
+  IdAsc = '_ID_ASC',
+  IdDesc = '_ID_DESC',
+  SkuAsc = 'SKU_ASC',
+  SkuDesc = 'SKU_DESC'
+}
+
 export type UpdateByIdCustomerInput = {
   username?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
@@ -770,6 +924,7 @@ export type UpdateByIdOrderInput = {
   timestamp?: Maybe<Scalars['Date']>;
   customerId?: Maybe<Scalars['String']>;
   productIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  promotionIds?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UpdateByIdOrderPayload = {
@@ -791,6 +946,7 @@ export type UpdateByIdProductInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
 };
 
 export type UpdateByIdProductPayload = {
@@ -812,6 +968,7 @@ export type UpdateByIdPromotionInput = {
   stock?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['Date']>;
   modified?: Maybe<Scalars['Date']>;
+  imageLocation?: Maybe<Scalars['String']>;
   discountPercentage?: Maybe<Scalars['Float']>;
 };
 
@@ -997,6 +1154,12 @@ export type ResolversTypes = {
   FilterFindManyUserOperatorsInput: FilterFindManyUserOperatorsInput;
   FilterFindManyUserUsernameOperatorsInput: FilterFindManyUserUsernameOperatorsInput;
   FilterFindManyUser_idOperatorsInput: FilterFindManyUser_IdOperatorsInput;
+  FilterFindOneProductInput: FilterFindOneProductInput;
+  FilterFindOneProductsInput: FilterFindOneProductsInput;
+  FilterFindOneProductsOperatorsInput: FilterFindOneProductsOperatorsInput;
+  FilterFindOneProductsSkuOperatorsInput: FilterFindOneProductsSkuOperatorsInput;
+  FilterFindOneProducts_idOperatorsInput: FilterFindOneProducts_IdOperatorsInput;
+  FilterFindOnePromotionInput: FilterFindOnePromotionInput;
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
   LoginPayload: ResolverTypeWrapper<LoginPayload>;
   MongoError: ResolverTypeWrapper<MongoError>;
@@ -1014,12 +1177,15 @@ export type ResolversTypes = {
   RemoveByIdUserPayload: ResolverTypeWrapper<RemoveByIdUserPayload>;
   RuntimeError: ResolverTypeWrapper<RuntimeError>;
   SortFindByIdsProductInput: SortFindByIdsProductInput;
+  SortFindByIdsPromotionInput: SortFindByIdsPromotionInput;
   SortFindManyAdminInput: SortFindManyAdminInput;
   SortFindManyCustomerInput: SortFindManyCustomerInput;
   SortFindManyOrderInput: SortFindManyOrderInput;
   SortFindManyProductInput: SortFindManyProductInput;
   SortFindManyPromotionInput: SortFindManyPromotionInput;
   SortFindManyUserInput: SortFindManyUserInput;
+  SortFindOneProductInput: SortFindOneProductInput;
+  SortFindOnePromotionInput: SortFindOnePromotionInput;
   UpdateByIdCustomerInput: UpdateByIdCustomerInput;
   UpdateByIdCustomerPayload: ResolverTypeWrapper<UpdateByIdCustomerPayload>;
   UpdateByIdOrderInput: UpdateByIdOrderInput;
@@ -1073,6 +1239,12 @@ export type ResolversParentTypes = {
   FilterFindManyUserOperatorsInput: FilterFindManyUserOperatorsInput;
   FilterFindManyUserUsernameOperatorsInput: FilterFindManyUserUsernameOperatorsInput;
   FilterFindManyUser_idOperatorsInput: FilterFindManyUser_IdOperatorsInput;
+  FilterFindOneProductInput: FilterFindOneProductInput;
+  FilterFindOneProductsInput: FilterFindOneProductsInput;
+  FilterFindOneProductsOperatorsInput: FilterFindOneProductsOperatorsInput;
+  FilterFindOneProductsSkuOperatorsInput: FilterFindOneProductsSkuOperatorsInput;
+  FilterFindOneProducts_idOperatorsInput: FilterFindOneProducts_IdOperatorsInput;
+  FilterFindOnePromotionInput: FilterFindOnePromotionInput;
   JSON: Scalars['JSON'];
   LoginPayload: LoginPayload;
   MongoError: MongoError;
@@ -1250,9 +1422,11 @@ export type OrderResolvers<ContextType = any, ParentType extends ResolversParent
   timestamp?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   customerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   productIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  promotionIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   _id?: Resolver<ResolversTypes['MongoID'], ParentType, ContextType>;
   orderedBy?: Resolver<Maybe<ResolversTypes['Customer']>, ParentType, ContextType>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<OrderProductsArgs, 'limit'>>;
+  promotions?: Resolver<Array<ResolversTypes['Promotion']>, ParentType, ContextType, RequireFields<OrderPromotionsArgs, 'limit'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1267,6 +1441,7 @@ export type ProductResolvers<ContextType = any, ParentType extends ResolversPare
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1281,6 +1456,7 @@ export type ProductsResolvers<ContextType = any, ParentType extends ResolversPar
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1296,6 +1472,7 @@ export type ProductsInterfaceResolvers<ContextType = any, ParentType extends Res
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
 export type PromotionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Promotion'] = ResolversParentTypes['Promotion']> = {
@@ -1309,6 +1486,7 @@ export type PromotionResolvers<ContextType = any, ParentType extends ResolversPa
   stock?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   modified?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  imageLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   discountPercentage?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1316,15 +1494,19 @@ export type PromotionResolvers<ContextType = any, ParentType extends ResolversPa
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductsArgs, 'limit'>>;
   productById?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductByIdArgs, '_id'>>;
+  productByIds?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductByIdsArgs, '_ids' | 'limit'>>;
+  productFindOne?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductFindOneArgs, never>>;
   promotions?: Resolver<Array<ResolversTypes['Promotion']>, ParentType, ContextType, RequireFields<QueryPromotionsArgs, 'limit'>>;
   promotionById?: Resolver<Maybe<ResolversTypes['Promotion']>, ParentType, ContextType, RequireFields<QueryPromotionByIdArgs, '_id'>>;
+  promotionByIds?: Resolver<Array<ResolversTypes['Promotion']>, ParentType, ContextType, RequireFields<QueryPromotionByIdsArgs, '_ids' | 'limit'>>;
+  promotionFindOne?: Resolver<Maybe<ResolversTypes['Promotion']>, ParentType, ContextType, RequireFields<QueryPromotionFindOneArgs, never>>;
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserInterface']>>>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'limit'>>;
   userById?: Resolver<Maybe<ResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<QueryUserByIdArgs, '_id'>>;
   admins?: Resolver<Array<ResolversTypes['Admin']>, ParentType, ContextType, RequireFields<QueryAdminsArgs, 'limit'>>;
   adminById?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType, RequireFields<QueryAdminByIdArgs, '_id'>>;
   customers?: Resolver<Array<ResolversTypes['Customer']>, ParentType, ContextType, RequireFields<QueryCustomersArgs, 'limit'>>;
   customerById?: Resolver<Maybe<ResolversTypes['Customer']>, ParentType, ContextType, RequireFields<QueryCustomerByIdArgs, '_id'>>;
-  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  me?: Resolver<Maybe<ResolversTypes['Customer']>, ParentType, ContextType>;
   orders?: Resolver<Array<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<QueryOrdersArgs, 'limit'>>;
   orderById?: Resolver<Maybe<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<QueryOrderByIdArgs, '_id'>>;
 };

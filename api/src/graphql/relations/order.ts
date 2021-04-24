@@ -1,4 +1,4 @@
-import { CustomerTC, OrderTC, ProductTC } from "../models";
+import { CustomerTC, OrderTC, ProductTC, PromotionTC } from "../models";
 import { Order } from "@type/SchemaModel";
 
 OrderTC.addRelation("orderedBy", {
@@ -18,5 +18,15 @@ OrderTC.addRelation("products", {
   },
   projection: {
     productIds: true,
+  },
+});
+
+OrderTC.addRelation("promotions", {
+  resolver: () => PromotionTC.getResolver("findByIds"),
+  prepareArgs: {
+    _ids: (source: Order) => source.promotionIds,
+  },
+  projection: {
+    promotionIds: true,
   },
 });
