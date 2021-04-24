@@ -56,28 +56,28 @@ const Header = () => {
 
       <Nav className="justify-content-center" activeKey="/home">
         <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s">
+          <Nav.Link href="/products" className="raleway-3s">
             ALL PRODUCTS
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s">
+          <Nav.Link href="/promotions" className="raleway-3s">
+            ALL PROMOTIONS
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/" className="raleway-3s" disabled>
             MEN
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s">
+          <Nav.Link href="/" className="raleway-3s" disabled>
             WOMEN
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s">
+          <Nav.Link href="/" className="raleway-3s" disabled>
             ACCESSORIES
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s">
-            PROMOTION
           </Nav.Link>
         </Nav.Item>
       </Nav>
