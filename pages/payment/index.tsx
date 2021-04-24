@@ -64,7 +64,9 @@ const PaymentPage = () => {
     gql`
       query productByIds($productIds: [MongoID!]!) {
         productByIds(_ids: $productIds) {
+          _id
           price
+          stock
         }
       }
     `,
@@ -79,8 +81,10 @@ const PaymentPage = () => {
     gql`
       query promotionByIds($promotionIds: [MongoID!]!) {
         promotionByIds(_ids: $promotionIds) {
+          _id
           price
           discountPercentage
+          stock
         }
       }
     `,
@@ -104,7 +108,7 @@ const PaymentPage = () => {
       setPromotions(promotionsData.promotionByIds);
   }, [promotionsLoading]);
 
-  const [createOrder, { data: orderData }] = useMutation(gql`
+  const [createOrder] = useMutation(gql`
     mutation payment(
       $userId: String!
       $productIds: [String!]!
@@ -123,6 +127,22 @@ const PaymentPage = () => {
     }
   `);
 
+  const [setProductStock] = useMutation(gql`
+    mutation setProductStock($id: MongoID!, $stock: Float!) {
+      updateProductById(_id: $id, record: { stock: $stock }) {
+        recordId
+      }
+    }
+  `);
+
+  const [setPromotionStock] = useMutation(gql`
+    mutation setPromotionStock($id: MongoID!, $stock: Float!) {
+      updatePromotionById(_id: $id, record: { stock: $stock }) {
+        recordId
+      }
+    }
+  `);
+
   const handlePayment = useCallback(async () => {
     const {
       data: {
@@ -135,9 +155,34 @@ const PaymentPage = () => {
         promotionIds: getCartItems("PROMOTION"),
       },
     });
+
+    await Promise.all(
+      products.map(
+        async (product) =>
+          await setProductStock({
+            variables: {
+              id: product._id,
+              stock: product.stock - 1,
+            },
+          })
+      )
+    );
+
+    await Promise.all(
+      promotions.map(
+        async (promotion) =>
+          await setPromotionStock({
+            variables: {
+              id: promotion._id,
+              stock: promotion.stock - 1,
+            },
+          })
+      )
+    );
+
     clearCart();
     await router.push(`/customer/order/${recordId}`);
-  }, [user?._id]);
+  }, [user?._id, products, promotions]);
 
   if (loading) {
     return <p>Loading</p>;
