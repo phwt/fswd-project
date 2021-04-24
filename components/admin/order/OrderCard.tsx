@@ -1,18 +1,33 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { Order } from "@type/SchemaModel";
 import { OrderCardRow } from "../../../pages/admin/order/[orderId]";
+import { useMutation } from "@apollo/client";
+import { gql } from "@apollo/client/core";
 
-const OrderCardButton = ({ label, variant }) => {
+const OrderCardButton = (props) => {
+  const { label, variant } = props;
   return (
     <Col md={4} className="px-1">
-      <Button block variant={variant}>
+      <Button block variant={variant} {...props}>
         {label}
       </Button>
     </Col>
   );
 };
 
-const OrderCard = ({ order }: { order: Order }) => {
+interface Props {
+  order: Order;
+}
+
+const OrderCard = ({ order }: Props) => {
+  const [changeOrderStatus] = useMutation(gql`
+    mutation changeOrderStatus($id: MongoID!, $status: EnumOrderStatus!) {
+      updateOrderById(_id: $id, record: { status: $status }) {
+        recordId
+      }
+    }
+  `);
+
   return (
     <Card>
       <Card.Header>Total</Card.Header>
@@ -29,9 +44,45 @@ const OrderCard = ({ order }: { order: Order }) => {
           <Col md={12} className="text-center">
             <h5>Change Order Status</h5>
           </Col>
-          <OrderCardButton label="Paid" variant="danger" />
-          <OrderCardButton label="Delivered" variant="warning" />
-          <OrderCardButton label="Completed" variant="success" />
+          <OrderCardButton
+            label="Paid"
+            variant="danger"
+            onClick={async () => {
+              await changeOrderStatus({
+                variables: {
+                  id: order._id,
+                  status: "PAID",
+                },
+              });
+              window.location.reload();
+            }}
+          />
+          <OrderCardButton
+            label="Shipped"
+            variant="warning"
+            onClick={async () => {
+              await changeOrderStatus({
+                variables: {
+                  id: order._id,
+                  status: "SHIPPED",
+                },
+              });
+              window.location.reload();
+            }}
+          />
+          <OrderCardButton
+            label="Completed"
+            variant="success"
+            onClick={async () => {
+              await changeOrderStatus({
+                variables: {
+                  id: order._id,
+                  status: "COMPLETED",
+                },
+              });
+              window.location.reload();
+            }}
+          />
         </Row>
       </Card.Body>
     </Card>
