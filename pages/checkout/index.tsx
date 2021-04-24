@@ -1,10 +1,10 @@
 import { Button, Col, Row } from "react-bootstrap";
 import CartItem from "@components/common/CartItem";
 import { useEffect, useMemo, useState } from "react";
-import { Product } from "@type/SchemaModel";
+import { Product, Promotion } from "@type/SchemaModel";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
-import { formatPrice, productTotal } from "@modules/Utils";
+import { formatPrice, productTotal, promotionTotal } from "@modules/Utils";
 import Link from "next/link";
 import { getCartItems } from "@modules/Cart";
 import { useRouter } from "next/router";
@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 const CheckoutPage = () => {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
 
   const { loading: meLoading, error: meError, data: meData } = useQuery(
     gql`
@@ -43,19 +44,44 @@ const CheckoutPage = () => {
     }
   );
 
+  const { loading: promotionsLoading, data: promotionsData } = useQuery(
+    gql`
+      query promotionByIds($promotionIds: [MongoID!]!) {
+        promotionByIds(_ids: $promotionIds) {
+          _id
+          name
+          detail
+          price
+          imageLocation
+          discountPercentage
+        }
+      }
+    `,
+    {
+      variables: {
+        promotionIds: getCartItems("PROMOTION"),
+      },
+    }
+  );
+
   const items = useMemo(() => {
-    return products.length;
-  }, [products]);
+    return products.length + promotions.length;
+  }, [products, promotions]);
 
   const total = useMemo(() => {
-    return productTotal(products);
-  }, [products]);
+    return productTotal(products) + promotionTotal(promotions);
+  }, [products, promotions]);
 
   useEffect(() => {
     if (!loading && data) setProducts(data.productByIds);
   }, [loading]);
 
-  if (loading || meLoading) {
+  useEffect(() => {
+    if (!promotionsLoading && promotionsData)
+      setPromotions(promotionsData.promotionByIds);
+  }, [promotionsLoading]);
+
+  if (loading || meLoading || promotionsLoading) {
     return <p>Loading...</p>;
   } else {
     if (!meData.me) {
@@ -74,6 +100,9 @@ const CheckoutPage = () => {
       <Col md={12}>
         {products.map((product) => (
           <CartItem key={product._id} product={product} noRemove />
+        ))}
+        {promotions.map((product) => (
+          <CartItem key={product._id} product={product} noRemove isPromotion />
         ))}
       </Col>
       <Col md={12} className="text-right mb-2">

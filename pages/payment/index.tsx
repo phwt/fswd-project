@@ -9,8 +9,8 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
-import { formatPrice, productTotal } from "@modules/Utils";
-import { Product } from "@type/SchemaModel";
+import { formatPrice, productTotal, promotionTotal } from "@modules/Utils";
+import { Product, Promotion } from "@type/SchemaModel";
 import { clearCart, getCartItems } from "@modules/Cart";
 import { useSession } from "@modules/SessionContext";
 import { useRouter } from "next/router";
@@ -57,6 +57,7 @@ const PaymentPage = () => {
   const router = useRouter();
   const [payment, setPayment] = useState("Visa / Mastercard");
   const [products, setProducts] = useState<Product[]>([]);
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
   const { user } = useSession();
 
   const { loading, error, data } = useQuery(
@@ -74,13 +75,34 @@ const PaymentPage = () => {
     }
   );
 
+  const { loading: promotionsLoading, data: promotionsData } = useQuery(
+    gql`
+      query promotionByIds($promotionIds: [MongoID!]!) {
+        promotionByIds(_ids: $promotionIds) {
+          price
+          discountPercentage
+        }
+      }
+    `,
+    {
+      variables: {
+        promotionIds: getCartItems("PROMOTION"),
+      },
+    }
+  );
+
   const total = useMemo(() => {
-    return productTotal(products);
-  }, [products]);
+    return productTotal(products) + promotionTotal(promotions);
+  }, [products, promotions]);
 
   useEffect(() => {
     if (!loading && data) setProducts(data.productByIds);
   }, [loading]);
+
+  useEffect(() => {
+    if (!promotionsLoading && promotionsData)
+      setPromotions(promotionsData.promotionByIds);
+  }, [promotionsLoading]);
 
   const [createOrder, { data: orderData }] = useMutation(gql`
     mutation payment($userId: String!, $productIds: [String!]!) {
