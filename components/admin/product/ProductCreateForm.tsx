@@ -20,6 +20,7 @@ const ProductCreateForm = ({ promotionForm = false }: Props) => {
     sku: "",
     stock: 0,
     weight: 0,
+    discountPercentage: 0,
   };
 
   const [addProduct] = useMutation(
@@ -56,30 +57,32 @@ const ProductCreateForm = ({ promotionForm = false }: Props) => {
       if (product["image"]) {
         const formData = new FormData();
         const imageFile: File = product["image"];
-        delete product["image"];
-
-        formData.append("variables", JSON.stringify(product));
         formData.append("file", imageFile);
 
-        const { data } = await axios.post("/api/admin/product/new", formData, {
+        const {
+          data: { imageLocation },
+        } = await axios.post("/api/admin/product/new", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-      } else {
-        if (promotionForm)
-          await addPromotion({
-            variables: {
-              productInput: product,
-            },
-          });
-        else
-          await addProduct({
-            variables: {
-              productInput: product,
-            },
-          });
+
+        delete product["image"];
+        product["imageLocation"] = imageLocation;
       }
+
+      if (promotionForm)
+        await addPromotion({
+          variables: {
+            productInput: product,
+          },
+        });
+      else
+        await addProduct({
+          variables: {
+            productInput: product,
+          },
+        });
 
       if (promotionForm) await router.push("/admin/promotions");
       else await router.push("/admin/products");

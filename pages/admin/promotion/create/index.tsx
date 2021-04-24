@@ -1,5 +1,13 @@
+import ProductCreateForm from "@components/admin/product/ProductCreateForm";
+
 const AdminPromotionCreatePage = () => {
-  return <p>Admin Promotion Create Page</p>;
+  return (
+    <>
+      <h2>Create Promotion</h2>
+      <hr />
+      <ProductCreateForm promotionForm />
+    </>
+  );
 };
 
 export default AdminPromotionCreatePage;

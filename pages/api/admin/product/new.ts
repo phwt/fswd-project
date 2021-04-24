@@ -37,22 +37,7 @@ apiRoute.use(uploadMiddleware);
 
 // API Route
 apiRoute.post(async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    // TODO: Use env
-    const result = await axios.post("http://localhost:5001/graphql", {
-      query:
-        "mutation createProduct($productInput: CreateOneProductInput!) {createProduct(record: $productInput) {recordId}}",
-      variables: {
-        productInput: {
-          ...JSON.parse(req.body.variables),
-          imageLocation: req.files[0].path,
-        },
-      },
-    });
-  } catch {
-  } finally {
-    res.status(200).json("Product Added");
-  }
+  res.status(200).json({ imageLocation: req.files[0].path });
 });
 
 export default apiRoute;
