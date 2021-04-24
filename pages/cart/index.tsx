@@ -36,7 +36,12 @@ const SummaryBlock = ({ products }: { products: Product[] }) => {
         </Col>
         <Col md={12}>
           <Link href="/checkout">
-            <Button variant="success" block className="mt-2">
+            <Button
+              variant="success"
+              block
+              className="mt-2"
+              disabled={!products.length}
+            >
               <i className="fa fa-shopping-cart mr-2" />
               Checkout
             </Button>
@@ -86,6 +91,16 @@ const CartPage = () => {
           </h2>
         </Col>
         <Col md={8}>
+          {!products.length && (
+            <div className="text-center my-5">
+              <h3>No Item in Cart</h3>
+              <Link href="/">
+                <a>
+                  <h5>Start Shopping</h5>
+                </a>
+              </Link>
+            </div>
+          )}
           {products.map((product) => (
             <CartItem
               key={product._id}
