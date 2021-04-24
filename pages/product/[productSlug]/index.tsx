@@ -5,8 +5,6 @@ import ProductDetail from "../../../components/common/ProductDetail";
 
 const ProductPage = () => {
   //get type from url param
-  const urlParams = new URLSearchParams(window.location.search);
-  const myParam = urlParams.get("type");
 
   //come from promotion type=promotion
   //come from product -
@@ -55,44 +53,46 @@ const ProductPage = () => {
       },
     }
   );
+
   useEffect(() => {
-    if (myParam === "promotion") {
-      getPromotion();
-    } else {
-      getProduct();
+    if (process.browser) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get("type");
+
+      if (myParam === "promotion") {
+        getPromotion();
+      } else {
+        getProduct();
+      }
     }
   }, []);
-  console.log(dataPromotion);
-  console.log(dataProduct);
-  // console.log(type);
-  // return <h1>{dataPromotion.promotionById.name}</h1>;
 
-  return (<h1>hi</h1>
-    // <>
-    //   {!loadingPromotion && dataPromotion && (
-    //     <>
-    //       {/* Product Page {query.productSlug} */}
-    //       <ProductDetail
-    //         name={dataPromotion.promotionFindOne.name}
-    //         price={dataPromotion.promotionFindOne.price}
-    //         detail={dataPromotion.promotionFindOne.detail}
-    //         id={dataPromotion.promotionFindOne.id}
-    //         imgurl="../product-xl.jpg"
-    //       />
-    //     </>
-    //   )}
-    //   {!loadingProduct && dataProduct && (
-    //     <>
-    //       <ProductDetail
-    //         name={dataProduct.productFindOne.name}
-    //         price={dataProduct.productFindOne.price}
-    //         detail={dataProduct.productFindOne.detail}
-    //         id={dataProduct.productFindOne._id}
-    //         imgurl="../product-xl.jpg"
-    //       />
-    //     </>
-    //   )}
-    // </>
+  return (
+    <>
+      {!loadingPromotion && dataPromotion && (
+        <>
+          {/* Product Page {query.productSlug} */}
+          <ProductDetail
+            name={dataPromotion.promotionFindOne.name}
+            price={dataPromotion.promotionFindOne.price}
+            detail={dataPromotion.promotionFindOne.detail}
+            id={dataPromotion.promotionFindOne.id}
+            imgurl="../product-xl.jpg"
+          />
+        </>
+      )}
+      {!loadingProduct && dataProduct && (
+        <>
+          <ProductDetail
+            name={dataProduct.productFindOne.name}
+            price={dataProduct.productFindOne.price}
+            detail={dataProduct.productFindOne.detail}
+            id={dataProduct.productFindOne._id}
+            imgurl="../product-xl.jpg"
+          />
+        </>
+      )}
+    </>
   );
 };
 
