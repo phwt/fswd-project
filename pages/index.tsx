@@ -46,6 +46,7 @@ const Home = () => {
             {data.products.slice(1).map((d) => {
               return (
                 <ProductCard
+                  key={d.name.toString()}
                   size="18"
                   name={d.name}
                   price={d.price}
@@ -66,6 +67,7 @@ const Home = () => {
             {data.promotions.slice(1).map((d) => {
               return (
                 <ProductCard
+                  key={d.name.toString()}
                   size="18"
                   name={d.name}
                   price={d.price}
