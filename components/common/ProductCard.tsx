@@ -12,7 +12,7 @@ const ProductCard = ({ product, size }: Props) => {
     <Card style={{ width: `${size}rem` }} className="bg-t border-0">
       <Link
         href={`/product/${product.sku}${
-          product.type === "product" ? "" : "?type=promotion"
+          product.type === "Product" ? "" : "?type=promotion"
         }`}
       >
         <a>
