@@ -25,9 +25,15 @@ interface Props {
   product: Product | Promotion;
   onSubmit: (product: Product | Promotion) => void;
   promotionForm?: boolean;
+  noImage?: boolean;
 }
 
-const ProductForm = ({ product, onSubmit, promotionForm = false }: Props) => {
+const ProductForm = ({
+  product,
+  onSubmit,
+  promotionForm = false,
+  noImage = false,
+}: Props) => {
   const [localProduct, setLocalProduct] = useState<Product | Promotion>(
     product
   );
@@ -126,20 +132,22 @@ const ProductForm = ({ product, onSubmit, promotionForm = false }: Props) => {
           />
         </Col>
 
-        <Col md={12} className="mt-2">
-          <Form.Label>Product Image</Form.Label>
-          <Form.File
-            label="Choose file"
-            custom
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setLocalProduct({
-                ...localProduct,
-                // @ts-ignore
-                image: Array.from(e.target.files)[0],
-              });
-            }}
-          />
-        </Col>
+        {!noImage && (
+          <Col md={12} className="mt-2">
+            <Form.Label>Product Image</Form.Label>
+            <Form.File
+              label="Choose file"
+              custom
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setLocalProduct({
+                  ...localProduct,
+                  // @ts-ignore
+                  image: Array.from(e.target.files)[0],
+                });
+              }}
+            />
+          </Col>
+        )}
 
         <Col className="mt-3 text-right">
           <Button variant="success" type="submit">
