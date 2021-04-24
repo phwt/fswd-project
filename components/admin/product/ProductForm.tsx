@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { Product } from "@type/SchemaModel";
+import { Product, Promotion } from "@type/SchemaModel";
 
 const ControlUnit = ({ label, unit, name, value, onChange }) => {
   return (
@@ -22,12 +22,15 @@ const ControlUnit = ({ label, unit, name, value, onChange }) => {
 };
 
 interface Props {
-  product: Product;
-  onSubmit: (product: Product) => void;
+  product: Product | Promotion;
+  onSubmit: (product: Product | Promotion) => void;
+  promotionForm?: boolean;
 }
 
-const ProductForm = ({ product, onSubmit }: Props) => {
-  const [localProduct, setLocalProduct] = useState<Product>(product);
+const ProductForm = ({ product, onSubmit, promotionForm = false }: Props) => {
+  const [localProduct, setLocalProduct] = useState<Product | Promotion>(
+    product
+  );
 
   const submitHandler = useCallback(
     (e) => {
@@ -43,6 +46,10 @@ const ProductForm = ({ product, onSubmit }: Props) => {
     },
     [localProduct]
   );
+
+  const lastColSize = useMemo(() => {
+    return promotionForm ? 3 : 4;
+  }, [promotionForm]);
 
   return (
     <form onSubmit={submitHandler}>
@@ -76,7 +83,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
           />
         </Col>
 
-        <Col md={4} className="mt-2">
+        <Col md={lastColSize} className="mt-2">
           <ControlUnit
             label="Price"
             unit="฿"
@@ -86,7 +93,20 @@ const ProductForm = ({ product, onSubmit }: Props) => {
           />
         </Col>
 
-        <Col md={4} className="mt-2">
+        {promotionForm && (
+          <Col md={lastColSize} className="mt-2">
+            <ControlUnit
+              label="Discount"
+              unit="%"
+              name="discountPercentage"
+              // @ts-ignore
+              value={localProduct.discountPercentage}
+              onChange={changeHandler}
+            />
+          </Col>
+        )}
+
+        <Col md={lastColSize} className="mt-2">
           <ControlUnit
             label="Weight"
             unit="g"
@@ -96,7 +116,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
           />
         </Col>
 
-        <Col md={4} className="mt-2">
+        <Col md={lastColSize} className="mt-2">
           <ControlUnit
             label="Stock"
             unit="pcs"
