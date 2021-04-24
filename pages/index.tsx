@@ -36,6 +36,7 @@ const Home = () => {
                 price={data.products[0].price}
                 detail={data.products[0].detail}
                 id={data.products[0]._id}
+                type="product"
                 imgurl="product-xl.jpg"
               />
             </Col>
@@ -50,6 +51,7 @@ const Home = () => {
                   price={d.price}
                   detail={d.detail}
                   id={d._id}
+                  type="product"
                   imgurl="product.jpg"
                 />
               );
@@ -61,7 +63,7 @@ const Home = () => {
             <b> PROMOTION</b>
           </h3>
           <CardDeck>
-            {data.products.slice(1).map((d) => {
+            {data.promotions.slice(1).map((d) => {
               return (
                 <ProductCard
                   size="18"
@@ -69,6 +71,7 @@ const Home = () => {
                   price={d.price}
                   detail={d.detail}
                   id={d._id}
+                  type="promotion"
                   imgurl="promotion.jpg"
                 />
               );
