@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import { formatPrice } from "@modules/Utils";
 
 const CustomerOrdersPage = () => {
   const { loading, error, data } = useQuery(
@@ -11,6 +12,7 @@ const CustomerOrdersPage = () => {
             _id
             status
             products {
+              _id
               name
               price
               stock
@@ -34,7 +36,7 @@ const CustomerOrdersPage = () => {
 
   const renderOrderCards = data.me.orders.map((order) => {
     return (
-      <div className="card my-5">
+      <div className="card my-5" key={order._id.toString()}>
         <div className="card-header">
           <div className="row">
             <div className="col">
@@ -52,7 +54,7 @@ const CustomerOrdersPage = () => {
         <div className="card-body">
           {order.products.map((product) => {
             return (
-              <div className="row">
+              <div className="row" key={product._id.toString()}>
                 <div className="col-3 d-flex align-items-center">
                   <svg width="150" height="120">
                     <rect x="50" y="20" width="100" height="100" />
@@ -62,14 +64,14 @@ const CustomerOrdersPage = () => {
                   <h5>{product.name}</h5>
                 </div>
                 <div className="col-2 d-flex align-items-center">
-                  <h5 className="float-right">{product.price} THB</h5>
+                  <h5 className="float-right">{formatPrice(product.price)} THB</h5>
                 </div>
               </div>
             );
           })}
           <div className="d-flex flex-fill justify-content-end">
             <h5>
-              <b>Total:</b> {calPrice(order.products)} THB
+              <b>Total:</b> {formatPrice(calPrice(order.products))} THB
             </h5>
           </div>
           <a href={"/customer/order/" + order._id}>
@@ -82,8 +84,12 @@ const CustomerOrdersPage = () => {
 
   return (
     <>
-      <h4>Orders</h4>
+    {!loading && (
+      <>
+      <h1>Orders</h1>
       {renderOrderCards}
+      </>
+    )}
     </>
   );
 };

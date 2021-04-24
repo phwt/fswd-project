@@ -25,6 +25,8 @@ const Header = () => {
               <span className="mx-2">|</span>
               <Link href="/customer">Profile</Link>
               <span className="mx-2">|</span>
+              <Link href="/customer/orders">Orders</Link>
+              <span className="mx-2">|</span>
               <a href="#" onClick={handleLogout}>
                 Logout
               </a>

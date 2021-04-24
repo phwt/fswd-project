@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import { formatPrice } from "@modules/Utils";
 import { useRouter } from "next/router";
 
 const CustomerOrderPage = () => {
@@ -12,6 +13,7 @@ const CustomerOrderPage = () => {
           status
           timestamp
           products {
+            _id
             name
             detail
             price
@@ -65,7 +67,7 @@ const CustomerOrderPage = () => {
           <hr></hr>
           {data.orderById.products.map((product) => {
             return (
-              <div className="row my-4">
+              <div className="row my-4" key={product._id.toString()}>
                 <div className="col-3 d-flex align-items-center justify-content-center">
                   <svg width="100" height="100">
                     <rect x="0" y="0" width="100" height="100" />
@@ -76,7 +78,7 @@ const CustomerOrderPage = () => {
                   <h5>Stock: {product.stock}</h5>
                 </div>
                 <div className="col-2 d-flex align-items-center">
-                  <h5 className="float-right">{product.price} THB</h5>
+                  <h5 className="float-right">{formatPrice(product.price)} THB</h5>
                 </div>
               </div>
             );
@@ -84,7 +86,7 @@ const CustomerOrderPage = () => {
           <hr></hr>
           <div className="d-flex flex-fill justify-content-end mx-5 mt-3">
             <h5>
-              <b>Total:</b> {calPrice(data.orderById.products)} THB
+              <b>Total:</b> {formatPrice(calPrice(data.orderById.products))} THB
             </h5>
           </div>
         </div>
