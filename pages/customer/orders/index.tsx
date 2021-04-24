@@ -88,7 +88,7 @@ const CustomerOrdersPage = () => {
 
   return (
     <>
-      <h4>Orders</h4>
+      <h1>Orders</h1>
       {renderOrderCards}
     </>
   );
