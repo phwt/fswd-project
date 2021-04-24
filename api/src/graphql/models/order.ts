@@ -13,6 +13,7 @@ const OrderSchema = new Schema({
   timestamp: { type: Date, default: new Date() },
   customerId: { type: String, required: true, ref: "Customer" },
   productIds: [{ type: String, required: true, ref: "Product" }],
+  promotionIds: [{ type: String, required: true, ref: "Promotion" }],
 });
 
 export const OrderModel = mongoose.model("Order", OrderSchema);
