@@ -6,13 +6,14 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
-import { useEffect, useMemo, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import { formatPrice, productTotal } from "@modules/Utils";
 import { Product } from "@type/SchemaModel";
-import Link from "next/link";
-import { getCartItems } from "@modules/Cart";
+import { clearCart, getCartItems } from "@modules/Cart";
+import { useSession } from "@modules/SessionContext";
+import { useRouter } from "next/router";
 
 const VisaForm = () => {
   return (
@@ -53,8 +54,10 @@ const OrganForm = () => {
 };
 
 const PaymentPage = () => {
+  const router = useRouter();
   const [payment, setPayment] = useState();
   const [products, setProducts] = useState<Product[]>([]);
+  const { sessionLoading, user } = useSession();
 
   const { loading, error, data } = useQuery(
     gql`
@@ -78,6 +81,31 @@ const PaymentPage = () => {
   useEffect(() => {
     if (!loading && data) setProducts(data.productByIds);
   }, [loading]);
+
+  const [createOrder, { data: orderData }] = useMutation(gql`
+    mutation payment($userId: String!, $productIds: [String!]!) {
+      createOrder(
+        record: { status: PAID, customerId: $userId, productIds: $productIds }
+      ) {
+        recordId
+      }
+    }
+  `);
+
+  const handlePayment = useCallback(async () => {
+    const {
+      data: {
+        createOrder: { recordId },
+      },
+    } = await createOrder({
+      variables: {
+        userId: user._id,
+        productIds: getCartItems(),
+      },
+    });
+    clearCart();
+    await router.push(`/customer/order/${recordId}`);
+  }, [user?._id]);
 
   if (loading) {
     return <p>Loading</p>;
@@ -157,11 +185,9 @@ const PaymentPage = () => {
           </Col>
 
           <Col md={12} className="my-5 pb-5">
-            <Link href="/customer/orders">
-              <Button block variant="success">
-                <i className="fa fa-shopping-cart mr-1" /> Pay and Place Order
-              </Button>
-            </Link>
+            <Button block variant="success" onClick={handlePayment}>
+              <i className="fa fa-shopping-cart mr-1" /> Pay and Place Order
+            </Button>
           </Col>
         </Row>
       </Col>

@@ -40,3 +40,16 @@ export const removeCartItem = (
   }
   return [];
 };
+
+export const clearCart = (type: "BOTH" | "PRODUCT" | "PROMOTION" = "BOTH") => {
+  if (process.browser) {
+    if (type === "BOTH") {
+      localStorage.setItem("cartProduct", "[]");
+      localStorage.setItem("cartPromotion", "[]");
+    } else {
+      const key = storageKey(type);
+      localStorage.setItem(key, "[]");
+    }
+  }
+  return [];
+};
