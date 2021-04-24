@@ -1,6 +1,7 @@
 import { Button, Row, Col, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { formatPrice } from "@modules/Utils";
 
 const ProductDetail = ({ name, price, detail, imgurl, id }) => {
   return (
@@ -12,7 +13,7 @@ const ProductDetail = ({ name, price, detail, imgurl, id }) => {
         <Col>
           <h3>{name}</h3>
           <p>{detail}</p>
-          <p>{price}</p>
+          <p>{formatPrice(price)} THB</p>
 
           <Button variant="light">
             <FontAwesomeIcon icon={faShoppingCart} />

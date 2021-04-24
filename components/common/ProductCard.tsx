@@ -1,5 +1,6 @@
 import { Card, Button } from "react-bootstrap";
 import Link from "next/link";
+import { formatPrice } from "@modules/Utils";
 
 const ProductCard = ({ size, name, price, detail, imgurl, id, type }) => {
   return (
@@ -30,7 +31,7 @@ const ProductCard = ({ size, name, price, detail, imgurl, id, type }) => {
           <Card.Body className="p-0">
             <p className="m-0 upper">{name}</p>
             <p className="m-0">{detail}</p>
-            <p>{price} THB</p>
+            <p>{formatPrice(price)} THB</p>
           </Card.Body>
         </a>
       </Link>
