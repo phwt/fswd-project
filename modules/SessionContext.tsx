@@ -13,8 +13,15 @@ import { LOGIN_MUTATION } from "../graphql/loginMutation";
 
 const SessionContext = createContext(null);
 
+interface SessionUser {
+  _id: string;
+  username: string;
+  email: string;
+  role: "Customer" | "Admin";
+}
+
 export const SessionProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<SessionUser>(null);
   const [, setCookie, removeCookie] = useCookies(["token"]);
   const [loadMe, { loading, data }] = useLazyQuery(ME_QUERY, {
     fetchPolicy: "network-only",
