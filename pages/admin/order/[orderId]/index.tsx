@@ -1,11 +1,11 @@
-import { Button, Card, Col, Row, Table } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import { Order } from "@type/SchemaModel";
 import { apolloClient } from "app-apollo-client";
 import { gql } from "@apollo/client/core";
-import { discountPrice, formatPrice } from "@modules/Utils";
-import { useMemo } from "react";
+import ProductTable from "@components/admin/order/ProductTable";
+import OrderCard from "@components/admin/order/OrderCard";
 
-const OrderCardRow = ({ title, value }) => (
+export const OrderCardRow = ({ title, value }) => (
   <>
     <Col md={4}>
       <b>{title}</b>
@@ -15,122 +15,6 @@ const OrderCardRow = ({ title, value }) => (
     </Col>
   </>
 );
-
-const OrderCardButton = ({ label, variant }) => {
-  return (
-    <Col md={4} className="px-1">
-      <Button block variant={variant}>
-        {label}
-      </Button>
-    </Col>
-  );
-};
-
-const OrderCard = ({ order }: { order: Order }) => {
-  return (
-    <Card>
-      <Card.Header>Total</Card.Header>
-      <Card.Body>
-        <Row>
-          <OrderCardRow
-            title="Order Date"
-            value={new Date(order.timestamp).toDateString()}
-          />
-          <OrderCardRow title="Status" value={order.status} />
-          <Col md={12}>
-            <hr />
-          </Col>
-          <Col md={12} className="text-center">
-            <h5>Change Order Status</h5>
-          </Col>
-          <OrderCardButton label="Paid" variant="danger" />
-          <OrderCardButton label="Delivered" variant="warning" />
-          <OrderCardButton label="Completed" variant="success" />
-        </Row>
-      </Card.Body>
-    </Card>
-  );
-};
-
-const ProductTable = ({ products, promotions }) => {
-  const totalItems = useMemo(() => {
-    return products.length + promotions.length;
-  }, [products, promotions]);
-
-  const totalWeight = useMemo(() => {
-    return (
-      products
-        .map((product) => product.weight)
-        .reduce((acc, cur) => acc + cur) +
-      promotions
-        .map((product) => product.weight)
-        .reduce((acc, cur) => acc + cur)
-    );
-  }, [products, promotions]);
-
-  const totalPrice = useMemo(() => {
-    return (
-      products.map((product) => product.price).reduce((acc, cur) => acc + cur) +
-      promotions
-        .map((product) =>
-          discountPrice(product.price, product.discountPercentage)
-        )
-        .reduce((acc, cur) => acc + cur)
-    );
-  }, [products, promotions]);
-
-  return (
-    <Table>
-      <thead>
-        <th>#</th>
-        <th>SKU</th>
-        <th>Product Name</th>
-        <th>Weight</th>
-        <th>Discount</th>
-        <th>Price</th>
-      </thead>
-      <tbody>
-        {products.map((product, index) => (
-          <tr>
-            <td>{index + 1}</td>
-            <td>{product.sku}</td>
-            <td>{product.name}</td>
-            <td>{formatPrice(product.weight)} g</td>
-            <td>-</td>
-            <td>{formatPrice(product.price)} THB</td>
-          </tr>
-        ))}
-        {promotions.map((promotion, index) => (
-          <tr>
-            <td>{index + 1 + products.length}</td>
-            <td>{promotion.sku}</td>
-            <td>{promotion.name}</td>
-            <td>{formatPrice(promotion.weight)} g</td>
-            <td>{promotion.discountPercentage}%</td>
-            <td>
-              {formatPrice(
-                discountPrice(promotion.price, promotion.discountPercentage)
-              )}{" "}
-              THB
-            </td>
-          </tr>
-        ))}
-        <tr>
-          <td />
-          <td>
-            <b>Total</b>
-          </td>
-          <td>{totalItems} items</td>
-          <td>{totalWeight} g</td>
-          <td>
-            <b>Subtotal</b>
-          </td>
-          <td>{totalPrice} THB</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
-};
 
 export const getServerSideProps = async ({ params: { orderId } }) => {
   const {
