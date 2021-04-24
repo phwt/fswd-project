@@ -105,9 +105,18 @@ const PaymentPage = () => {
   }, [promotionsLoading]);
 
   const [createOrder, { data: orderData }] = useMutation(gql`
-    mutation payment($userId: String!, $productIds: [String!]!) {
+    mutation payment(
+      $userId: String!
+      $productIds: [String!]!
+      $promotionIds: [String!]!
+    ) {
       createOrder(
-        record: { status: PAID, customerId: $userId, productIds: $productIds }
+        record: {
+          status: PAID
+          customerId: $userId
+          productIds: $productIds
+          promotionIds: $promotionIds
+        }
       ) {
         recordId
       }
@@ -123,6 +132,7 @@ const PaymentPage = () => {
       variables: {
         userId: user._id,
         productIds: getCartItems(),
+        promotionIds: getCartItems("PROMOTION"),
       },
     });
     clearCart();
