@@ -55,9 +55,9 @@ const OrganForm = () => {
 
 const PaymentPage = () => {
   const router = useRouter();
-  const [payment, setPayment] = useState();
+  const [payment, setPayment] = useState("Visa / Mastercard");
   const [products, setProducts] = useState<Product[]>([]);
-  const { sessionLoading, user } = useSession();
+  const { user } = useSession();
 
   const { loading, error, data } = useQuery(
     gql`
