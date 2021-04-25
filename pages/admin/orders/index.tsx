@@ -25,14 +25,14 @@ const AdminOrdersPage = () => {
 
   const renderTableOrder = data.orders.map((order) => {
     return (
-      <tr>
+      <tr key={order._id.toString()}>
         <th scope="row">{order._id}</th>
         <td>{order.status}</td>
         <td>{order.timestamp}</td>
         <td>{order.customerId}</td>
         <td>
           <Button variant="outline-dark">
-            <Nav.Link href={"/admin/orders/" + order._id}>View</Nav.Link>
+            <Nav.Link href={"/customer/order/" + order._id}>View</Nav.Link>
           </Button>
         </td>
       </tr>

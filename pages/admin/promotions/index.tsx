@@ -1,5 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import { Nav, Button } from "react-bootstrap";
+import { formatPrice } from "@modules/Utils";
 
 const AdminPromotionsPage = () => {
   const { loading, error, data } = useQuery(
@@ -12,6 +13,7 @@ const AdminPromotionsPage = () => {
           price
           stock
           discountPercentage
+          sku
         }
       }
     `
@@ -27,16 +29,16 @@ const AdminPromotionsPage = () => {
 
   const renderTablePromotions = data.promotions.map((promotion) => {
     return (
-      <tr>
+      <tr key={promotion.name.toString()}>
         <th scope="row">{promotion._id}</th>
         <td>{promotion.name}</td>
         <td>{promotion.detail}</td>
-        <td>{promotion.price}</td>
+        <td>{formatPrice(promotion.price)}</td>
         <td>{promotion.stock}</td>
         <td>{promotion.discountPercentage}</td>
         <td>
           <Button variant="outline-dark">
-            <Nav.Link href={"/admin/promotions/" + promotion._id}>
+            <Nav.Link href={"/product/"+promotion.sku+"?type=promotion"}>
               View
             </Nav.Link>
           </Button>

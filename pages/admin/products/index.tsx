@@ -1,5 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import { Nav,Button } from "react-bootstrap";
+import { formatPrice } from "@modules/Utils";
 
 const AdminProductsPage = () => {
   const { loading, error, data } = useQuery(
@@ -11,6 +12,7 @@ const AdminProductsPage = () => {
           detail
           price
           stock
+          sku
         }
       }
     `
@@ -26,19 +28,19 @@ const AdminProductsPage = () => {
 
   const renderTableProducts = data.products.map((products) => {
     return (
-      <tr>
+      <tr key={products.name.toString()}>
         <th scope="row">{products._id}</th>
         <td>{products.name}</td>
         <td>{products.detail}</td>
-        <td>{products.price}</td>
+        <td>{formatPrice(products.price)}</td>
         <td>{products.stock}</td>
-        <td><Button variant="outline-dark"><Nav.Link href={"/admin/products/"+products._id}>View</Nav.Link></Button></td>
+        <td><Button variant="outline-dark"><Nav.Link href={"/product/"+products.sku}>View</Nav.Link></Button></td>
       </tr>
     );
   });
 
   return (
-    <div className="content-admin">
+    <div>
       <h2>Products</h2>
       <table className="table">
         <thead>
