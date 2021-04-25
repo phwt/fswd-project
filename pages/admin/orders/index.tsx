@@ -32,7 +32,7 @@ const AdminOrdersPage = () => {
         <td>{order.customerId}</td>
         <td>
           <Button variant="outline-dark">
-            <Nav.Link href={"/customer/order/" + order._id}>View</Nav.Link>
+            <Nav.Link href={"/admin/order/" + order._id}>View</Nav.Link>
           </Button>
         </td>
       </tr>
