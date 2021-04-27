@@ -8,25 +8,39 @@ const ProductTable = ({ products, promotions }) => {
   }, [products, promotions]);
 
   const totalWeight = useMemo(() => {
-    return (
-      products
+    let productWeight = 0,
+      promotionWeight = 0;
+
+    if (products.length)
+      productWeight = products
         .map((product) => product.weight)
-        .reduce((acc, cur) => acc + cur) +
-      promotions
+        .reduce((acc, cur) => acc + cur);
+
+    if (promotions.length)
+      promotionWeight = promotions
         .map((product) => product.weight)
-        .reduce((acc, cur) => acc + cur)
-    );
+        .reduce((acc, cur) => acc + cur);
+
+    return productWeight + promotionWeight;
   }, [products, promotions]);
 
   const totalPrice = useMemo(() => {
-    return (
-      products.map((product) => product.price).reduce((acc, cur) => acc + cur) +
-      promotions
+    let productPrice = 0,
+      promotionPrice = 0;
+
+    if (products.length)
+      productPrice = products
+        .map((product) => product.price)
+        .reduce((acc, cur) => acc + cur);
+
+    if (promotions.length)
+      promotionPrice = promotions
         .map((product) =>
           discountPrice(product.price, product.discountPercentage)
         )
-        .reduce((acc, cur) => acc + cur)
-    );
+        .reduce((acc, cur) => acc + cur);
+
+    return productPrice + promotionPrice;
   }, [products, promotions]);
 
   return (
