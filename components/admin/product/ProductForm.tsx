@@ -137,7 +137,6 @@ const ProductForm = ({
             <Form.Label>Product Image</Form.Label>
             <Form.File
               label="Choose file"
-              custom
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setLocalProduct({
                   ...localProduct,
