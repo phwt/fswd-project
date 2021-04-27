@@ -12,16 +12,26 @@ interface Props {
 const ProductCreateForm = ({ promotionForm = false }: Props) => {
   const router = useRouter();
 
-  const initialProduct = {
-    _id: "",
-    detail: "",
-    name: "",
-    price: 0,
-    sku: "",
-    stock: 0,
-    weight: 0,
-    discountPercentage: 0,
-  };
+  const initialProduct = promotionForm
+    ? {
+        _id: "",
+        detail: "",
+        name: "",
+        price: 0,
+        sku: "",
+        stock: 0,
+        weight: 0,
+        discountPercentage: 0,
+      }
+    : {
+        _id: "",
+        detail: "",
+        name: "",
+        price: 0,
+        sku: "",
+        stock: 0,
+        weight: 0,
+      };
 
   const [addProduct] = useMutation(
     gql`
