@@ -18,7 +18,7 @@ const ProductCard = ({ product, size }: Props) => {
         <a>
           <Card.Img
             variant="top"
-            src={product.imageLocation ?? "promotion.jpg"}
+            src={product.imageLocation ?? "no-image.jpg"}
             className="border-0"
           />
 

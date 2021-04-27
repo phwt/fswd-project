@@ -80,8 +80,7 @@ const ProductPage = () => {
             detail={dataPromotion.promotionFindOne.detail}
             id={dataPromotion.promotionFindOne.id}
             imgurl={
-              dataPromotion.promotionFindOne.imageLocation ??
-              "../product-xl.jpg"
+              dataPromotion.promotionFindOne.imageLocation ?? "../no-image.jpg"
             }
           />
         </>
@@ -94,7 +93,7 @@ const ProductPage = () => {
             detail={dataProduct.productFindOne.detail}
             id={dataProduct.productFindOne._id}
             imgurl={
-              dataProduct.productFindOne.imageLocation ?? "../product-xl.jpg"
+              dataProduct.productFindOne.imageLocation ?? "../no-image.jpg"
             }
           />
         </>
