@@ -22,7 +22,7 @@ const CartItem = ({
         <Col className="text-center">
           <img
             className="img-fluid"
-            src="https://via.placeholder.com/200x300"
+            src={product.imageLocation ?? "no-image.jpg"}
             style={{
               height: 150,
             }}
