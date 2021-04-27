@@ -16,6 +16,7 @@ const ProductsPage = () => {
             detail
             price
             type
+            imageLocation
           }
           count
         }

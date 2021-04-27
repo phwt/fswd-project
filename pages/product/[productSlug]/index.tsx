@@ -23,6 +23,7 @@ const ProductPage = () => {
           detail
           price
           _id
+          imageLocation
         }
       }
     `,
@@ -44,6 +45,7 @@ const ProductPage = () => {
           detail
           price
           _id
+          imageLocation
         }
       }
     `,
@@ -77,7 +79,10 @@ const ProductPage = () => {
             price={dataPromotion.promotionFindOne.price}
             detail={dataPromotion.promotionFindOne.detail}
             id={dataPromotion.promotionFindOne.id}
-            imgurl="../product-xl.jpg"
+            imgurl={
+              dataPromotion.promotionFindOne.imageLocation ??
+              "../product-xl.jpg"
+            }
           />
         </>
       )}
@@ -88,7 +93,9 @@ const ProductPage = () => {
             price={dataProduct.productFindOne.price}
             detail={dataProduct.productFindOne.detail}
             id={dataProduct.productFindOne._id}
-            imgurl="../product-xl.jpg"
+            imgurl={
+              dataProduct.productFindOne.imageLocation ?? "../product-xl.jpg"
+            }
           />
         </>
       )}

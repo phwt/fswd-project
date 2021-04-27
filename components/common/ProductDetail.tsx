@@ -12,7 +12,7 @@ const ProductDetail = ({ name, price, detail, imgurl, id }) => {
     <>
       <Row>
         <Col>
-          <Image src={imgurl} />
+          <Image src={imgurl} fluid />
         </Col>
         <Col>
           <h3>{name}</h3>

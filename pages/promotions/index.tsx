@@ -14,6 +14,7 @@ const PromotionsPage = () => {
         detail
         price
         type
+        imageLocation
       }
     }
   `;

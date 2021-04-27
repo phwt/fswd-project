@@ -15,6 +15,7 @@ const Home = () => {
         detail
         price
         type
+        imageLocation
       }
       promotions(limit: 4, sort: _ID_DESC) {
         _id
@@ -23,6 +24,7 @@ const Home = () => {
         detail
         price
         type
+        imageLocation
       }
     }
   `;
@@ -41,7 +43,9 @@ const Home = () => {
           </Row>
           <CardDeck>
             {data.products.slice(1).map((d) => {
-              return <ProductCard key={d.name.toString()} size="18" product={d} />;
+              return (
+                <ProductCard key={d.name.toString()} size="18" product={d} />
+              );
             })}
           </CardDeck>
 
@@ -51,7 +55,9 @@ const Home = () => {
           </h3>
           <CardDeck>
             {data.promotions.slice(1).map((d: Product) => {
-              return <ProductCard key={d.name.toString()} size="18" product={d} />;
+              return (
+                <ProductCard key={d.name.toString()} size="18" product={d} />
+              );
             })}
           </CardDeck>
         </>
