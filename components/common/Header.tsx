@@ -1,11 +1,18 @@
-import { useSession } from "../../modules/SessionContext";
+import { useSession } from "@modules/SessionContext";
 import Link from "next/link";
 import { Col, Row, Nav, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 const Header = () => {
   const { loading, user, logout: handleLogout } = useSession();
+  const router = useRouter();
+
+  const topPath = useMemo(() => {
+    return router.pathname.split("/")[1];
+  }, [router.pathname]);
 
   return (
     <div className="p-3 bg-0 sticky">
@@ -54,31 +61,41 @@ const Header = () => {
         <Col></Col>
       </Row>
 
-      <Nav className="justify-content-center" activeKey="/home">
+      <Nav className="justify-content-center" activeKey={topPath}>
         <Nav.Item>
-          <Nav.Link href="/products" className="raleway-3s">
-            ALL PRODUCTS
-          </Nav.Link>
+          <Link href="/products" passHref>
+            <Nav.Link className="raleway-3s" eventKey="products">
+              ALL PRODUCTS
+            </Nav.Link>
+          </Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/promotions" className="raleway-3s">
-            ALL PROMOTIONS
-          </Nav.Link>
+          <Link href="/promotions" passHref>
+            <Nav.Link className="raleway-3s" eventKey="promotions">
+              ALL PROMOTIONS
+            </Nav.Link>
+          </Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s" disabled>
-            MEN
-          </Nav.Link>
+          <Link href="/" passHref>
+            <Nav.Link className="raleway-3s" disabled>
+              MEN
+            </Nav.Link>
+          </Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s" disabled>
-            WOMEN
-          </Nav.Link>
+          <Link href="/" passHref>
+            <Nav.Link className="raleway-3s" disabled>
+              WOMEN
+            </Nav.Link>
+          </Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/" className="raleway-3s" disabled>
-            ACCESSORIES
-          </Nav.Link>
+          <Link href="/" passHref>
+            <Nav.Link className="raleway-3s" disabled>
+              ACCESSORIES
+            </Nav.Link>
+          </Link>
         </Nav.Item>
       </Nav>
     </div>
