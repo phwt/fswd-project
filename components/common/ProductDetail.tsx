@@ -1,11 +1,11 @@
-import { Button, Row, Col, Image } from "react-bootstrap";
+import { Button, Row, Col, Image, Badge } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { formatPrice } from "@modules/Utils";
 import { addCartItem } from "@modules/Cart";
 import { useRouter } from "next/router";
 
-const ProductDetail = ({ name, price, detail, imgurl, id }) => {
+const ProductDetail = ({ name, price, detail, imgurl, id, discount, type }) => {
   const router = useRouter();
 
   return (
@@ -17,8 +17,21 @@ const ProductDetail = ({ name, price, detail, imgurl, id }) => {
         <Col>
           <h3>{name}</h3>
           <p>{detail}</p>
-          <p>{formatPrice(price)} THB</p>
-
+          {type === "Product" && <p>{formatPrice(price)} THB</p>}
+          {type === "Promotion" && (
+            <>
+              <del>
+                <p className="m-0">{formatPrice(price)} THB</p>
+              </del>
+              <h5>
+                <Badge variant="danger">
+                  {formatPrice(price - (price * discount) / 100)}
+                  THB
+                </Badge>
+              </h5>
+            </>
+          )}
+          <br />
           <Button
             variant="light"
             onClick={() => {

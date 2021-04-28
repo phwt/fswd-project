@@ -25,6 +25,7 @@ const Home = () => {
         price
         type
         imageLocation
+        discountPercentage
       }
     }
   `;

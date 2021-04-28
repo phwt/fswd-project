@@ -15,6 +15,7 @@ const PromotionsPage = () => {
         price
         type
         imageLocation
+        discountPercentage
       }
     }
   `;

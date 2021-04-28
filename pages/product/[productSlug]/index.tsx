@@ -46,6 +46,7 @@ const ProductPage = () => {
           price
           _id
           imageLocation
+          discountPercentage
         }
       }
     `,
@@ -82,6 +83,8 @@ const ProductPage = () => {
             imgurl={
               dataPromotion.promotionFindOne.imageLocation ?? "../no-image.jpg"
             }
+            discount={dataPromotion.promotionFindOne.discountPercentage}
+            type="Promotion"
           />
         </>
       )}
@@ -95,6 +98,8 @@ const ProductPage = () => {
             imgurl={
               dataProduct.productFindOne.imageLocation ?? "../no-image.jpg"
             }
+            discount="0"
+            type="Product"
           />
         </>
       )}
