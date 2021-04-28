@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap");
 // @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap");
 // @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/regular";
@@ -68,4 +68,8 @@ body {
   &.active {
     font-weight: 600;
   }
+}
+.page-item.active .page-link {
+  background-color: white;
+  border-color: white;
 }

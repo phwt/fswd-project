@@ -70,6 +70,7 @@ const ProductsPage = () => {
           </CardDeck>
         </>
       )}
+      <br/>
       <Pagination style={{ justifyContent: "center" }}>{items}</Pagination>
     </>
   );
