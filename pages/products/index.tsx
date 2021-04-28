@@ -41,19 +41,7 @@ const ProductsPage = () => {
   //   }
   // `;
   let items = [];
-  if (loading) {
-    for (let number = 1; number <= 10; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          active={number === currentPage}
-          onClick={() => setCurrentPage(number)}
-        >
-          {number}
-        </Pagination.Item>
-      );
-    }
-  } else {
+  if (!loading) {
     for (let number = 1; number <= data.productPagination.count / 4; number++) {
       items.push(
         <Pagination.Item
