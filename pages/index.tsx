@@ -49,11 +49,19 @@ const Home = () => {
               );
             })}
           </CardDeck>
-
-          <h3>
-            <FontAwesomeIcon icon={faPercentage} />
-            <b> PROMOTION</b>
-          </h3>
+          <Col
+            className="bg-danger mx-1 p-3 mb-5"
+            style={{ justifyContent: "center" }}
+          >
+            <p className="raleway-3">ONLINE ONLY</p>
+            <br />
+            <h1 className="raleway-6 text-white ">
+              {/* <FontAwesomeIcon icon={faPercentage} /> */}
+              SPRING PROMOTION
+              <br />
+              UP TO 20% OFF
+            </h1>
+          </Col>
           <CardDeck>
             {data.promotions.slice(1).map((d: Product) => {
               return (

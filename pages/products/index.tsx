@@ -71,9 +71,7 @@ const ProductsPage = () => {
     <>
       {!loading && (
         <>
-          <h3>
-            <b> ALL PRODUCTS</b>
-          </h3>
+          <h3 className="raleway-3">ALL PRODUCTS</h3>
           <br />
           <CardDeck>
             {data.productPagination.items.map((d) => {

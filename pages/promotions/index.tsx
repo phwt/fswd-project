@@ -24,9 +24,9 @@ const PromotionsPage = () => {
     <>
       {!loading && (
         <>
-          <h3>
-            <FontAwesomeIcon icon={faPercentage} />
-            <b> ALL PROMOTION</b>
+          <h3 className="raleway-3">
+            {/* <FontAwesomeIcon icon={faPercentage} /> */}
+            ALL PROMOTION
           </h3>
           <br />
           <CardColumns>
