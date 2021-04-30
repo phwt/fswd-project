@@ -21,7 +21,9 @@ const Header = () => {
         <Col></Col>
         <Col></Col>
         <Col>
-          <h3 className="text-center raleway-6">FSWD</h3>
+          <a href="/" style={{ textDecoration: "none" }}>
+            <h2 className="text-center raleway-6">FSWD</h2>
+          </a>
         </Col>
         <Col></Col>
         <Col className="text-right">

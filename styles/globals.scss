@@ -1,6 +1,9 @@
 @import "~@forevolve/bootstrap-dark/scss/bootstrap-dark";
 @import "~bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/regular";
@@ -42,7 +45,6 @@
 .raleway-3 {
   font-family: "Raleway", sans-serif;
   font-weight: 300;
-  font-size: 0.9em;
 }
 .raleway-3s {
   font-family: "Raleway", sans-serif;
@@ -50,7 +52,7 @@
   font-size: 0.9em;
 }
 body {
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 .border-0 {
   border-radius: 0;
@@ -66,4 +68,8 @@ body {
   &.active {
     font-weight: 600;
   }
+}
+.page-item.active .page-link {
+  background-color: white;
+  border-color: white;
 }

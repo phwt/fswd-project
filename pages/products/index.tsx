@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { CardDeck, Pagination } from "react-bootstrap";
+import { CardDeck, Pagination, Row, Col } from "react-bootstrap";
 import ProductCard from "../../components/common/ProductCard";
 import { useState, useEffect } from "react";
 
@@ -8,7 +8,7 @@ const ProductsPage = () => {
   const { loading, error, data } = useQuery(
     gql`
       query productPagination($currentPage: Int) {
-        productPagination(page: $currentPage, perPage: 5) {
+        productPagination(page: $currentPage, perPage: 5, sort: _ID_DESC) {
           items {
             _id
             sku
@@ -41,19 +41,7 @@ const ProductsPage = () => {
   //   }
   // `;
   let items = [];
-  if (loading) {
-    for (let number = 1; number <= 10; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          active={number === currentPage}
-          onClick={() => setCurrentPage(number)}
-        >
-          {number}
-        </Pagination.Item>
-      );
-    }
-  } else {
+  if (!loading) {
     for (let number = 1; number <= data.productPagination.count / 4; number++) {
       items.push(
         <Pagination.Item
@@ -71,9 +59,7 @@ const ProductsPage = () => {
     <>
       {!loading && (
         <>
-          <h3>
-            <b> ALL PRODUCTS</b>
-          </h3>
+          <h3 className="raleway-3">ALL PRODUCTS</h3>
           <br />
           <CardDeck>
             {data.productPagination.items.map((d) => {
@@ -84,7 +70,8 @@ const ProductsPage = () => {
           </CardDeck>
         </>
       )}
-      <Pagination>{items}</Pagination>
+      <br/>
+      <Pagination style={{ justifyContent: "center" }}>{items}</Pagination>
     </>
   );
 };

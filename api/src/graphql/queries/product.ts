@@ -10,3 +10,5 @@ export const promotions = PromotionTC.getResolver("findMany");
 export const promotionById = PromotionTC.getResolver("findById");
 export const promotionByIds = PromotionTC.getResolver("findByIds");
 export const promotionFindOne = PromotionTC.getResolver("findOne");
+export const promotionPagination = PromotionTC.getResolver("pagination");
+

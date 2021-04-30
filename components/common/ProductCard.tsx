@@ -1,4 +1,4 @@
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Badge } from "react-bootstrap";
 import Link from "next/link";
 import { formatPrice } from "@modules/Utils";
 import { Product } from "@type/SchemaModel";
@@ -25,7 +25,25 @@ const ProductCard = ({ product, size }: Props) => {
           <Card.Body className="p-0">
             <p className="m-0 upper">{product.name}</p>
             <p className="m-0">{product.detail}</p>
-            <p>{formatPrice(product.price)} THB</p>
+            {product.type === "Product" && (
+              <p>{formatPrice(product.price)} THB</p>
+            )}
+            {product.type === "Promotion" && (
+              <>
+                <del>
+                  <p className="m-0">{formatPrice(product.price)} THB</p>
+                </del>
+                <h5>
+                  <Badge variant="danger">
+                    {formatPrice(
+                      product.price -
+                        (product.price * product.discountPercentage) / 100
+                    )}
+                    THB
+                  </Badge>
+                </h5>
+              </>
+            )}
           </Card.Body>
         </a>
       </Link>
