@@ -1,10 +1,10 @@
 import { Card, Button, Badge } from "react-bootstrap";
 import Link from "next/link";
 import { formatPrice } from "@modules/Utils";
-import { Product } from "@type/SchemaModel";
+import { Product, Promotion } from "@type/SchemaModel";
 
 interface Props {
-  product: Product;
+  product: Product | Promotion;
   size: string;
 }
 const ProductCard = ({ product, size }: Props) => {
