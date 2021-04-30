@@ -8,7 +8,9 @@
     "dev:frontend": "next dev",
     "dev:api": "cd api/ && npm run dev",
     "build": "next build",
-    "start": "next start",
+    "start:frontend": "next start",
+    "start:api": "cd api && npm start",
+    "start": "npm-run-all --parallel start:frontend start:api",
     "format": "prettier --write './**/*.{js,ts,tsx,json,css,scss}' --config ./.prettierrc"
   },
   "dependencies": {
