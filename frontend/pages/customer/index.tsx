@@ -1,14 +1,16 @@
-import { gql, useQuery } from "@apollo/client";
-import { useCallback, useState } from "react";
+import { gql } from "@apollo/client";
 import { Customer } from "@type/SchemaModel";
 import CustomerInfoCard from "@components/customer/CustomerInfoCard";
 import PasswordCard from "@components/customer/PasswordCard";
+import { serverApollo } from "@modules/Apollo";
 
-const CustomerPage = () => {
-  const [customer, setCustomer] = useState<Customer>();
+export const getServerSideProps = async (context) => {
+  const apolloClient = serverApollo(context);
 
-  const { loading, error, data } = useQuery(
-    gql`
+  const {
+    data: { me },
+  } = await apolloClient.query({
+    query: gql`
       query {
         me {
           _id
@@ -19,22 +21,24 @@ const CustomerPage = () => {
           shippingAddress
         }
       }
-    `
-  );
+    `,
+  });
 
-  if (!loading && data && data.me && !customer) {
-    setCustomer(data.me);
-  }
+  return {
+    props: { customer: me },
+  };
+};
 
+interface Props {
+  customer: Customer;
+}
+
+const CustomerPage = ({ customer }: Props) => {
   return (
     <>
       <h1 className="mx-5 mb-4 mt-2">Profile</h1>
-      {customer && (
-        <>
-          <CustomerInfoCard customer={customer} />
-          <PasswordCard />
-        </>
-      )}
+      <CustomerInfoCard customer={customer} />
+      <PasswordCard />
     </>
   );
 };

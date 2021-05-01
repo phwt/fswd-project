@@ -1,12 +1,16 @@
-import { useQuery, gql } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { formatPrice } from "@modules/Utils";
-import { useRouter } from "next/router";
+import { serverApollo } from "@modules/Apollo";
+import { useCallback, useMemo } from "react";
+import { Order } from "@type/SchemaModel";
 
-const CustomerOrderPage = () => {
-  const { query } = useRouter();
+export const getServerSideProps = async (context) => {
+  const apolloClient = serverApollo(context);
 
-  const { loading, error, data } = useQuery(
-    gql`
+  const {
+    data: { orderById },
+  } = await apolloClient.query({
+    query: gql`
       query orderById($orderId: MongoID!) {
         orderById(_id: $orderId) {
           _id
@@ -19,29 +23,33 @@ const CustomerOrderPage = () => {
             price
             stock
             weight
+            imageLocation
           }
         }
       }
     `,
-    {
-      variables: {
-        orderId: query.orderId,
-      },
-    }
-  );
+    variables: {
+      orderId: context.params.orderId,
+    },
+  });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error || !data) {
-    return <div>Error...</div>;
-  }
-
-  const calPrice = (products) => {
-    return products.map((product) => product.price).reduce((a, b) => a + b, 0);
+  return {
+    props: { order: orderById },
   };
+};
 
-  const dateString = new Date(data.orderById.timestamp);
+interface Props {
+  order: Order;
+}
+
+const CustomerOrderPage = ({ order }: Props) => {
+  const calPrice = useCallback((products) => {
+    return products.map((product) => product.price).reduce((a, b) => a + b, 0);
+  }, []);
+
+  const dateString = useMemo(() => {
+    return new Date(order.timestamp);
+  }, [order.timestamp]);
 
   return (
     <>
@@ -50,11 +58,11 @@ const CustomerOrderPage = () => {
         <div className="card-body">
           <div className="mx-3 my-3">
             <h5>
-              <b>Order Id:</b> {data.orderById._id}
+              <b>Order Id:</b> {order._id}
             </h5>
 
             <h5>
-              <b>Status:</b> {data.orderById.status}
+              <b>Status:</b> {order.status}
             </h5>
 
             <h5>
@@ -64,8 +72,8 @@ const CustomerOrderPage = () => {
               <b>Time:</b> {dateString.toLocaleTimeString()}
             </h5>
           </div>
-          <hr></hr>
-          {data.orderById.products.map((product) => {
+          <hr />
+          {order.products.map((product) => {
             return (
               <div className="row my-4" key={product._id.toString()}>
                 <div className="col-3 d-flex align-items-center justify-content-center">
@@ -78,15 +86,17 @@ const CustomerOrderPage = () => {
                   <h5>Stock: {product.stock}</h5>
                 </div>
                 <div className="col-2 d-flex align-items-center">
-                  <h5 className="float-right">{formatPrice(product.price)} THB</h5>
+                  <h5 className="float-right">
+                    {formatPrice(product.price)} THB
+                  </h5>
                 </div>
               </div>
             );
           })}
-          <hr></hr>
+          <hr />
           <div className="d-flex flex-fill justify-content-end mx-5 mt-3">
             <h5>
-              <b>Total:</b> {formatPrice(calPrice(data.orderById.products))} THB
+              <b>Total:</b> {formatPrice(calPrice(order.products))} THB
             </h5>
           </div>
         </div>
