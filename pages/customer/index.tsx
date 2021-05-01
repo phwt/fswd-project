@@ -2,6 +2,7 @@ import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
 import { apolloClient } from "app-apollo-client";
 import { Customer } from "@type/SchemaModel";
+import { Button } from "react-bootstrap";
 
 const CustomerInfoCard = ({
   customer,
@@ -121,55 +122,39 @@ const CustomerInfoCard = ({
 const PasswordCard = () => {
   return (
     <div className="card m-5">
-      <h5 className="card-header">Password</h5>
+      <h5 className="card-header">Reset Password</h5>
       <div className="card-body">
         <form>
           <div className="row">
             <div className="col d-flex justify-content-center align-items-center">
-              <ul>
-                <li>uppercase and lowercase letters.</li>
-                <li>numbers.</li>
-                <li>special symbols, such as ./@#! %():</li>
-                <li>at least 12 characters long.</li>
-                <li>doesn't contain memorable keyboard paths.</li>
-                <li>doesn't have your personal information.</li>
-                <li>unique for each account you have.</li>
-              </ul>
+              <div>
+                <b>Password Guidelines</b>
+                <ul>
+                  <li>Use both uppercase and lowercase letters.</li>
+                  <li>Include at least one number</li>
+                  <li>Include special symbols, such as ./@#! %():</li>
+                  <li>At least 12 characters long.</li>
+                  <li>Doesn't contain memorable keyboard paths.</li>
+                  <li>Doesn't have your personal information.</li>
+                  <li>Unique for each account you have.</li>
+                </ul>
+              </div>
             </div>
 
-            <div className="col">
-              <div className="form-group">
-                <label>Old Password</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Your old password"
-                  required
-                ></input>
-              </div>
-              <div className="form-group">
-                <label>New Password</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Your new password"
-                  required
-                ></input>
-              </div>
-              <div className="form-group">
-                <label>Confirm New Password</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Confirm new password"
-                  required
-                ></input>
-              </div>
+            <div className="col d-flex justify-content-center align-items-center">
+              <Button
+                block
+                variant="light"
+                onClick={() => {
+                  alert(
+                    "Password reset instruction has been sent to your email"
+                  );
+                }}
+              >
+                Reset Password
+              </Button>
             </div>
           </div>
-          <button type="submit" className="btn btn-light my-3 float-right">
-            Save
-          </button>
         </form>
       </div>
     </div>
