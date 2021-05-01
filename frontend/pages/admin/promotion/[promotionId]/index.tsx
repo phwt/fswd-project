@@ -1,11 +1,15 @@
 import { gql } from "@apollo/client/core";
-import { apolloClient } from "app-apollo-client";
+import { serverApollo } from "@modules/Apollo";
 import ProductEditForm from "@components/admin/product/ProductEditForm";
 
-export const getServerSideProps = async ({ params: { promotionId } }) => {
+export const getServerSideProps = async (context) => {
+  const {
+    params: { promotionId },
+  } = context;
+
   const {
     data: { promotionById },
-  } = await apolloClient.query({
+  } = await serverApollo(context).query({
     query: gql`
       query product($promotionId: MongoID!) {
         promotionById(_id: $promotionId) {

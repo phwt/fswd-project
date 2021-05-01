@@ -17,8 +17,7 @@
     "paths": {
       "@modules/*": ["modules/*"],
       "@components/*": ["components/*"],
-      "@type/*": ["types/*"],
-      "app-apollo-client": ["pages/_app"]
+      "@type/*": ["types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

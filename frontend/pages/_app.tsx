@@ -1,11 +1,6 @@
 import "../styles/globals.scss";
 import { CookiesProvider } from "react-cookie";
-import {
-  ApolloClient,
-  ApolloProvider,
-  createHttpLink,
-  InMemoryCache,
-} from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import { SessionProvider } from "@modules/SessionContext";
 import CommonHeader from "@components/common/Header";
 import BackofficeHeader from "@components/admin/Header";
