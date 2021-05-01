@@ -67,11 +67,9 @@ const CustomerInfoCard = ({
                   <label>Email</label>
                   <input
                     type="email"
-                    className="form-control"
+                    className="form-control-plaintext text-secondary"
                     value={customer.email}
-                    name="email"
-                    onChange={handleChange}
-                    required
+                    readOnly
                   />
                 </div>
               </div>
