@@ -56,13 +56,13 @@ const Header = () => {
             ))}
           {!user && (
             <>
-              <a className="raleway-3s">
-                <Link href="/login">LOGIN</Link>
-              </a>
+              <Link href="/login">
+                <a className="raleway-3s">LOGIN</a>
+              </Link>
               <span className="mx-2">/</span>
-              <a className="raleway-3s">
-                <Link href="/register">REGISTER</Link>
-              </a>
+              <Link href="/register">
+                <a className="raleway-3s">REGISTER</a>
+              </Link>
             </>
           )}
           &nbsp;&nbsp;
