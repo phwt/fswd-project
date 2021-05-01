@@ -26,19 +26,12 @@ const CustomerPage = () => {
     setCustomer(data.me);
   }
 
-  const handleChange = useCallback(
-    (e) => {
-      setCustomer({ ...customer, [e.target.name]: e.target.value });
-    },
-    [customer]
-  );
-
   return (
     <>
       <h1 className="mx-5 mb-4 mt-2">Profile</h1>
       {customer && (
         <>
-          <CustomerInfoCard customer={customer} handleChange={handleChange} />
+          <CustomerInfoCard customer={customer} />
           <PasswordCard />
         </>
       )}
