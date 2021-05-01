@@ -21,9 +21,11 @@ const Header = () => {
         <Col></Col>
         <Col></Col>
         <Col>
-          <a href="/" style={{ textDecoration: "none" }}>
-            <h2 className="text-center raleway-6">FSWD</h2>
-          </a>
+          <Link href="/">
+            <a style={{ textDecoration: "none" }}>
+              <h2 className="text-center raleway-6">FSWD</h2>
+            </a>
+          </Link>
         </Col>
         <Col></Col>
         <Col className="text-right">

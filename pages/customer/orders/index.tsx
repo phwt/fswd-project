@@ -1,5 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import { formatPrice } from "@modules/Utils";
+import Link from "next/link";
 
 const CustomerOrdersPage = () => {
   const { loading, error, data } = useQuery(
@@ -76,9 +77,11 @@ const CustomerOrdersPage = () => {
               <b>Total:</b> {formatPrice(calPrice(order.products))} THB
             </h5>
           </div>
-          <a href={"/customer/order/" + order._id}>
-            <button className="btn btn-light my-3 float-right">Detail</button>
-          </a>
+          <Link href={"/customer/order/" + order._id}>
+            <a>
+              <button className="btn btn-light my-3 float-right">Detail</button>
+            </a>
+          </Link>
         </div>
       </div>
     );
