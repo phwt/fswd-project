@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
 
 export const apolloClient = new ApolloClient({
-  uri: "http://localhost:5001/graphql",
+  uri: process.env.NEXT_PUBLIC_REMOTE_API,
   cache: new InMemoryCache({
     addTypename: false,
   }),
