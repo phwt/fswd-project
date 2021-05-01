@@ -14,6 +14,7 @@ import { Product, Promotion } from "@type/SchemaModel";
 import { clearCart, getCartItems } from "@modules/Cart";
 import { useSession } from "@modules/SessionContext";
 import { useRouter } from "next/router";
+import PageTitle from "@components/common/PageTitle";
 
 const VisaForm = () => {
   return (
@@ -189,86 +190,84 @@ const PaymentPage = () => {
   }
 
   return (
-    <Row>
-      <Col md={12} className="text-center mt-4 mb-5">
-        <h2>
-          <i className="fa fa-money-check-alt" /> Payment
-        </h2>
-      </Col>
-      <Col md={6}>
-        <h4 className="d-inline">Payment Options</h4>
-        <hr />
-        <ToggleButtonGroup
-          name="radio"
-          type="radio"
-          className="w-100"
-          size="lg"
-          value={payment}
-          onChange={setPayment}
-        >
-          <ToggleButton value="Visa / Mastercard">
-            <i className="fab fa-cc-visa mr-2" />
-            <i className="fab fa-cc-mastercard" />
-          </ToggleButton>
-          <ToggleButton value="PayPal">
-            <i className="fab fa-paypal" />
-          </ToggleButton>
-          <ToggleButton value="Organ">
-            <i className="fa fa-lungs" />
-          </ToggleButton>
-        </ToggleButtonGroup>
+    <>
+      <PageTitle icon="money-check-alt" title="Payment" />
+      <Row>
+        <Col md={6}>
+          <h4 className="d-inline">Payment Options</h4>
+          <hr />
+          <ToggleButtonGroup
+            name="radio"
+            type="radio"
+            className="w-100"
+            size="lg"
+            value={payment}
+            onChange={setPayment}
+          >
+            <ToggleButton value="Visa / Mastercard">
+              <i className="fab fa-cc-visa mr-2" />
+              <i className="fab fa-cc-mastercard" />
+            </ToggleButton>
+            <ToggleButton value="PayPal">
+              <i className="fab fa-paypal" />
+            </ToggleButton>
+            <ToggleButton value="Organ">
+              <i className="fa fa-lungs" />
+            </ToggleButton>
+          </ToggleButtonGroup>
 
-        <div className="mt-2 text-center">
-          {payment ? (
-            <>
-              Pay with <b>{payment}</b>
-            </>
-          ) : (
-            "Please select payment options"
-          )}
-        </div>
+          <div className="mt-2 text-center">
+            {payment ? (
+              <>
+                Pay with <b>{payment}</b>
+              </>
+            ) : (
+              "Please select payment options"
+            )}
+          </div>
 
-        <Row>
-          {payment && (
-            <>
-              <Col md={12}>
-                <hr />
-              </Col>
+          <Row>
+            {payment && (
+              <>
+                <Col md={12}>
+                  <hr />
+                </Col>
 
-              {payment === "Visa / Mastercard" && <VisaForm />}
-              {payment === "PayPal" && (
-                <div className="text-center">
-                  Your balance will be magically deducted from the PayPal
-                  account corresponding to your email in the next step.
-                </div>
-              )}
-              {payment === "Organ" && <OrganForm />}
-            </>
-          )}
-        </Row>
-      </Col>
+                {payment === "Visa / Mastercard" && <VisaForm />}
+                {payment === "PayPal" && (
+                  <div className="text-center">
+                    Your balance will be magically deducted from the PayPal
+                    account corresponding to your email in the next step.
+                  </div>
+                )}
+                {payment === "Organ" && <OrganForm />}
+              </>
+            )}
+          </Row>
+        </Col>
 
-      <Col md={6}>
-        <h4 className="d-inline">Summary</h4>
-        <hr />
+        <Col md={6}>
+          <h4 className="d-inline">Summary</h4>
+          <hr />
 
-        <Row>
-          <Col>
-            <h5 className="d-inline mr-3">Total</h5>
-          </Col>
-          <Col className="text-right">
-            <h2 className="d-inline mr-1">{formatPrice(total)}</h2>
-            <small className="text-muted">THB</small>
-          </Col>
+          <Row>
+            <Col>
+              <h5 className="d-inline mr-3">Total</h5>
+            </Col>
+            <Col className="text-right">
+              <h2 className="d-inline mr-1">{formatPrice(total)}</h2>
+              <small className="text-muted">THB</small>
+            </Col>
 
-          <Col md={12} className="my-5 pb-5">
-            <Button block variant="success" onClick={handlePayment}>
-              <i className="fa fa-shopping-cart mr-1" /> Pay and Place Order
-            </Button>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+            <Col md={12} className="my-5 pb-5">
+              <Button block variant="success" onClick={handlePayment}>
+                <i className="fa fa-shopping-cart mr-1" /> Pay and Place Order
+              </Button>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </>
   );
 };
 

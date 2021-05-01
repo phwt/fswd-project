@@ -2,6 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { CardDeck, Pagination, Row, Col } from "react-bootstrap";
 import ProductCard from "../../components/common/ProductCard";
 import { useState, useEffect } from "react";
+import PageTitle from "@components/common/PageTitle";
 
 const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,8 +60,7 @@ const ProductsPage = () => {
     <>
       {!loading && (
         <>
-          <h3 className="raleway-3">ALL PRODUCTS</h3>
-          <br />
+          <PageTitle icon="shopping-bag" title="Products" />
           <CardDeck>
             {data.productPagination.items.map((d) => {
               return (
@@ -70,7 +70,7 @@ const ProductsPage = () => {
           </CardDeck>
         </>
       )}
-      <br/>
+      <br />
       <Pagination style={{ justifyContent: "center" }}>{items}</Pagination>
     </>
   );

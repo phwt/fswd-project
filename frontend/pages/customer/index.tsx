@@ -3,6 +3,7 @@ import { Customer } from "@type/SchemaModel";
 import CustomerInfoCard from "@components/customer/CustomerInfoCard";
 import PasswordCard from "@components/customer/PasswordCard";
 import { serverApollo } from "@modules/Apollo";
+import PageTitle from "@components/common/PageTitle";
 
 export const getServerSideProps = async (context) => {
   const apolloClient = serverApollo(context);
@@ -36,7 +37,7 @@ interface Props {
 const CustomerPage = ({ customer }: Props) => {
   return (
     <>
-      <h1 className="mx-5 mb-4 mt-2">Profile</h1>
+      <PageTitle icon="user" title="Profile" />
       <CustomerInfoCard customer={customer} />
       <PasswordCard />
     </>

@@ -7,6 +7,7 @@ import CartItem from "@components/common/CartItem";
 import { formatPrice, productTotal, promotionTotal } from "@modules/Utils";
 import Link from "next/link";
 import { getCartItems } from "@modules/Cart";
+import PageTitle from "@components/common/PageTitle";
 
 const SummaryBlock = ({
   products,
@@ -121,12 +122,8 @@ const CartPage = () => {
 
   return (
     <>
+      <PageTitle icon="shopping-cart" title="My Cart" />
       <Row>
-        <Col md={12} className="text-center mt-4 mb-5">
-          <h2>
-            <i className="fa fa-shopping-cart" /> My Cart
-          </h2>
-        </Col>
         <Col md={8}>
           {!products.length && (
             <div className="text-center my-5">

@@ -2,6 +2,7 @@ import { gql } from "@apollo/client";
 import { formatPrice } from "@modules/Utils";
 import Link from "next/link";
 import { serverApollo } from "@modules/Apollo";
+import PageTitle from "@components/common/PageTitle";
 
 export const getServerSideProps = async (context) => {
   const apolloClient = serverApollo(context);
@@ -41,7 +42,7 @@ const CustomerOrdersPage = ({ me }) => {
 
   const renderOrderCards = me.orders.map((order) => {
     return (
-      <div className="card my-5" key={order._id.toString()}>
+      <div className="card mb-5" key={order._id.toString()}>
         <div className="card-header">
           <div className="row">
             <div className="col">
@@ -93,7 +94,7 @@ const CustomerOrdersPage = ({ me }) => {
 
   return (
     <>
-      <h1>Orders</h1>
+      <PageTitle icon="list" title="Orders" />
       {me?.orders.length === 0 && <p>No Orders</p>}
       {renderOrderCards}
     </>
