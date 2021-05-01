@@ -4,8 +4,11 @@ import CustomerInfoCard from "@components/customer/CustomerInfoCard";
 import PasswordCard from "@components/customer/PasswordCard";
 import { serverApollo } from "@modules/Apollo";
 import PageTitle from "@components/common/PageTitle";
+import { requireAuthentication } from "@modules/Auth";
 
 export const getServerSideProps = async (context) => {
+  if (!(await requireAuthentication(context))) return;
+
   const apolloClient = serverApollo(context);
 
   const {

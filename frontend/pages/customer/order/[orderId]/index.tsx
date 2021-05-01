@@ -3,8 +3,10 @@ import { formatPrice } from "@modules/Utils";
 import { serverApollo } from "@modules/Apollo";
 import { useCallback, useMemo } from "react";
 import { Order } from "@type/SchemaModel";
+import { requireAuthentication } from "@modules/Auth";
 
 export const getServerSideProps = async (context) => {
+  if (!(await requireAuthentication(context))) return;
   const apolloClient = serverApollo(context);
 
   const {
