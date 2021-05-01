@@ -14,6 +14,44 @@ const Header = () => {
     return router.pathname.split("/")[1];
   }, [router.pathname]);
 
+  const adminSection = (
+    <>
+      Hello!, {user?.username}
+      <span className="mx-2">|</span>
+      <Link href="/admin">Dashboard</Link>
+      <span className="mx-2">|</span>
+      <a href="#" onClick={handleLogout}>
+        Logout
+      </a>
+    </>
+  );
+
+  const customerSection = (
+    <>
+      Hello!, {user?.username}
+      <span className="mx-2">|</span>
+      <Link href="/customer">Profile</Link>
+      <span className="mx-2">|</span>
+      <Link href="/customer/orders">Orders</Link>
+      <span className="mx-2">|</span>
+      <a href="#" onClick={handleLogout}>
+        Logout
+      </a>
+    </>
+  );
+
+  const visitorSection = (
+    <>
+      <Link href="/login">
+        <a className="raleway-3s">LOGIN</a>
+      </Link>
+      <span className="mx-2">/</span>
+      <Link href="/register">
+        <a className="raleway-3s">REGISTER</a>
+      </Link>
+    </>
+  );
+
   return (
     <div className="p-3 bg-0 sticky">
       <Row>
@@ -32,39 +70,11 @@ const Header = () => {
           {loading && <span>Loading</span>}
           {user &&
             (user.username === "admin" ? (
-              <>
-                Hello!, {user?.username}
-                <span className="mx-2">|</span>
-                <Link href="/admin">Dashboard</Link>
-                <span className="mx-2">|</span>
-                <a href="#" onClick={handleLogout}>
-                  Logout
-                </a>
-              </>
+              <>{adminSection}</>
             ) : (
-              <>
-                Hello!, {user?.username}
-                <span className="mx-2">|</span>
-                <Link href="/customer">Profile</Link>
-                <span className="mx-2">|</span>
-                <Link href="/customer/orders">Orders</Link>
-                <span className="mx-2">|</span>
-                <a href="#" onClick={handleLogout}>
-                  Logout
-                </a>
-              </>
+              <>{customerSection}</>
             ))}
-          {!user && (
-            <>
-              <Link href="/login">
-                <a className="raleway-3s">LOGIN</a>
-              </Link>
-              <span className="mx-2">/</span>
-              <Link href="/register">
-                <a className="raleway-3s">REGISTER</a>
-              </Link>
-            </>
-          )}
+          {!user && <>{visitorSection}</>}
           &nbsp;&nbsp;
           <Link href="/cart">
             <Button size="sm" variant="light">
