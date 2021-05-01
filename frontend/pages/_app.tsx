@@ -14,30 +14,7 @@ import CommonBaseContainer from "@components/common/BaseContainer";
 import BackofficeBaseContainer from "@components/admin/BaseContainer";
 import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
-import { setContext } from "@apollo/client/link/context";
-import Cookies from "js-cookie";
-
-const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_REMOTE_API,
-});
-
-const authLink = setContext((_, { headers }) => {
-  const token = Cookies.get("token");
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    },
-  };
-});
-
-export const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache({
-    addTypename: false,
-  }),
-  credentials: "include",
-});
+import { clientApollo } from "@modules/Apollo";
 
 const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const { pathname } = useRouter();
@@ -62,7 +39,7 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
 const App = ({ Component, pageProps }) => {
   return (
     <CookiesProvider>
-      <ApolloProvider client={apolloClient}>
+      <ApolloProvider client={clientApollo()}>
         <SessionProvider>
           <BaseLayout>
             <Component {...pageProps} />
