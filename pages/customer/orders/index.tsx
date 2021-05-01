@@ -24,7 +24,7 @@ const CustomerOrdersPage = () => {
     `
   );
 
-  if (loading) {
+  if (loading || !data.me) {
     return <div>Loading...</div>;
   }
   if (error || !data) {
@@ -92,6 +92,9 @@ const CustomerOrdersPage = () => {
       {!loading && (
         <>
           <h1>Orders</h1>
+
+          {data?.me?.orders.length === 0 && <p>No Orders</p>}
+
           {renderOrderCards}
         </>
       )}
