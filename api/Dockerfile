@@ -6,7 +6,5 @@ WORKDIR /var/www
 COPY . /var/www
 
 RUN npm install
-
-RUN npm run build
-EXPOSE 3000
+EXPOSE 5001
 CMD npm run start
