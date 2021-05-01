@@ -7,3 +7,8 @@ generates:
       - "typescript"
       - "typescript-resolvers"
       - "typescript-mongodb"
+  ../frontend/types/SchemaModel.ts:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+      - "typescript-mongodb"
