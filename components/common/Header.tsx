@@ -28,19 +28,30 @@ const Header = () => {
         <Col></Col>
         <Col className="text-right">
           {loading && <span>Loading</span>}
-          {user && (
-            <>
-              Hello!, {user?.username}
-              <span className="mx-2">|</span>
-              <Link href="/customer">Profile</Link>
-              <span className="mx-2">|</span>
-              <Link href="/customer/orders">Orders</Link>
-              <span className="mx-2">|</span>
-              <a href="#" onClick={handleLogout}>
-                Logout
-              </a>
-            </>
-          )}
+          {user &&
+            (user.username === "admin" ? (
+              <>
+                Hello!, {user?.username}
+                <span className="mx-2">|</span>
+                <Link href="/admin">Dashboard</Link>
+                <span className="mx-2">|</span>
+                <a href="#" onClick={handleLogout}>
+                  Logout
+                </a>
+              </>
+            ) : (
+              <>
+                Hello!, {user?.username}
+                <span className="mx-2">|</span>
+                <Link href="/customer">Profile</Link>
+                <span className="mx-2">|</span>
+                <Link href="/customer/orders">Orders</Link>
+                <span className="mx-2">|</span>
+                <a href="#" onClick={handleLogout}>
+                  Logout
+                </a>
+              </>
+            ))}
           {!user && (
             <>
               <a className="raleway-3s">
