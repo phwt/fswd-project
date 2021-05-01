@@ -1,6 +1,11 @@
 import "../styles/globals.scss";
 import { CookiesProvider } from "react-cookie";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { SessionProvider } from "@modules/SessionContext";
 import CommonHeader from "@components/common/Header";
 import BackofficeHeader from "@components/admin/Header";
@@ -9,9 +14,25 @@ import CommonBaseContainer from "@components/common/BaseContainer";
 import BackofficeBaseContainer from "@components/admin/BaseContainer";
 import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
+import { setContext } from "@apollo/client/link/context";
+import Cookies from "js-cookie";
+
+const httpLink = createHttpLink({
+  uri: process.env.NEXT_PUBLIC_REMOTE_API,
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = Cookies.get("token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
 
 export const apolloClient = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_REMOTE_API,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     addTypename: false,
   }),
