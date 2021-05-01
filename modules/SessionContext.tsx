@@ -10,6 +10,7 @@ import { useCookies } from "react-cookie";
 
 import { ME_QUERY } from "../graphql/meQuery";
 import { LOGIN_MUTATION } from "../graphql/loginMutation";
+import { useRouter } from "next/router";
 
 const SessionContext = createContext(null);
 
@@ -27,6 +28,7 @@ export const SessionProvider = ({ children }) => {
     fetchPolicy: "network-only",
   });
   const [login] = useMutation(LOGIN_MUTATION);
+  const router = useRouter();
 
   const handleLogin = useCallback(
     async (username, password) => {
@@ -48,6 +50,7 @@ export const SessionProvider = ({ children }) => {
   const handleLogout = useCallback(() => {
     setUser(null);
     removeCookie("token", { maxAge: 86400 });
+    router.push("/login");
   }, [removeCookie]);
 
   useEffect(() => {
