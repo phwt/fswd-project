@@ -37,7 +37,9 @@ const ProductCard = ({ product, size }: Props) => {
                   <Badge variant="danger">
                     {formatPrice(
                       product.price -
-                        (product.price * product.discountPercentage) / 100
+                        (product.price *
+                          (product as Promotion).discountPercentage) /
+                          100
                     )}
                     THB
                   </Badge>
