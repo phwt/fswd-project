@@ -38,9 +38,7 @@ const AdminPromotionsPage = () => {
         <td>{promotion.discountPercentage}</td>
         <td>
           <Button variant="outline-dark">
-            <Nav.Link href={"/admin/promotion/"+promotion._id}>
-              View
-            </Nav.Link>
+            <Nav.Link href={"/admin/promotion/" + promotion._id}>View</Nav.Link>
           </Button>
         </td>
       </tr>

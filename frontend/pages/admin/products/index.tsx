@@ -1,5 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import { Nav,Button } from "react-bootstrap";
+import { Nav, Button } from "react-bootstrap";
 import { formatPrice } from "@modules/Utils";
 
 const AdminProductsPage = () => {
@@ -34,7 +34,11 @@ const AdminProductsPage = () => {
         <td>{products.detail}</td>
         <td>{formatPrice(products.price)}</td>
         <td>{products.stock}</td>
-        <td><Button variant="outline-dark"><Nav.Link href={"/admin/product/"+products._id}>View</Nav.Link></Button></td>
+        <td>
+          <Button variant="outline-dark">
+            <Nav.Link href={"/admin/product/" + products._id}>View</Nav.Link>
+          </Button>
+        </td>
       </tr>
     );
   });
@@ -53,9 +57,7 @@ const AdminProductsPage = () => {
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {renderTableProducts}
-        </tbody>
+        <tbody>{renderTableProducts}</tbody>
       </table>
     </div>
   );
