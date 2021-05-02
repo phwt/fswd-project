@@ -2,14 +2,16 @@ import { gql } from "@apollo/client";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import { serverApollo } from "@modules/Apollo";
 import { useMemo } from "react";
+import Link from "next/link";
 
 export const getServerSideProps = async (context) => {
   const apolloClient = serverApollo(context);
 
   const { data } = await apolloClient.query({
     query: gql`
-      {
+      query {
         products {
+          _id
           name
           detail
           price
@@ -70,9 +72,11 @@ const LatestTable = ({ orders }) => {
         <td>{order.status}</td>
         <td>{dateString.toLocaleDateString()}</td>
         <td className="text-right">
-          <Button size="sm" variant="light">
-            <i className="fa fa-chevron-right" />
-          </Button>
+          <Link href={`/admin/order/${order._id}`}>
+            <Button size="sm" variant="light">
+              <i className="fa fa-chevron-right" />
+            </Button>
+          </Link>
         </td>
       </tr>
     );
@@ -102,9 +106,11 @@ const StockTable = ({ products }) => {
         <th>{item.name}</th>
         <td>{item.stock}</td>
         <td className="text-right">
-          <Button size="sm" variant="light">
-            <i className="fa fa-chevron-right" />
-          </Button>
+          <Link href={`/admin/product/${item._id}`}>
+            <Button size="sm" variant="light">
+              <i className="fa fa-chevron-right" />
+            </Button>
+          </Link>
         </td>
       </tr>
     );
