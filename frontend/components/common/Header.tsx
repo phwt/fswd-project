@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Col, Row, Nav, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
@@ -16,26 +17,37 @@ const Header = () => {
 
   const adminSection = (
     <>
-      Hello!, {user?.username}
-      <span className="mx-2">|</span>
-      <Link href="/admin">Dashboard</Link>
-      <span className="mx-2">|</span>
-      <a href="#" onClick={handleLogout}>
-        Logout
+      <a className="raleway-3s" style={{ textTransform: "uppercase" }}>
+        {user?.username}
+      </a>
+      <span className="mx-2">/</span>
+      <a className="raleway-3s" href="/admin">
+        DASHBOARD
+      </a>
+      <span className="mx-2">/</span>
+      <a className="raleway-3s" href="#" onClick={handleLogout}>
+        LOGOUT
       </a>
     </>
   );
 
   const customerSection = (
     <>
-      Hello!, {user?.username}
-      <span className="mx-2">|</span>
-      <Link href="/customer">Profile</Link>
-      <span className="mx-2">|</span>
-      <Link href="/customer/orders">Orders</Link>
-      <span className="mx-2">|</span>
-      <a href="#" onClick={handleLogout}>
-        Logout
+      <a
+        className="raleway-3s"
+        style={{ textTransform: "uppercase" }}
+        href="/customer"
+      >
+        <FontAwesomeIcon icon={faUser} />
+        {user?.username}
+      </a>
+      <span className="mx-2">/</span>
+      <a className="raleway-3s" href="/customer/orders">
+        ORDERS
+      </a>
+      <span className="mx-2">/</span>
+      <a className="raleway-3s" href="#" onClick={handleLogout}>
+        LOGOUT
       </a>
     </>
   );
