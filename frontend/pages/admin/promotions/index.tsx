@@ -37,7 +37,11 @@ const AdminPromotionsPage = ({ promotions }) => {
     return (
       <tr key={promotion.name.toString()}>
         <th scope="row">{index + 1}</th>
-        <td>{promotion.name}</td>
+        <td>
+          <Link href={"/admin/promotion/" + promotion._id}>
+            {promotion.name}
+          </Link>
+        </td>
         <td>{promotion.detail}</td>
         <td>{formatPrice(promotion.price)}</td>
         <td>{promotion.stock}</td>

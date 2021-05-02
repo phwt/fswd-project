@@ -39,10 +39,14 @@ const AdminOrdersPage = ({ orders }) => {
       <tr key={order._id.toString()}>
         <th>{index + 1}</th>
         <td>
+          <Link href={"/admin/order/" + order._id}>
+            {order.orderedBy.username}
+          </Link>
+        </td>
+        <td>
           <OrderStatusLabel status={order.status} />
         </td>
         <td>{dateString.toLocaleDateString()}</td>
-        <td>{order.orderedBy.username}</td>
         <td className="text-right">
           <Link href={"/admin/order/" + order._id}>
             <Button variant="light" size="sm">
@@ -62,9 +66,9 @@ const AdminOrdersPage = ({ orders }) => {
         <thead>
           <tr>
             <th>#</th>
+            <th>Customer</th>
             <th>Status</th>
             <th>Timestamp</th>
-            <th>Customer</th>
             <th />
           </tr>
         </thead>
