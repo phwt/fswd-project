@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
 import { clientApollo } from "@modules/Apollo";
 import Head from "next/head";
+import { ResponsiveEmbed, Row } from "react-bootstrap";
 
 const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const { pathname } = useRouter();
@@ -34,6 +35,14 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
           <Head>
             <title>Store</title>
           </Head>
+          <Row style={{ width: "auto", height: "auto" }}>
+            <ResponsiveEmbed aspectRatio="21by9">
+              <embed
+                type="image/svg+xml"
+                src="https://dms-fs.s3.ap-southeast-1.amazonaws.com/video.mp4"
+              />
+            </ResponsiveEmbed>
+          </Row>
           <CommonBaseContainer>{children}</CommonBaseContainer>
         </>
       )}
