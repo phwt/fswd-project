@@ -4,6 +4,7 @@ import { serverApollo } from "@modules/Apollo";
 import { useMemo } from "react";
 import Link from "next/link";
 import { formatPrice } from "@modules/Utils";
+import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
 
 export const getServerSideProps = async (context) => {
   const apolloClient = serverApollo(context);
@@ -29,7 +30,7 @@ export const getServerSideProps = async (context) => {
             price
           }
         }
-        FilterOrder: orders(limit: 5, sort: _ID_DESC) {
+        FilterOrder: orders(limit: 10, sort: _ID_DESC) {
           _id
           products {
             name
@@ -74,7 +75,9 @@ const LatestTable = ({ orders }) => {
       <tr key={order._id.toString()}>
         <th>{index + 1}</th>
         <th>{order.orderedBy.username}</th>
-        <td>{order.status}</td>
+        <td>
+          <OrderStatusLabel status={order.status} />
+        </td>
         <td>{dateString.toLocaleDateString()}</td>
         <td className="text-right">
           <Link href={`/admin/order/${order._id}`}>
@@ -104,7 +107,7 @@ const LatestTable = ({ orders }) => {
 };
 
 const StockTable = ({ products }) => {
-  const renderTableProduct = products.slice(0, 5).map((item, index) => {
+  const renderTableProduct = products.slice(0, 10).map((item, index) => {
     return (
       <tr key={item._id}>
         <th>{index + 1}</th>

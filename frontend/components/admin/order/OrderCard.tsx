@@ -3,12 +3,14 @@ import { Order } from "@type/SchemaModel";
 import { OrderCardRow } from "../../../pages/admin/order/[orderId]";
 import { useMutation } from "@apollo/client";
 import { gql } from "@apollo/client/core";
+import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
 
 const OrderCardButton = (props) => {
   const { label, variant } = props;
   return (
     <Col md={4} className="px-1">
-      <Button block variant={variant} {...props}>
+      <Button block variant="light" onClick={props.onClick}>
+        <i className={`fa fa-circle mr-2 text-${variant}`} />
         {label}
       </Button>
     </Col>
@@ -37,7 +39,9 @@ const OrderCard = ({ order }: Props) => {
             title="Order Date"
             value={new Date(order.timestamp).toDateString()}
           />
-          <OrderCardRow title="Status" value={order.status} />
+          <OrderCardRow title="Status">
+            <OrderStatusLabel status={order.status} />
+          </OrderCardRow>
           <Col md={12}>
             <hr />
           </Col>

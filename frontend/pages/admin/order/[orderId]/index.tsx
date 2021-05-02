@@ -5,16 +5,24 @@ import OrderCard from "@components/admin/order/OrderCard";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { Order } from "@type/SchemaModel";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import PageTitle from "@components/admin/PageTitle";
 
-export const OrderCardRow = ({ title, value }) => (
+export const OrderCardRow = ({
+  title,
+  value,
+  children,
+}: {
+  title: string;
+  value?: string;
+  children?: ReactNode | ReactNode[];
+}) => (
   <>
     <Col md={4}>
       <b>{title}</b>
     </Col>
     <Col md={8} className="text-right">
-      {value}
+      {children ? <>{children}</> : <>{value}</>}
     </Col>
   </>
 );

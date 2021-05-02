@@ -3,6 +3,7 @@ import { Nav, Button, Row, Col } from "react-bootstrap";
 import { serverApollo } from "@modules/Apollo";
 import Link from "next/link";
 import PageTitle from "@components/admin/PageTitle";
+import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
 
 export const getServerSideProps = async (context) => {
   const apolloClient = serverApollo(context);
@@ -37,7 +38,9 @@ const AdminOrdersPage = ({ orders }) => {
     return (
       <tr key={order._id.toString()}>
         <th>{index + 1}</th>
-        <td>{order.status}</td>
+        <td>
+          <OrderStatusLabel status={order.status} />
+        </td>
         <td>{dateString.toLocaleDateString()}</td>
         <td>{order.orderedBy.username}</td>
         <td className="text-right">
