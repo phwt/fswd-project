@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { serverApollo } from "@modules/Apollo";
 
 export const getServerSideProps = async (context) => {
@@ -59,22 +59,8 @@ const StatCard = ({ title, value, unit }) => {
   );
 };
 
-const AdminPage = ({ data }) => {
-  var profit = 0;
-  const product = data.products;
-
-  const sortStock = product.slice().sort((a, b) => {
-    return parseFloat(a.stock) - parseFloat(b.stock);
-  });
-  console.log(sortStock);
-
-  const totalPrice = data.orders.map((order) => {
-    const total = order.products.map((product) => {
-      profit += product.price;
-    });
-  });
-
-  const renderTableOrder = data.FilterOrder.map((order, index) => {
+const LatestTable = ({ orders }) => {
+  const renderTableOrder = orders.map((order, index) => {
     var dateString = new Date(order.timestamp);
     return (
       <tr key={order._id.toString()}>
@@ -82,84 +68,114 @@ const AdminPage = ({ data }) => {
         <th>{order.orderedBy.username}</th>
         <td>{order.status}</td>
         <td>{dateString.toLocaleDateString()}</td>
-      </tr>
-    );
-  });
-
-  const renderTableProduct = sortStock.slice(0, 5).map((item, index) => {
-    return (
-      <tr>
-        <th>{index + 1}</th>
-        <th>{item.name}</th>
-        <td>{item.detail}</td>
-        <td>{item.price}</td>
-        <td>{item.stock}</td>
+        <td className="text-right">
+          <Button size="sm" variant="light">
+            <i className="fa fa-chevron-right" />
+          </Button>
+        </td>
       </tr>
     );
   });
 
   return (
+    <table className="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Customer</th>
+          <th>Status</th>
+          <th>Timestamp</th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>{renderTableOrder}</tbody>
+    </table>
+  );
+};
+
+const StockTable = ({ products }) => {
+  const renderTableProduct = products.slice(0, 5).map((item, index) => {
+    return (
+      <tr>
+        <th>{index + 1}</th>
+        <th>{item.name}</th>
+        <td>{item.stock}</td>
+        <td className="text-right">
+          <Button size="sm" variant="light">
+            <i className="fa fa-chevron-right" />
+          </Button>
+        </td>
+      </tr>
+    );
+  });
+
+  return (
+    <table className="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Product</th>
+          <th>Stock</th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>{renderTableProduct}</tbody>
+    </table>
+  );
+};
+
+const AdminPage = ({ data }) => {
+  var profit = 0;
+  const product = data.products;
+
+  const totalPrice = data.orders.map((order) => {
+    const total = order.products.map((product) => {
+      profit += product.price;
+    });
+  });
+
+  const sortStock = product.slice().sort((a, b) => {
+    return parseFloat(a.stock) - parseFloat(b.stock);
+  });
+
+  return (
     <>
-      <h2>Dashboard</h2>
-      <Container>
-        <Row className="mt-5">
-          <Col md={3}>
-            <StatCard
-              title="Total Products"
-              value={data.products.length}
-              unit="items"
-            />
-          </Col>
-          <Col md={3}>
-            <StatCard
-              title="Total Promotions"
-              value={data.promotions.length}
-              unit="items"
-            />
-          </Col>
-          <Col md={3}>
-            <StatCard
-              title="Total Orders"
-              value={data.orders.length}
-              unit="orders"
-            />
-          </Col>
-          <Col md={3}>
-            <StatCard title="Income" value={profit} unit="THB" />
-          </Col>
-        </Row>
-        <Row className="mt-5">
-          <Col>
-            <h3>รายการสั่งซื้อล่าสุด</h3>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ลำดับรายการ</th>
-                  <th>ชื่อลูกค้า</th>
-                  <th>สถานะ</th>
-                  <th>วันที่</th>
-                </tr>
-              </thead>
-              <tbody>{renderTableOrder}</tbody>
-            </table>
-          </Col>
-          <Col>
-            <h3>สินค้าขาดสต็อค</h3>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ลำดับสินค้า</th>
-                  <th>ชื่อสินค้า</th>
-                  <th>รายละเอียด</th>
-                  <th>ราคา</th>
-                  <th>จำนวนคงเหลือ</th>
-                </tr>
-              </thead>
-              <tbody>{renderTableProduct}</tbody>
-            </table>
-          </Col>
-        </Row>
-      </Container>
+      <Row className="mt-2">
+        <Col md={3}>
+          <StatCard
+            title="Total Products"
+            value={data.products.length}
+            unit="items"
+          />
+        </Col>
+        <Col md={3}>
+          <StatCard
+            title="Total Promotions"
+            value={data.promotions.length}
+            unit="items"
+          />
+        </Col>
+        <Col md={3}>
+          <StatCard
+            title="Total Orders"
+            value={data.orders.length}
+            unit="orders"
+          />
+        </Col>
+        <Col md={3}>
+          <StatCard title="Income" value={profit} unit="THB" />
+        </Col>
+      </Row>
+      <Row className="mt-5">
+        <Col>
+          <h3>Latest Orders</h3>
+          <LatestTable orders={data.FilterOrder} />
+        </Col>
+        <Col>
+          <h3>Low on Stock</h3>
+          <StockTable products={sortStock} />
+        </Col>
+      </Row>
     </>
   );
 };
