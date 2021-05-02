@@ -1,6 +1,6 @@
 import { useSession } from "@modules/SessionContext";
 import Link from "next/link";
-import { Col, Row, Nav, Button } from "react-bootstrap";
+import { Col, Row, Nav, Button, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -33,22 +33,32 @@ const Header = () => {
 
   const customerSection = (
     <>
-      <a
-        className="raleway-3s"
-        style={{ textTransform: "uppercase" }}
-        href="/customer"
-      >
-        <FontAwesomeIcon icon={faUser} />
-        {user?.username}
-      </a>
-      <span className="mx-2">/</span>
-      <a className="raleway-3s" href="/customer/orders">
+      <Dropdown className="raleway-3s">
+        <Dropdown.Toggle
+          style={{ textTransform: "uppercase" }}
+          size="sm"
+          variant="dark"
+          id="dropdown-basic"
+        >
+          {/* <FontAwesomeIcon style={{ display: "inline" }} icon={faUser} /> */}
+          {user?.username}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu className="raleway-3s">
+          <Dropdown.Item href="/customer">PROFILE</Dropdown.Item>
+          <Dropdown.Item href="/customer/orders">MY ORDERS</Dropdown.Item>
+          <Dropdown.Item href="#" onClick={handleLogout}>
+            LOGOUT
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      {/* <a className="raleway-3s" href="/customer/orders">
         ORDERS
       </a>
       <span className="mx-2">/</span>
       <a className="raleway-3s" href="#" onClick={handleLogout}>
         LOGOUT
-      </a>
+      </a> */}
     </>
   );
 
