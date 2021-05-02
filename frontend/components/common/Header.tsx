@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Col, Row, Nav, Button, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
@@ -24,28 +23,18 @@ const Header = () => {
           variant="dark"
           id="dropdown-basic"
         >
-          {/* <FontAwesomeIcon style={{ display: "inline" }} icon={faUser} /> */}
           {user?.username}
         </Dropdown.Toggle>
 
         <Dropdown.Menu className="raleway-3s">
-          <Dropdown.Item href="/admin">DASHBOARD</Dropdown.Item>
+          <Link href="/admin" passHref>
+            <Dropdown.Item>DASHBOARD</Dropdown.Item>
+          </Link>
           <Dropdown.Item href="#" onClick={handleLogout}>
             LOGOUT
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      {/* <a className="raleway-3s" style={{ textTransform: "uppercase" }}>
-        {user?.username}
-      </a>
-      <span className="mx-2">/</span>
-      <a className="raleway-3s" href="/admin">
-        DASHBOARD
-      </a>
-      <span className="mx-2">/</span>
-      <a className="raleway-3s" href="#" onClick={handleLogout}>
-        LOGOUT
-      </a> */}
     </>
   );
 
@@ -58,30 +47,26 @@ const Header = () => {
           variant="dark"
           id="dropdown-basic"
         >
-          {/* <FontAwesomeIcon style={{ display: "inline" }} icon={faUser} /> */}
           {user?.username}
         </Dropdown.Toggle>
 
         <Dropdown.Menu className="raleway-3s">
-          <Dropdown.Item href="/customer">PROFILE</Dropdown.Item>
-          <Dropdown.Item href="/customer/orders">MY ORDERS</Dropdown.Item>
+          <Link href="/customer" passHref>
+            <Dropdown.Item>PROFILE</Dropdown.Item>
+          </Link>
+          <Link href="/customer/orders" passHref>
+            <Dropdown.Item>MY ORDERS</Dropdown.Item>
+          </Link>
           <Dropdown.Item href="#" onClick={handleLogout}>
             LOGOUT
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      {/* <a className="raleway-3s" href="/customer/orders">
-        ORDERS
-      </a>
-      <span className="mx-2">/</span>
-      <a className="raleway-3s" href="#" onClick={handleLogout}>
-        LOGOUT
-      </a> */}
     </>
   );
 
   const visitorSection = (
-    <>
+    <span className="mr-2">
       <Link href="/login">
         <a className="raleway-3s">LOGIN</a>
       </Link>
@@ -89,15 +74,15 @@ const Header = () => {
       <Link href="/register">
         <a className="raleway-3s">REGISTER</a>
       </Link>
-    </>
+    </span>
   );
 
   return (
     <div className="p-3 bg-0 sticky">
       <Row>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
+        <Col />
+        <Col />
+        <Col />
         <Col>
           <Link href="/">
             <a style={{ textDecoration: "none" }}>
@@ -105,9 +90,8 @@ const Header = () => {
             </a>
           </Link>
         </Col>
-        <Col></Col>
+        <Col />
         <Col className="text-right">
-          {loading && <span>Loading</span>}
           {user &&
             (user.username === "admin" ? (
               <>{adminSection}</>
@@ -122,22 +106,21 @@ const Header = () => {
             </Button>
           </Link>
         </Col>
-
-        <Col></Col>
+        <Col />
       </Row>
 
       <Nav className="justify-content-center" activeKey={topPath}>
         <Nav.Item>
           <Link href="/products" passHref>
             <Nav.Link className="raleway-3s" eventKey="products">
-              ALL PRODUCTS
+              PRODUCTS
             </Nav.Link>
           </Link>
         </Nav.Item>
         <Nav.Item>
           <Link href="/promotions" passHref>
             <Nav.Link className="raleway-3s" eventKey="promotions">
-              ALL PROMOTIONS
+              PROMOTIONS
             </Nav.Link>
           </Link>
         </Nav.Item>
