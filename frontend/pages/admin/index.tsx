@@ -28,12 +28,15 @@ export const getServerSideProps = async (context) => {
         promotions {
           _id
         }
-        orders(filter: { status: PAID }) {
+        orders {
+          _id
+        }
+        completedOrders: orders(filter: { status: COMPLETED }) {
           products {
             price
           }
         }
-        FilterOrder: orders(limit: 10, sort: _ID_DESC) {
+        filterOrder: orders(limit: 10, sort: _ID_DESC) {
           _id
           products {
             name
@@ -144,7 +147,7 @@ const StockTable = ({ products }) => {
 
 const AdminPage = ({ data }) => {
   const totalIncome = useMemo(() => {
-    return data.orders
+    return data.completedOrders
       .map((order) => {
         return order.products.map((product) => {
           return product.price;
@@ -152,7 +155,7 @@ const AdminPage = ({ data }) => {
       })
       .reduce((acc, cur) => [...acc, ...cur])
       .reduce((acc, cur) => acc + cur);
-  }, [data.orders]);
+  }, [data.completedOrders]);
 
   const sortStock = useMemo(() => {
     return data.products.slice().sort((a, b) => {
@@ -199,7 +202,7 @@ const AdminPage = ({ data }) => {
       <Row className="mt-5">
         <Col>
           <h3>Latest Orders</h3>
-          <LatestTable orders={data.FilterOrder} />
+          <LatestTable orders={data.filterOrder} />
         </Col>
         <Col>
           <h3>Low on Stock</h3>
