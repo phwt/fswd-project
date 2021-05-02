@@ -1,5 +1,10 @@
 import { useMemo } from "react";
-import { discountPrice, formatPrice } from "@modules/Utils";
+import {
+  calculateTotalPrice,
+  calculateTotalWeight,
+  discountPrice,
+  formatPrice,
+} from "@modules/Utils";
 import { Table } from "react-bootstrap";
 
 const ProductTable = ({ products, promotions }) => {
@@ -8,39 +13,11 @@ const ProductTable = ({ products, promotions }) => {
   }, [products, promotions]);
 
   const totalWeight = useMemo(() => {
-    let productWeight = 0,
-      promotionWeight = 0;
-
-    if (products.length)
-      productWeight = products
-        .map((product) => product.weight)
-        .reduce((acc, cur) => acc + cur);
-
-    if (promotions.length)
-      promotionWeight = promotions
-        .map((product) => product.weight)
-        .reduce((acc, cur) => acc + cur);
-
-    return productWeight + promotionWeight;
+    return calculateTotalWeight(products, promotions);
   }, [products, promotions]);
 
   const totalPrice = useMemo(() => {
-    let productPrice = 0,
-      promotionPrice = 0;
-
-    if (products.length)
-      productPrice = products
-        .map((product) => product.price)
-        .reduce((acc, cur) => acc + cur);
-
-    if (promotions.length)
-      promotionPrice = promotions
-        .map((product) =>
-          discountPrice(product.price, product.discountPercentage)
-        )
-        .reduce((acc, cur) => acc + cur);
-
-    return productPrice + promotionPrice;
+    return calculateTotalPrice(products, promotions);
   }, [products, promotions]);
 
   return (
@@ -91,7 +68,7 @@ const ProductTable = ({ products, promotions }) => {
           <td>
             <b>Subtotal</b>
           </td>
-          <td>{totalPrice} THB</td>
+          <td>{formatPrice(totalPrice)} THB</td>
         </tr>
       </tbody>
     </Table>
