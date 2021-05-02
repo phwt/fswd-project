@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { CardDeck, Pagination } from "react-bootstrap";
 import ProductCard from "../../components/common/ProductCard";
 import { useState } from "react";
-import PageTitle from "@components/common/PageTitle";
+// import PageTitle from "@components/common/PageTitle";
 
 const PromotionsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,7 +53,8 @@ const PromotionsPage = () => {
     <>
       {!loading && (
         <>
-          <PageTitle icon="percentage" title="Products" />
+          <br />
+          <h3 className="raleway-6">PROMOTIONS</h3>
           <br />
           <CardDeck>
             {data.promotionPagination.items.map((d) => {
