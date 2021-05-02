@@ -74,7 +74,7 @@ body {
   border-color: white;
 }
 
-.img-resize{
+.img-resize {
   width: 100px;
   height: 100px;
   overflow: hidden;
@@ -83,6 +83,11 @@ body {
   justify-content: center;
 }
 
-.img-order{
+.img-order {
   width: 100%;
+}
+
+.btn-dark {
+  background-color: black;
+  border: none;
 }
