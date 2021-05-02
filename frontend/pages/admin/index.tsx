@@ -53,10 +53,8 @@ const StatCard = ({ title, value, unit }) => {
     <Card style={{ width: "100%" }} className="w-100">
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>
-          <h1 className="d-inline">{value}</h1>{" "}
-          <small className="text-muted">{unit}</small>
-        </Card.Text>
+        <h1 className="d-inline">{value}</h1>{" "}
+        <small className="text-muted">{unit}</small>
       </Card.Body>
     </Card>
   );
@@ -101,7 +99,7 @@ const LatestTable = ({ orders }) => {
 const StockTable = ({ products }) => {
   const renderTableProduct = products.slice(0, 5).map((item, index) => {
     return (
-      <tr>
+      <tr key={item._id}>
         <th>{index + 1}</th>
         <th>{item.name}</th>
         <td>{item.stock}</td>

@@ -31,17 +31,19 @@ const Header = () => {
         </Link>
 
         <h6>
-          <Nav.Link>
-            {user && (
-              <>
-                Logged in as {user?.username}
-                <span className="mx-2">|</span>
-                <a href="#" onClick={handleLogout}>
-                  Logout
-                </a>
-              </>
-            )}
-          </Nav.Link>
+          {user && (
+            <Nav.Item
+              style={{
+                padding: "0.5rem 1rem",
+              }}
+            >
+              Logged in as {user?.username}
+              <span className="mx-2">|</span>
+              <a href="#" onClick={handleLogout}>
+                Logout
+              </a>
+            </Nav.Item>
+          )}
         </h6>
 
         <hr
