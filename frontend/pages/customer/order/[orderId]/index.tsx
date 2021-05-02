@@ -28,7 +28,6 @@ export const getServerSideProps = async (context) => {
             name
             detail
             price
-            stock
             weight
             imageLocation
           }
@@ -58,16 +57,21 @@ export const getServerSideProps = async (context) => {
 const ProductCard = ({ product, isPromotion = false }) => {
   return (
     <div className="row my-4" key={product._id.toString()}>
-      <div className="col-3 d-flex align-items-center justify-content-center">
-        <svg width="100" height="100">
-          <rect x="0" y="0" width="100" height="100" />
-        </svg>
+      <div className="col-3 d-flex justify-content-center">
+        <div className="img-resize">
+          {!product.imageLocation && (
+            <img className="img-order" src={"/no-image.jpg"} />
+          )}
+
+          {product.imageLocation && (
+            <img className="img-order" src={product.imageLocation} />
+          )}
+        </div>
       </div>
       <div className="col-7 d-flex flex-column justify-content-center">
-        <h5>Name: {product.name}</h5>
-        <h5>Stock: {product.stock}</h5>
+        <h5>{product.name}</h5>
       </div>
-      <div className="col-2 d-flex align-items-center text-right">
+      <div className="col-2 d-flex align-items-center justify-content-center">
         {!isPromotion && (
           <h5 className="float-right">{formatPrice(product.price)} THB</h5>
         )}
@@ -112,10 +116,6 @@ const CustomerOrderPage = ({ order }: Props) => {
         <div className="card-header">Order Detail</div>
         <div className="card-body">
           <div className="mx-3 my-3">
-            <h5>
-              <b>Order Id:</b> {order._id}
-            </h5>
-
             <h5>
               <b>Status:</b> {order.status}
             </h5>

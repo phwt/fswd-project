@@ -73,3 +73,16 @@ body {
   background-color: white;
   border-color: white;
 }
+
+.img-resize{
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-order{
+  width: 100%;
+}
