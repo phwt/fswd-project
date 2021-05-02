@@ -3,6 +3,7 @@ import nextConnect from "next-connect";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import AWS from "aws-sdk";
+import path from "path";
 
 // Multer 'files' object
 declare module "next" {
@@ -44,7 +45,14 @@ const upload = multer({
   storage: multerS3({
     s3,
     bucket: process.env.S3_BUCKET,
-    key: (req, file, cb) => cb(null, file.originalname),
+    key: (req, file, cb) => {
+      return cb(
+        null,
+        `${path.parse(file.originalname).name}-${Math.random()
+          .toString(36)
+          .substring(7)}${path.parse(file.originalname).ext}`
+      );
+    },
   }),
 });
 const uploadMiddleware = upload.array("file");
