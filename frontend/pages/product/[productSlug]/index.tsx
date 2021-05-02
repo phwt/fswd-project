@@ -1,6 +1,6 @@
-import { gql, useQuery, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ProductDetail from "../../../components/common/ProductDetail";
 
 const ProductPage = () => {

@@ -1,5 +1,5 @@
 import { Customer } from "@type/SchemaModel";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { gql } from "@apollo/client/core";

@@ -1,8 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import { Col, Row, Card, Button, CardDeck, Image } from "react-bootstrap";
+import { Col, Row, CardDeck } from "react-bootstrap";
 import ProductCard from "../components/common/ProductCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPercentage } from "@fortawesome/free-solid-svg-icons";
 import { Product } from "@type/SchemaModel";
 
 const Home = () => {

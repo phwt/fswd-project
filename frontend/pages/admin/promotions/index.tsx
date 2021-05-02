@@ -1,5 +1,5 @@
-import { useQuery, gql } from "@apollo/client";
-import { Nav, Button, Col, Row } from "react-bootstrap";
+import { gql } from "@apollo/client";
+import { Button, Col, Row } from "react-bootstrap";
 import { formatPrice } from "@modules/Utils";
 import { serverApollo } from "@modules/Apollo";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import { CardDeck, Pagination, Row, Col } from "react-bootstrap";
+import { CardDeck, Pagination } from "react-bootstrap";
 import ProductCard from "../../components/common/ProductCard";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PageTitle from "@components/common/PageTitle";
 
 const ProductsPage = () => {

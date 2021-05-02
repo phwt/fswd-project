@@ -1,4 +1,4 @@
-import { Card, Button, Badge } from "react-bootstrap";
+import { Card, Badge } from "react-bootstrap";
 import Link from "next/link";
 import { formatPrice } from "@modules/Utils";
 import { Product, Promotion } from "@type/SchemaModel";

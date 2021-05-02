@@ -1,9 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { CardDeck, Pagination } from "react-bootstrap";
 import ProductCard from "../../components/common/ProductCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPercentage } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PageTitle from "@components/common/PageTitle";
 
 const PromotionsPage = () => {
