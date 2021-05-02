@@ -68,6 +68,7 @@ const CartPage = () => {
       query productByIds($productIds: [MongoID!]!) {
         productByIds(_ids: $productIds) {
           _id
+          sku
           name
           detail
           price
@@ -87,6 +88,7 @@ const CartPage = () => {
       query promotionByIds($promotionIds: [MongoID!]!) {
         promotionByIds(_ids: $promotionIds) {
           _id
+          sku
           name
           detail
           price
@@ -125,7 +127,7 @@ const CartPage = () => {
       <PageTitle icon="shopping-cart" title="My Cart" />
       <Row>
         <Col md={8}>
-          {!products.length && (
+          {!(products.length || promotions.length) && (
             <div className="text-center my-5">
               <h3>No Item in Cart</h3>
               <Link href="/">

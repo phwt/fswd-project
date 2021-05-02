@@ -2,6 +2,7 @@ import { Product, Promotion } from "@type/SchemaModel";
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import { removeCartItem } from "@modules/Cart";
 import { discountPrice, formatPrice } from "@modules/Utils";
+import Link from "next/link";
 
 interface Props {
   product: Product | Promotion;
@@ -20,13 +21,20 @@ const CartItem = ({
     <Card className="mb-3 p-3">
       <Row>
         <Col className="text-center">
-          <img
-            className="img-fluid"
-            src={product.imageLocation ?? "no-image.jpg"}
-            style={{
-              height: 150,
-            }}
-          />
+          <Link
+            href={`/product/${product.sku}${
+              isPromotion ? "?type=promotion" : ""
+            }`}
+          >
+            <img
+              className="img-fluid"
+              src={product.imageLocation ?? "no-image.jpg"}
+              style={{
+                height: 150,
+                cursor: "pointer",
+              }}
+            />
+          </Link>
         </Col>
         <Col md={6}>
           <h4>{product.name}</h4>
