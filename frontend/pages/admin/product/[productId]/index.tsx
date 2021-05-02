@@ -1,10 +1,12 @@
 import { gql } from "@apollo/client/core";
 import { serverApollo } from "@modules/Apollo";
 import ProductEditForm from "@components/admin/product/ProductEditForm";
-import { Button } from "react-bootstrap";
 import PageTitle from "@components/admin/PageTitle";
+import { requireAuthentication } from "@modules/Auth";
 
 export const getServerSideProps = async (context) => {
+  await requireAuthentication(context, ["Admin"]);
+
   const {
     params: { productId },
   } = context;

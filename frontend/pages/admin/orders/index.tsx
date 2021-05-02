@@ -4,8 +4,11 @@ import { serverApollo } from "@modules/Apollo";
 import Link from "next/link";
 import PageTitle from "@components/admin/PageTitle";
 import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
+import { requireAuthentication } from "@modules/Auth";
 
 export const getServerSideProps = async (context) => {
+  await requireAuthentication(context, ["Admin"]);
+
   const apolloClient = serverApollo(context);
   const {
     data: { orders },

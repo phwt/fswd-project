@@ -4,8 +4,11 @@ import { formatPrice } from "@modules/Utils";
 import { serverApollo } from "@modules/Apollo";
 import Link from "next/link";
 import PageTitle from "@components/admin/PageTitle";
+import { requireAuthentication } from "@modules/Auth";
 
 export const getServerSideProps = async (context) => {
+  await requireAuthentication(context, ["Admin"]);
+
   const apolloClient = serverApollo(context);
   const {
     data: { products },

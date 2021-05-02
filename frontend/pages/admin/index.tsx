@@ -5,8 +5,11 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { formatPrice } from "@modules/Utils";
 import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
+import { requireAuthentication } from "@modules/Auth";
 
 export const getServerSideProps = async (context) => {
+  await requireAuthentication(context, ["Admin"]);
+
   const apolloClient = serverApollo(context);
 
   const { data } = await apolloClient.query({

@@ -7,6 +7,12 @@ import { useQuery } from "@apollo/client";
 import { Order } from "@type/SchemaModel";
 import { ReactNode, useEffect, useState } from "react";
 import PageTitle from "@components/admin/PageTitle";
+import { requireAuthentication } from "@modules/Auth";
+
+export const getServerSideProps = async (context) => {
+  await requireAuthentication(context, ["Admin"]);
+  return { props: {} };
+};
 
 export const OrderCardRow = ({
   title,

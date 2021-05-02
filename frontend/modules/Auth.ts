@@ -16,7 +16,10 @@ export const requireAuthentication = async (context, roles: string[] = []) => {
   const validAccess = () => {
     if (me) {
       if (roles.length) {
-        return roles.includes(me.role);
+        return (
+          roles.includes(me.role) ||
+          roles.map((role) => role.toLowerCase()).includes(me.username)
+        );
       }
       return true;
     }
