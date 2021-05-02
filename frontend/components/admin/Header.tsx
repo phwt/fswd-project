@@ -13,6 +13,7 @@ const Header = () => {
         </Nav.Link>
 
         <h6>
+        <Nav.Link>
           {user && (
             <>
               Logged in as {user?.username}
@@ -22,6 +23,7 @@ const Header = () => {
               </a>
             </>
           )}
+          </Nav.Link>
         </h6>
       </header>
 
