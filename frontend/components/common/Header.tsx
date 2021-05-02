@@ -17,7 +17,7 @@ const Header = () => {
 
   const adminSection = (
     <>
-      <Dropdown className="raleway-3s">
+      <Dropdown className="raleway-3s" style={{ display: "inline" }}>
         <Dropdown.Toggle
           style={{ textTransform: "uppercase" }}
           size="sm"
@@ -51,7 +51,7 @@ const Header = () => {
 
   const customerSection = (
     <>
-      <Dropdown className="raleway-3s">
+      <Dropdown className="raleway-3s" style={{ display: "inline" }}>
         <Dropdown.Toggle
           style={{ textTransform: "uppercase" }}
           size="sm"
