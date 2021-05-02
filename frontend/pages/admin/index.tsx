@@ -1,10 +1,12 @@
-import { useQuery, gql } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { formatPrice } from "@modules/Utils";
+import { serverApollo } from "@modules/Apollo";
 
-const AdminPage = () => {
-  const { loading, error, data } = useQuery(
-    gql`
+export const getServerSideProps = async (context) => {
+  const apolloClient = serverApollo(context);
+
+  const { data } = await apolloClient.query({
+    query: gql`
       {
         products {
           name
@@ -22,7 +24,6 @@ const AdminPage = () => {
           products {
             price
           }
-          
         }
         FilterOrder: orders(limit: 5, sort: _ID_DESC) {
           _id
@@ -36,16 +37,15 @@ const AdminPage = () => {
           }
         }
       }
-    `
-  );
+    `,
+  });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error || !data) {
-    return <div>Error...</div>;
-  }
+  return {
+    props: { data },
+  };
+};
 
+const AdminPage = ({ data }) => {
   var profit = 0;
   const product = data.products;
 
@@ -64,7 +64,7 @@ const AdminPage = () => {
     var dateString = new Date(order.timestamp);
     return (
       <tr key={order._id.toString()}>
-        <th>{index+1}</th>
+        <th>{index + 1}</th>
         <th>{order.orderedBy.username}</th>
         <td>{order.status}</td>
         <td>{dateString.toLocaleDateString()}</td>
@@ -75,7 +75,7 @@ const AdminPage = () => {
   const renderTableProduct = sortStock.slice(0, 5).map((item, index) => {
     return (
       <tr>
-        <th>{index+1}</th>
+        <th>{index + 1}</th>
         <th>{item.name}</th>
         <td>{item.detail}</td>
         <td>{item.price}</td>
@@ -148,7 +148,7 @@ const AdminPage = () => {
           <Col>
             <h3>สินค้าขาดสต็อค</h3>
             <table className="table">
-            <thead>
+              <thead>
                 <tr>
                   <th>ลำดับสินค้า</th>
                   <th>ชื่อสินค้า</th>
