@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Product, Promotion } from "@type/SchemaModel";
+import { randomProductInfo } from "@modules/Utils";
 
 const ControlUnit = ({ label, unit, name, value, onChange }) => {
   return (
@@ -56,6 +57,10 @@ const ProductForm = ({
   const lastColSize = useMemo(() => {
     return promotionForm ? 3 : 4;
   }, [promotionForm]);
+
+  const randomInfo = useCallback(() => {
+    setLocalProduct(randomProductInfo(promotionForm));
+  }, []);
 
   return (
     <form onSubmit={submitHandler}>
@@ -149,6 +154,14 @@ const ProductForm = ({
         )}
 
         <Col className="mt-3 text-right">
+          <Button
+            variant=""
+            type="button"
+            className="mr-2"
+            onClick={randomInfo}
+          >
+            &nbsp;
+          </Button>
           <Button variant="success" type="submit">
             Submit
           </Button>
