@@ -5,6 +5,7 @@ import { serverApollo } from "@modules/Apollo";
 import PageTitle from "@components/common/PageTitle";
 import { requireAuthentication } from "@modules/Auth";
 import { useMemo } from "react";
+import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
 
 export const getServerSideProps = async (context) => {
   if (!(await requireAuthentication(context))) return;
@@ -18,7 +19,7 @@ export const getServerSideProps = async (context) => {
         me {
           _id
           shippingAddress
-          orders {
+          orders(sort: _ID_DESC) {
             _id
             timestamp
             status
@@ -58,13 +59,13 @@ const CustomerOrdersPage = ({ me }) => {
         <div className="card-header">
           <div className="row">
             <div className="col">
-              <h5>
+              <h5 className="m-0">
                 <b>Date:</b> {dateString.toLocaleDateString()}
               </h5>
             </div>
             <div className="col">
-              <h5 className="float-right">
-                <b>Status:</b> {order.status}
+              <h5 className="float-right m-0">
+                <OrderStatusLabel status={order.status} />
               </h5>
             </div>
           </div>
@@ -84,10 +85,10 @@ const CustomerOrdersPage = ({ me }) => {
                     )}
                   </div>
                 </div>
-                <div className="col-7 d-flex align-items-center">
+                <div className="col-6 d-flex align-items-center">
                   <h5>{product.name}</h5>
                 </div>
-                <div className="col-2 d-flex align-items-center justify-content-center">
+                <div className="col-3 d-flex align-items-center justify-content-center">
                   <h5 className="float-right">
                     {formatPrice(product.price)} THB
                   </h5>
@@ -96,16 +97,22 @@ const CustomerOrdersPage = ({ me }) => {
               </div>
             );
           })}
-          <div className="d-flex flex-fill justify-content-end">
+
+          <div className="d-flex flex-fill justify-content-end mx-5 mt-3">
             <h5>
               <b>Total:</b> {formatPrice(calPrice(order.products))} THB
             </h5>
           </div>
-          <Link href={"/customer/order/" + order._id}>
-            <a>
-              <button className="btn btn-light my-3 float-right">Detail</button>
-            </a>
-          </Link>
+
+          <div className="d-flex flex-fill justify-content-end mx-5 mt-3">
+            <Link href={"/customer/order/" + order._id}>
+              <a>
+                <button className="btn btn-light my-3 float-right px-5">
+                  Detail
+                </button>
+              </a>
+            </Link>
+          </div>
         </div>
       </div>
     );

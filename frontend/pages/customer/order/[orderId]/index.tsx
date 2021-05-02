@@ -5,10 +5,11 @@ import {
   formatPrice,
 } from "@modules/Utils";
 import { serverApollo } from "@modules/Apollo";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { Order } from "@type/SchemaModel";
 import { requireAuthentication } from "@modules/Auth";
-import { Badge } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
 
 export const getServerSideProps = async (context) => {
   if (!(await requireAuthentication(context))) return;
@@ -68,10 +69,10 @@ const ProductCard = ({ product, isPromotion = false }) => {
           )}
         </div>
       </div>
-      <div className="col-7 d-flex flex-column justify-content-center">
+      <div className="col-6 d-flex flex-column justify-content-center">
         <h5>{product.name}</h5>
       </div>
-      <div className="col-2 d-flex align-items-center justify-content-center">
+      <div className="col-3 d-flex align-items-center justify-content-center">
         {!isPromotion && (
           <h5 className="float-right">{formatPrice(product.price)} THB</h5>
         )}
@@ -113,13 +114,30 @@ const CustomerOrderPage = ({ order }: Props) => {
   return (
     <>
       <div className="card my-5">
-        <div className="card-header">Order Detail</div>
+        <div className="card-header">
+          <div className="row">
+            <div className="col d-flex">
+              <Button
+                variant=""
+                className="p-0 px-2"
+                onClick={() => {
+                  window.history.back();
+                }}
+                size="sm"
+              >
+                <i className="fa fa-chevron-left" />
+              </Button>
+              <h5 className="m-0 d-inline">Order Detail</h5>
+            </div>
+            <div className="col">
+              <h5 className="float-right m-0">
+                <OrderStatusLabel status={order.status} />
+              </h5>
+            </div>
+          </div>
+        </div>
         <div className="card-body">
-          <div className="mx-3 my-3">
-            <h5>
-              <b>Status:</b> {order.status}
-            </h5>
-
+          <div className="mx-3 my-3 mb-4">
             <h5>
               <b>Date:</b> {dateString.toLocaleDateString()}
             </h5>
