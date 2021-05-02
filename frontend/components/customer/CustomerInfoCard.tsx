@@ -1,6 +1,9 @@
 import { Customer } from "@type/SchemaModel";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "react-bootstrap";
+import { useMutation } from "@apollo/client";
+import { gql } from "@apollo/client/core";
+import { useSession } from "@modules/SessionContext";
 
 const ProfilePicture = () => {
   const profilePictures = [
@@ -31,13 +34,68 @@ const ProfilePicture = () => {
   );
 };
 
-const CustomerInfoCard = ({
-  customer,
-  handleChange,
-}: {
-  customer: Customer;
-  handleChange: (e) => void;
-}) => {
+const CustomerInfoCard = ({ customer }: { customer: Customer }) => {
+  const [localCustomer, setLocalCustomer] = useState(customer);
+  const { user } = useSession();
+
+  const [updateCustomer] = useMutation(gql`
+    mutation(
+      $id: MongoID!
+      $billingAddress: String!
+      $shippingAddress: String!
+      $phone: String!
+    ) {
+      updateCustomerById(
+        _id: $id
+        record: {
+          billingAddress: $billingAddress
+          shippingAddress: $shippingAddress
+          phone: $phone
+        }
+      ) {
+        record {
+          billingAddress
+          shippingAddress
+          phone
+        }
+      }
+    }
+  `);
+
+  const handleChange = useCallback(
+    (e) => {
+      setLocalCustomer({ ...localCustomer, [e.target.name]: e.target.value });
+    },
+    [localCustomer]
+  );
+
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      try {
+        const {
+          data: {
+            updateCustomerById: { record },
+          },
+        } = await updateCustomer({
+          variables: {
+            id: user._id,
+            billingAddress: localCustomer.billingAddress,
+            shippingAddress: localCustomer.shippingAddress,
+            phone: localCustomer.phone,
+          },
+        });
+
+        setLocalCustomer({ ...localCustomer, ...record });
+        alert("User updated successfully");
+      } catch {
+        alert("Fail to update user!");
+      }
+    },
+    [user, localCustomer]
+  );
+
   return (
     <div className="card mx-5">
       <h5 className="card-header">Information</h5>
@@ -46,14 +104,14 @@ const CustomerInfoCard = ({
           <ProfilePicture />
 
           <div className="col-9">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col form-group">
                   <label>Username</label>
                   <input
                     type="text"
                     className="form-control-plaintext text-secondary"
-                    value={customer.username}
+                    value={localCustomer.username}
                     readOnly
                   />
                 </div>
@@ -63,7 +121,7 @@ const CustomerInfoCard = ({
                   <input
                     type="email"
                     className="form-control-plaintext text-secondary"
-                    value={customer.email}
+                    value={localCustomer.email}
                     readOnly
                   />
                 </div>
@@ -72,7 +130,7 @@ const CustomerInfoCard = ({
                 <label>Billing Address</label>
                 <textarea
                   className="form-control"
-                  value={customer.billingAddress}
+                  value={localCustomer.billingAddress}
                   name="billingAddress"
                   onChange={handleChange}
                   required
@@ -83,7 +141,7 @@ const CustomerInfoCard = ({
                 <label>Shipping Address</label>
                 <textarea
                   className="form-control"
-                  value={customer.shippingAddress}
+                  value={localCustomer.shippingAddress}
                   name="shippingAddress"
                   onChange={handleChange}
                   required
@@ -95,7 +153,7 @@ const CustomerInfoCard = ({
                 <input
                   type="tel"
                   className="form-control"
-                  value={customer.phone}
+                  value={localCustomer.phone}
                   name="phone"
                   onChange={handleChange}
                   required

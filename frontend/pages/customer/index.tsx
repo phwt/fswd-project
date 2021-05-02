@@ -1,14 +1,20 @@
-import { gql, useQuery } from "@apollo/client";
-import { useCallback, useState } from "react";
+import { gql } from "@apollo/client";
 import { Customer } from "@type/SchemaModel";
 import CustomerInfoCard from "@components/customer/CustomerInfoCard";
 import PasswordCard from "@components/customer/PasswordCard";
+import { serverApollo } from "@modules/Apollo";
+import PageTitle from "@components/common/PageTitle";
+import { requireAuthentication } from "@modules/Auth";
 
-const CustomerPage = () => {
-  const [customer, setCustomer] = useState<Customer>();
+export const getServerSideProps = async (context) => {
+  if (!(await requireAuthentication(context))) return;
 
-  const { loading, error, data } = useQuery(
-    gql`
+  const apolloClient = serverApollo(context);
+
+  const {
+    data: { me },
+  } = await apolloClient.query({
+    query: gql`
       query {
         me {
           _id
@@ -19,29 +25,24 @@ const CustomerPage = () => {
           shippingAddress
         }
       }
-    `
-  );
+    `,
+  });
 
-  if (!loading && data && data.me && !customer) {
-    setCustomer(data.me);
-  }
+  return {
+    props: { customer: me },
+  };
+};
 
-  const handleChange = useCallback(
-    (e) => {
-      setCustomer({ ...customer, [e.target.name]: e.target.value });
-    },
-    [customer]
-  );
+interface Props {
+  customer: Customer;
+}
 
+const CustomerPage = ({ customer }: Props) => {
   return (
     <>
-      <h1 className="mx-5 mb-4 mt-2">Profile</h1>
-      {customer && (
-        <>
-          <CustomerInfoCard customer={customer} handleChange={handleChange} />
-          <PasswordCard />
-        </>
-      )}
+      <PageTitle icon="user" title="Profile" />
+      <CustomerInfoCard customer={customer} />
+      <PasswordCard />
     </>
   );
 };

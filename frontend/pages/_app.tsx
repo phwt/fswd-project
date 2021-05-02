@@ -1,6 +1,6 @@
 import "../styles/globals.scss";
 import { CookiesProvider } from "react-cookie";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import { SessionProvider } from "@modules/SessionContext";
 import CommonHeader from "@components/common/Header";
 import BackofficeHeader from "@components/admin/Header";
@@ -9,14 +9,7 @@ import CommonBaseContainer from "@components/common/BaseContainer";
 import BackofficeBaseContainer from "@components/admin/BaseContainer";
 import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
-
-export const apolloClient = new ApolloClient({
-  uri: "http://localhost:5001/graphql",
-  cache: new InMemoryCache({
-    addTypename: false,
-  }),
-  credentials: "include",
-});
+import { clientApollo } from "@modules/Apollo";
 
 const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const { pathname } = useRouter();
@@ -41,7 +34,7 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
 const App = ({ Component, pageProps }) => {
   return (
     <CookiesProvider>
-      <ApolloProvider client={apolloClient}>
+      <ApolloProvider client={clientApollo()}>
         <SessionProvider>
           <BaseLayout>
             <Component {...pageProps} />

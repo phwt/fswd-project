@@ -31,6 +31,14 @@ const Home = () => {
   `;
   const { loading, error, data } = useQuery(query);
 
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
+  if (error) {
+    return <p>{JSON.stringify(error)}</p>;
+  }
+
   return (
     <>
       {!loading && (

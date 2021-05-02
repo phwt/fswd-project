@@ -4,6 +4,7 @@ import ProductCard from "../../components/common/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPercentage } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import PageTitle from "@components/common/PageTitle";
 
 const PromotionsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,10 +55,7 @@ const PromotionsPage = () => {
     <>
       {!loading && (
         <>
-          <h3 className="raleway-3">
-            {/* <FontAwesomeIcon icon={faPercentage} /> */}
-            ALL PROMOTION
-          </h3>
+          <PageTitle icon="percentage" title="Products" />
           <br />
           <CardDeck>
             {data.promotionPagination.items.map((d) => {

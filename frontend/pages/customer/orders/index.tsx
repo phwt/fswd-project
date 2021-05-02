@@ -1,10 +1,18 @@
-import { useQuery, gql } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { formatPrice } from "@modules/Utils";
 import Link from "next/link";
+import { serverApollo } from "@modules/Apollo";
+import PageTitle from "@components/common/PageTitle";
+import { requireAuthentication } from "@modules/Auth";
 
-const CustomerOrdersPage = () => {
-  const { loading, error, data } = useQuery(
-    gql`
+export const getServerSideProps = async (context) => {
+  if (!(await requireAuthentication(context))) return;
+  const apolloClient = serverApollo(context);
+
+  const {
+    data: { me },
+  } = await apolloClient.query({
+    query: gql`
       query {
         me {
           _id
@@ -21,23 +29,22 @@ const CustomerOrdersPage = () => {
           }
         }
       }
-    `
-  );
+    `,
+  });
 
-  if (loading || !data.me) {
-    return <div>Loading...</div>;
-  }
-  if (error || !data) {
-    return <div>Error...</div>;
-  }
+  return {
+    props: { me },
+  };
+};
 
+const CustomerOrdersPage = ({ me }) => {
   const calPrice = (products) => {
     return products.map((product) => product.price).reduce((a, b) => a + b, 0);
   };
 
-  const renderOrderCards = data.me.orders.map((order) => {
+  const renderOrderCards = me.orders.map((order) => {
     return (
-      <div className="card my-5" key={order._id.toString()}>
+      <div className="card mb-5" key={order._id.toString()}>
         <div className="card-header">
           <div className="row">
             <div className="col">
@@ -89,15 +96,9 @@ const CustomerOrdersPage = () => {
 
   return (
     <>
-      {!loading && (
-        <>
-          <h1>Orders</h1>
-
-          {data?.me?.orders.length === 0 && <p>No Orders</p>}
-
-          {renderOrderCards}
-        </>
-      )}
+      <PageTitle icon="list" title="Orders" />
+      {me?.orders.length === 0 && <p>No Orders</p>}
+      {renderOrderCards}
     </>
   );
 };
