@@ -1,22 +1,15 @@
-import { gql, useLazyQuery } from "@apollo/client";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { gql } from "@apollo/client";
+import { useEffect, useState } from "react";
 import ProductDetail from "../../../components/common/ProductDetail";
+import { serverApollo } from "@modules/Apollo";
 
-const ProductPage = () => {
-  //get type from url param
+export const getServerSideProps = async (context) => {
+  const apolloClient = serverApollo(context);
 
-  //come from promotion type=promotion
-  //come from product -
-
-  const { query } = useRouter();
-
-  //query product by id
-  const [
-    getProduct,
-    { loading: loadingProduct, error: errorProduct, data: dataProduct },
-  ] = useLazyQuery(
-    gql`
+  const {
+    data: { productFindOne, promotionFindOne },
+  } = await apolloClient.query({
+    query: gql`
       query productFindOne($sku: String!) {
         productFindOne(filter: { sku: $sku }) {
           name
@@ -25,21 +18,6 @@ const ProductPage = () => {
           _id
           imageLocation
         }
-      }
-    `,
-    {
-      variables: {
-        sku: query.productSlug,
-      },
-    }
-  );
-  //query promotion by id
-  const [
-    getPromotion,
-    { loading: loadingPromotion, error: errorPromotion, data: dataPromotion },
-  ] = useLazyQuery(
-    gql`
-      query promotionFindOne($sku: String!) {
         promotionFindOne(filter: { sku: $sku }) {
           name
           detail
@@ -50,57 +28,42 @@ const ProductPage = () => {
         }
       }
     `,
-    {
-      variables: {
-        sku: query.productSlug,
-      },
-    }
-  );
+    variables: {
+      sku: context.params.productSlug,
+    },
+  });
+
+  return {
+    props: {
+      product: productFindOne,
+      promotion: promotionFindOne,
+    },
+  };
+};
+
+const ProductPage = ({ product, promotion }) => {
+  const [isPromotion, setIsPromotion] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (process.browser) {
       const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get("type");
 
-      if (myParam === "promotion") {
-        getPromotion();
-      } else {
-        getProduct();
-      }
+      if (myParam === "promotion") setIsPromotion(true);
+      setLoaded(true);
     }
   }, []);
 
   return (
     <>
-      {!loadingPromotion && dataPromotion && (
+      {loaded && (
         <>
-          {/* Product Page {query.productSlug} */}
-          <ProductDetail
-            name={dataPromotion.promotionFindOne.name}
-            price={dataPromotion.promotionFindOne.price}
-            detail={dataPromotion.promotionFindOne.detail}
-            id={dataPromotion.promotionFindOne.id}
-            imgurl={
-              dataPromotion.promotionFindOne.imageLocation ?? "../no-image.jpg"
-            }
-            discount={dataPromotion.promotionFindOne.discountPercentage}
-            type="Promotion"
-          />
-        </>
-      )}
-      {!loadingProduct && dataProduct && (
-        <>
-          <ProductDetail
-            name={dataProduct.productFindOne.name}
-            price={dataProduct.productFindOne.price}
-            detail={dataProduct.productFindOne.detail}
-            id={dataProduct.productFindOne._id}
-            imgurl={
-              dataProduct.productFindOne.imageLocation ?? "../no-image.jpg"
-            }
-            discount="0"
-            type="Product"
-          />
+          {isPromotion ? (
+            <ProductDetail product={promotion} isPromotion />
+          ) : (
+            <ProductDetail product={product} />
+          )}
         </>
       )}
     </>
