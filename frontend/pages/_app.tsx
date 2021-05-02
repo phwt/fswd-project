@@ -20,6 +20,10 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
     return pathname.includes("admin");
   }, [pathname]);
 
+  const isRoot = useMemo(() => {
+    return pathname === "/";
+  }, [pathname]);
+
   return (
     <>
       {isBackoffice ? <BackofficeHeader /> : <CommonHeader />}
@@ -35,14 +39,18 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
           <Head>
             <title>Store</title>
           </Head>
-          <Row style={{ width: "auto", height: "auto" }}>
-            <ResponsiveEmbed aspectRatio="21by9">
-              <embed
-                type="image/svg+xml"
-                src="https://dms-fs.s3.ap-southeast-1.amazonaws.com/video.mp4"
-              />
-            </ResponsiveEmbed>
-          </Row>
+          {isRoot && (
+            <Row style={{ width: "auto", height: "auto", maxWidth: "100vw" }}>
+              <ResponsiveEmbed aspectRatio="21by9">
+                <video autoPlay muted>
+                  <source
+                    src="https://dms-fs.s3.ap-southeast-1.amazonaws.com/video.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </ResponsiveEmbed>
+            </Row>
+          )}
           <CommonBaseContainer>{children}</CommonBaseContainer>
         </>
       )}
