@@ -9,7 +9,7 @@ const ProductsPage = () => {
   const { loading, error, data } = useQuery(
     gql`
       query productPagination($currentPage: Int) {
-        productPagination(page: $currentPage, perPage: 5, sort: _ID_DESC) {
+        productPagination(page: $currentPage, perPage: 4, sort: _ID_DESC) {
           items {
             _id
             sku
