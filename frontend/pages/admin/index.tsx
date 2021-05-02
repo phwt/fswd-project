@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button } from "react-bootstrap";
 import { serverApollo } from "@modules/Apollo";
+import { useMemo } from "react";
 
 export const getServerSideProps = async (context) => {
   const apolloClient = serverApollo(context);
@@ -61,7 +62,7 @@ const StatCard = ({ title, value, unit }) => {
 
 const LatestTable = ({ orders }) => {
   const renderTableOrder = orders.map((order, index) => {
-    var dateString = new Date(order.timestamp);
+    const dateString = new Date(order.timestamp);
     return (
       <tr key={order._id.toString()}>
         <th>{index + 1}</th>
@@ -125,18 +126,22 @@ const StockTable = ({ products }) => {
 };
 
 const AdminPage = ({ data }) => {
-  var profit = 0;
-  const product = data.products;
+  const totalIncome = useMemo(() => {
+    return data.orders
+      .map((order) => {
+        return order.products.map((product) => {
+          return product.price;
+        });
+      })
+      .reduce((acc, cur) => [...acc, ...cur])
+      .reduce((acc, cur) => acc + cur);
+  }, [data.orders]);
 
-  const totalPrice = data.orders.map((order) => {
-    const total = order.products.map((product) => {
-      profit += product.price;
+  const sortStock = useMemo(() => {
+    return data.products.slice().sort((a, b) => {
+      return parseFloat(a.stock) - parseFloat(b.stock);
     });
-  });
-
-  const sortStock = product.slice().sort((a, b) => {
-    return parseFloat(a.stock) - parseFloat(b.stock);
-  });
+  }, [data.products]);
 
   return (
     <>
@@ -163,7 +168,7 @@ const AdminPage = ({ data }) => {
           />
         </Col>
         <Col md={3}>
-          <StatCard title="Income" value={profit} unit="THB" />
+          <StatCard title="Income" value={totalIncome} unit="THB" />
         </Col>
       </Row>
       <Row className="mt-5">
