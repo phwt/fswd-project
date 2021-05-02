@@ -10,6 +10,9 @@ const AdminOrdersPage = () => {
           status
           timestamp
           customerId
+          orderedBy {
+            username
+          }
         }
       }
     `
@@ -23,13 +26,14 @@ const AdminOrdersPage = () => {
     return <div>Error...</div>;
   }
 
-  const renderTableOrder = data.orders.map((order) => {
+  const renderTableOrder = data.orders.map((order, index) => {
+    var dateString = new Date(order.timestamp);
     return (
       <tr key={order._id.toString()}>
-        <th scope="row">{order._id}</th>
+        <th>{index+1}</th>
         <td>{order.status}</td>
-        <td>{order.timestamp}</td>
-        <td>{order.customerId}</td>
+        <td>{dateString.toLocaleDateString()}</td>
+        <td>{order.orderedBy.username}</td>
         <td>
           <Button variant="outline-dark">
             <Nav.Link href={"/admin/order/" + order._id}>View</Nav.Link>
@@ -48,7 +52,7 @@ const AdminOrdersPage = () => {
             <th>ID</th>
             <th>Status</th>
             <th>Time Stamp</th>
-            <th>Customer ID</th>
+            <th>Customer</th>
             <th></th>
           </tr>
         </thead>

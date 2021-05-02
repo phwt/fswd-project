@@ -27,10 +27,10 @@ const AdminPromotionsPage = () => {
     return <div>Error...</div>;
   }
 
-  const renderTablePromotions = data.promotions.map((promotion) => {
+  const renderTablePromotions = data.promotions.map((promotion, index) => {
     return (
       <tr key={promotion.name.toString()}>
-        <th scope="row">{promotion._id}</th>
+        <th scope="row">{index+1}</th>
         <td>{promotion.name}</td>
         <td>{promotion.detail}</td>
         <td>{formatPrice(promotion.price)}</td>

@@ -7,7 +7,6 @@ const AdminProductsPage = () => {
     gql`
       {
         products {
-          _id
           name
           detail
           price
@@ -26,10 +25,10 @@ const AdminProductsPage = () => {
     return <div>Error...</div>;
   }
 
-  const renderTableProducts = data.products.map((products) => {
+  const renderTableProducts = data.products.map((products,index) => {
     return (
       <tr key={products.name.toString()}>
-        <th scope="row">{products._id}</th>
+        <th>{index+1}</th>
         <td>{products.name}</td>
         <td>{products.detail}</td>
         <td>{formatPrice(products.price)}</td>
