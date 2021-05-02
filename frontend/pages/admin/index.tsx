@@ -3,6 +3,7 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import { serverApollo } from "@modules/Apollo";
 import { useMemo } from "react";
 import Link from "next/link";
+import { formatPrice } from "@modules/Utils";
 
 export const getServerSideProps = async (context) => {
   const apolloClient = serverApollo(context);
@@ -48,15 +49,21 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-const StatCard = ({ title, value, unit }) => {
+const StatCard = ({ title, value, unit, href }) => {
   return (
-    <Card style={{ width: "100%" }} className="w-100">
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <h1 className="d-inline">{value}</h1>{" "}
-        <small className="text-muted">{unit}</small>
-      </Card.Body>
-    </Card>
+    <Link href={href}>
+      <Card
+        style={{
+          cursor: "pointer",
+        }}
+      >
+        <Card.Body>
+          <Card.Title>{title}</Card.Title>
+          <h1 className="d-inline">{formatPrice(value)}</h1>{" "}
+          <small className="text-muted">{unit}</small>
+        </Card.Body>
+      </Card>
+    </Link>
   );
 };
 
@@ -155,6 +162,7 @@ const AdminPage = ({ data }) => {
             title="Total Products"
             value={data.products.length}
             unit="items"
+            href="/admin/products"
           />
         </Col>
         <Col md={3}>
@@ -162,6 +170,7 @@ const AdminPage = ({ data }) => {
             title="Total Promotions"
             value={data.promotions.length}
             unit="items"
+            href="/admin/promotions"
           />
         </Col>
         <Col md={3}>
@@ -169,10 +178,16 @@ const AdminPage = ({ data }) => {
             title="Total Orders"
             value={data.orders.length}
             unit="orders"
+            href="/admin/orders"
           />
         </Col>
         <Col md={3}>
-          <StatCard title="Income" value={totalIncome} unit="THB" />
+          <StatCard
+            title="Income"
+            value={totalIncome}
+            unit="THB"
+            href="/admin/orders"
+          />
         </Col>
       </Row>
       <Row className="mt-5">

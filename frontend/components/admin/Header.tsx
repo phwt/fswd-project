@@ -60,14 +60,14 @@ const Header = () => {
             Products
           </Nav.Link>
         </Link>
-        <Link href="/admin/orders" passHref>
-          <Nav.Link className="raleway-3s" eventKey="orders">
-            Orders
-          </Nav.Link>
-        </Link>
         <Link href="/admin/promotions" passHref>
           <Nav.Link className="raleway-3s" eventKey="promotions">
             Promotions
+          </Nav.Link>
+        </Link>
+        <Link href="/admin/orders" passHref>
+          <Nav.Link className="raleway-3s" eventKey="orders">
+            Orders
           </Nav.Link>
         </Link>
       </Nav>

@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client/core";
 import { serverApollo } from "@modules/Apollo";
 import ProductEditForm from "@components/admin/product/ProductEditForm";
+import PageTitle from "@components/admin/PageTitle";
 
 export const getServerSideProps = async (context) => {
   const {
@@ -38,7 +39,7 @@ export const getServerSideProps = async (context) => {
 const AdminPromotionPage = ({ product }) => {
   return (
     <>
-      <h2>Edit Promotion</h2>
+      <PageTitle title="Edit Promotion" />
       <hr />
       <ProductEditForm product={product} promotionForm />
     </>

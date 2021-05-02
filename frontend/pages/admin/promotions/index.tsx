@@ -1,11 +1,17 @@
 import { useQuery, gql } from "@apollo/client";
-import { Nav, Button } from "react-bootstrap";
+import { Nav, Button, Col, Row } from "react-bootstrap";
 import { formatPrice } from "@modules/Utils";
+import { serverApollo } from "@modules/Apollo";
+import Link from "next/link";
+import PageTitle from "@components/admin/PageTitle";
 
-const AdminPromotionsPage = () => {
-  const { loading, error, data } = useQuery(
-    gql`
-      {
+export const getServerSideProps = async (context) => {
+  const apolloClient = serverApollo(context);
+  const {
+    data: { promotions },
+  } = await apolloClient.query({
+    query: gql`
+      query {
         promotions {
           _id
           name
@@ -16,30 +22,32 @@ const AdminPromotionsPage = () => {
           sku
         }
       }
-    `
-  );
-  console.log(data);
+    `,
+  });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error || !data) {
-    return <div>Error...</div>;
-  }
+  return {
+    props: {
+      promotions,
+    },
+  };
+};
 
-  const renderTablePromotions = data.promotions.map((promotion, index) => {
+const AdminPromotionsPage = ({ promotions }) => {
+  const renderTablePromotions = promotions.map((promotion, index) => {
     return (
       <tr key={promotion.name.toString()}>
-        <th scope="row">{index+1}</th>
+        <th scope="row">{index + 1}</th>
         <td>{promotion.name}</td>
         <td>{promotion.detail}</td>
         <td>{formatPrice(promotion.price)}</td>
         <td>{promotion.stock}</td>
-        <td>{promotion.discountPercentage}</td>
-        <td>
-          <Button variant="outline-dark">
-            <Nav.Link href={"/admin/promotion/" + promotion._id}>View</Nav.Link>
-          </Button>
+        <td>{promotion.discountPercentage}%</td>
+        <td className="text-right">
+          <Link href={"/admin/promotion/" + promotion._id}>
+            <Button variant="light" size="sm">
+              <i className="fa fa-chevron-right" />
+            </Button>
+          </Link>
         </td>
       </tr>
     );
@@ -47,17 +55,30 @@ const AdminPromotionsPage = () => {
 
   return (
     <>
-      <h2>Promotions</h2>
+      <Row className="mb-3">
+        <Col>
+          <PageTitle title="Promotions" />
+        </Col>
+        <Col className="text-right">
+          <Link href="/admin/promotion/create">
+            <Button variant="success">
+              <i className="fa fa-plus mr-2" />
+              Add Promotion
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>Detail</th>
             <th>Price</th>
             <th>Stock</th>
             <th>Discount</th>
-            <th></th>
+            <th />
           </tr>
         </thead>
         <tbody>{renderTablePromotions}</tbody>

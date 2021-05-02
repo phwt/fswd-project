@@ -1,10 +1,16 @@
 import { useQuery, gql } from "@apollo/client";
-import { Nav, Button } from "react-bootstrap";
+import { Nav, Button, Row, Col } from "react-bootstrap";
+import { serverApollo } from "@modules/Apollo";
+import Link from "next/link";
+import PageTitle from "@components/admin/PageTitle";
 
-const AdminOrdersPage = () => {
-  const { loading, error, data } = useQuery(
-    gql`
-      {
+export const getServerSideProps = async (context) => {
+  const apolloClient = serverApollo(context);
+  const {
+    data: { orders },
+  } = await apolloClient.query({
+    query: gql`
+      query {
         orders {
           _id
           status
@@ -15,29 +21,31 @@ const AdminOrdersPage = () => {
           }
         }
       }
-    `
-  );
-  console.log(data);
+    `,
+  });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error || !data) {
-    return <div>Error...</div>;
-  }
+  return {
+    props: {
+      orders,
+    },
+  };
+};
 
-  const renderTableOrder = data.orders.map((order, index) => {
-    var dateString = new Date(order.timestamp);
+const AdminOrdersPage = ({ orders }) => {
+  const renderTableOrder = orders.map((order, index) => {
+    const dateString = new Date(order.timestamp);
     return (
       <tr key={order._id.toString()}>
-        <th>{index+1}</th>
+        <th>{index + 1}</th>
         <td>{order.status}</td>
         <td>{dateString.toLocaleDateString()}</td>
         <td>{order.orderedBy.username}</td>
-        <td>
-          <Button variant="outline-dark">
-            <Nav.Link href={"/admin/order/" + order._id}>View</Nav.Link>
-          </Button>
+        <td className="text-right">
+          <Link href={"/admin/order/" + order._id}>
+            <Button variant="light" size="sm">
+              <i className="fa fa-chevron-right" />
+            </Button>
+          </Link>
         </td>
       </tr>
     );
@@ -45,15 +53,16 @@ const AdminOrdersPage = () => {
 
   return (
     <>
-      <h2>Orders</h2>
+      <PageTitle title="Orders" />
+      <div className="mb-3" />
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Status</th>
-            <th>Time Stamp</th>
+            <th>Timestamp</th>
             <th>Customer</th>
-            <th></th>
+            <th />
           </tr>
         </thead>
         <tbody>{renderTableOrder}</tbody>

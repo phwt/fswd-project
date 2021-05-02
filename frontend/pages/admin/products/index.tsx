@@ -1,12 +1,19 @@
-import { useQuery, gql } from "@apollo/client";
-import { Nav, Button } from "react-bootstrap";
+import { gql } from "@apollo/client";
+import { Button, Col, Row } from "react-bootstrap";
 import { formatPrice } from "@modules/Utils";
+import { serverApollo } from "@modules/Apollo";
+import Link from "next/link";
+import PageTitle from "@components/admin/PageTitle";
 
-const AdminProductsPage = () => {
-  const { loading, error, data } = useQuery(
-    gql`
-      {
+export const getServerSideProps = async (context) => {
+  const apolloClient = serverApollo(context);
+  const {
+    data: { products },
+  } = await apolloClient.query({
+    query: gql`
+      query {
         products {
+          _id
           name
           detail
           price
@@ -14,29 +21,33 @@ const AdminProductsPage = () => {
           sku
         }
       }
-    `
-  );
-  console.log(data);
+    `,
+  });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error || !data) {
-    return <div>Error...</div>;
-  }
+  return {
+    props: {
+      products,
+    },
+  };
+};
 
-  const renderTableProducts = data.products.map((products,index) => {
+const AdminProductsPage = ({ products }) => {
+  const renderTableProducts = products.map((product, index) => {
     return (
-      <tr key={products.name.toString()}>
-        <th>{index+1}</th>
-        <td>{products.name}</td>
-        <td>{products.detail}</td>
-        <td>{formatPrice(products.price)}</td>
-        <td>{products.stock}</td>
+      <tr key={product._id}>
+        <th>{index + 1}</th>
         <td>
-          <Button variant="outline-dark">
-            <Nav.Link href={"/admin/product/" + products._id}>View</Nav.Link>
-          </Button>
+          <Link href={"/admin/product/" + product._id}>{product.name}</Link>
+        </td>
+        <td>{product.detail}</td>
+        <td>{formatPrice(product.price)}</td>
+        <td>{product.stock}</td>
+        <td className="text-right">
+          <Link href={"/admin/product/" + product._id}>
+            <Button variant="light" size="sm">
+              <i className="fa fa-chevron-right" />
+            </Button>
+          </Link>
         </td>
       </tr>
     );
@@ -44,16 +55,30 @@ const AdminProductsPage = () => {
 
   return (
     <div>
-      <h2>Products</h2>
+      <Row className="mb-3">
+        <Col>
+          <PageTitle title="Products" />
+        </Col>
+
+        <Col className="text-right">
+          <Link href="/admin/product/create">
+            <Button variant="success">
+              <i className="fa fa-plus mr-2" />
+              Add Product
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>Detail</th>
             <th>Price</th>
             <th>Stock</th>
-            <th></th>
+            <th />
           </tr>
         </thead>
         <tbody>{renderTableProducts}</tbody>

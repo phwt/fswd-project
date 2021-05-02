@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { Order } from "@type/SchemaModel";
 import { useEffect, useState } from "react";
+import PageTitle from "@components/admin/PageTitle";
 
 export const OrderCardRow = ({ title, value }) => (
   <>
@@ -67,7 +68,7 @@ const AdminOrderPage = () => {
 
   return (
     <>
-      <h2>Edit Order</h2>
+      <PageTitle title="Edit Order" />
       <hr />
       {order && (
         <Row>

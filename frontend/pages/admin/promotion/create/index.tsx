@@ -1,9 +1,10 @@
 import ProductCreateForm from "@components/admin/product/ProductCreateForm";
+import PageTitle from "@components/admin/PageTitle";
 
 const AdminPromotionCreatePage = () => {
   return (
     <>
-      <h2>Create Promotion</h2>
+      <PageTitle title="Create Promotion" />
       <hr />
       <ProductCreateForm promotionForm />
     </>
