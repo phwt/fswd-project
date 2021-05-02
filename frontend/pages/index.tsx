@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { Col, Row, CardDeck } from "react-bootstrap";
+import { Col, Row, CardDeck, Button } from "react-bootstrap";
 import ProductCard from "../components/common/ProductCard";
 import { Product } from "@type/SchemaModel";
 
@@ -55,6 +55,16 @@ const Home = () => {
               );
             })}
           </CardDeck>
+          <Col className="text-center mb-5">
+            <Button
+              href="/products"
+              size="sm"
+              variant="light"
+              className="raleway-3"
+            >
+              VIEW MORE
+            </Button>
+          </Col>
           <Col
             className="bg-danger mx-1 p-3 mb-5"
             style={{ justifyContent: "center" }}
@@ -75,6 +85,16 @@ const Home = () => {
               );
             })}
           </CardDeck>
+          <Col className="text-center">
+            <Button
+              href="/promotions"
+              size="sm"
+              variant="light"
+              className="raleway-3"
+            >
+              VIEW MORE
+            </Button>
+          </Col>
         </>
       )}
     </>
