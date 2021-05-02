@@ -44,6 +44,7 @@ const Home = () => {
           <Row>
             <Col></Col>
             <Col>
+              <h3 className="raleway-6">NEW IN</h3>
               <ProductCard size="40" product={data.products[0]} />
             </Col>
             <Col></Col>

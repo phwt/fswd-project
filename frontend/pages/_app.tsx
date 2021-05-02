@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
 import { clientApollo } from "@modules/Apollo";
 import Head from "next/head";
-import { ResponsiveEmbed, Row } from "react-bootstrap";
+import { ResponsiveEmbed, Row, Col } from "react-bootstrap";
 
 const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const { pathname } = useRouter();
@@ -40,16 +40,22 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
             <title>Store</title>
           </Head>
           {isRoot && (
-            <Row style={{ width: "auto", height: "auto", maxWidth: "100vw" }}>
-              <ResponsiveEmbed aspectRatio="21by9">
-                <video autoPlay muted>
-                  <source
-                    src="https://dms-fs.s3.ap-southeast-1.amazonaws.com/video.mp4"
-                    type="video/mp4"
-                  />
-                </video>
-              </ResponsiveEmbed>
-            </Row>
+            <>
+              <Row className="mt-5 pt-5"></Row>
+              <Row style={{ width: "auto", height: "auto", maxWidth: "100vw" }}>
+                <ResponsiveEmbed aspectRatio="21by9">
+                  <video autoPlay muted>
+                    <source
+                      src="https://dms-fs.s3.ap-southeast-1.amazonaws.com/video.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                </ResponsiveEmbed>
+              </Row>
+              <Col className="text-center">
+                <i className="fa fa-chevron-down fa-2x" />
+              </Col>
+            </>
           )}
           <CommonBaseContainer>{children}</CommonBaseContainer>
         </>
