@@ -21,7 +21,7 @@ const ProductDetail = ({ product, isPromotion = false }: Props) => {
           <Image src={product.imageLocation} fluid />
         </Col>
         <Col>
-          <h3>{product.name}</h3>
+          <h3 className="raleway-6">{product.name}</h3>
           <p>{product.detail}</p>
           {!isPromotion && <p>{formatPrice(product.price)} THB</p>}
 
@@ -44,6 +44,7 @@ const ProductDetail = ({ product, isPromotion = false }: Props) => {
 
           <br />
           <Button
+            className="raleway-3s"
             variant="light"
             onClick={() => {
               if (isPromotion) addCartItem(product._id, "PROMOTION");
@@ -52,7 +53,7 @@ const ProductDetail = ({ product, isPromotion = false }: Props) => {
             }}
           >
             <FontAwesomeIcon icon={faShoppingCart} />
-            &nbsp;&nbsp;Add to Cart
+            &nbsp;&nbsp;ADD TO CART
           </Button>
         </Col>
       </Row>
