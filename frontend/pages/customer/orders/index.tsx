@@ -4,6 +4,7 @@ import Link from "next/link";
 import { serverApollo } from "@modules/Apollo";
 import PageTitle from "@components/common/PageTitle";
 import { requireAuthentication } from "@modules/Auth";
+import { useMemo } from "react";
 
 export const getServerSideProps = async (context) => {
   if (!(await requireAuthentication(context))) return;
@@ -19,12 +20,13 @@ export const getServerSideProps = async (context) => {
           shippingAddress
           orders {
             _id
+            timestamp
             status
             products {
               _id
               name
               price
-              stock
+              imageLocation
             }
           }
         }
@@ -42,14 +44,22 @@ const CustomerOrdersPage = ({ me }) => {
     return products.map((product) => product.price).reduce((a, b) => a + b, 0);
   };
 
-  const renderOrderCards = me.orders.map((order) => {
+  const sortedOrders = me.orders
+    .slice()
+    .sort((a, b) => a.timestamp - b.timestamp);
+
+  const renderOrderCards = sortedOrders.map((order) => {
+    const dateString = useMemo(() => {
+      return new Date(order.timestamp);
+    }, [order.timestamp]);
+
     return (
       <div className="card mb-5" key={order._id.toString()}>
         <div className="card-header">
           <div className="row">
             <div className="col">
               <h5>
-                <b>Order Id:</b> {order._id}
+                <b>Date:</b> {dateString.toLocaleDateString()}
               </h5>
             </div>
             <div className="col">
@@ -62,20 +72,27 @@ const CustomerOrdersPage = ({ me }) => {
         <div className="card-body">
           {order.products.map((product) => {
             return (
-              <div className="row" key={product._id.toString()}>
-                <div className="col-3 d-flex align-items-center">
-                  <svg width="150" height="120">
-                    <rect x="50" y="20" width="100" height="100" />
-                  </svg>
+              <div className="row mb-1" key={product._id.toString()}>
+                <div className="col-3 d-flex justify-content-center">
+                  <div className="img-resize">
+                    {!product.imageLocation && (
+                      <img className="img-order" src={"/no-image.jpg"} />
+                    )}
+
+                    {product.imageLocation && (
+                      <img className="img-order" src={product.imageLocation} />
+                    )}
+                  </div>
                 </div>
                 <div className="col-7 d-flex align-items-center">
                   <h5>{product.name}</h5>
                 </div>
-                <div className="col-2 d-flex align-items-center">
+                <div className="col-2 d-flex align-items-center justify-content-center">
                   <h5 className="float-right">
                     {formatPrice(product.price)} THB
                   </h5>
                 </div>
+                <hr />
               </div>
             );
           })}
