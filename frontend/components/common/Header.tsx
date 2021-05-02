@@ -17,7 +17,25 @@ const Header = () => {
 
   const adminSection = (
     <>
-      <a className="raleway-3s" style={{ textTransform: "uppercase" }}>
+      <Dropdown className="raleway-3s">
+        <Dropdown.Toggle
+          style={{ textTransform: "uppercase" }}
+          size="sm"
+          variant="dark"
+          id="dropdown-basic"
+        >
+          {/* <FontAwesomeIcon style={{ display: "inline" }} icon={faUser} /> */}
+          {user?.username}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu className="raleway-3s">
+          <Dropdown.Item href="/admin">DASHBOARD</Dropdown.Item>
+          <Dropdown.Item href="#" onClick={handleLogout}>
+            LOGOUT
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      {/* <a className="raleway-3s" style={{ textTransform: "uppercase" }}>
         {user?.username}
       </a>
       <span className="mx-2">/</span>
@@ -27,7 +45,7 @@ const Header = () => {
       <span className="mx-2">/</span>
       <a className="raleway-3s" href="#" onClick={handleLogout}>
         LOGOUT
-      </a>
+      </a> */}
     </>
   );
 
