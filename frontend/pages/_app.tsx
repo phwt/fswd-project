@@ -10,6 +10,7 @@ import BackofficeBaseContainer from "@components/admin/BaseContainer";
 import { useRouter } from "next/router";
 import { ReactNode, useMemo } from "react";
 import { clientApollo } from "@modules/Apollo";
+import Head from "next/head";
 
 const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const { pathname } = useRouter();
@@ -22,9 +23,19 @@ const BaseLayout = ({ children }: { children: ReactNode | ReactNode[] }) => {
     <>
       {isBackoffice ? <BackofficeHeader /> : <CommonHeader />}
       {isBackoffice ? (
-        <BackofficeBaseContainer>{children}</BackofficeBaseContainer>
+        <>
+          <Head>
+            <title>Dashboard</title>
+          </Head>
+          <BackofficeBaseContainer>{children}</BackofficeBaseContainer>
+        </>
       ) : (
-        <CommonBaseContainer>{children}</CommonBaseContainer>
+        <>
+          <Head>
+            <title>Store</title>
+          </Head>
+          <CommonBaseContainer>{children}</CommonBaseContainer>
+        </>
       )}
       <Footer />
     </>
