@@ -24,7 +24,7 @@ const ProductCard = ({ product, size }: Props) => {
 
           <Card.Body className="p-0">
             <p className="m-0 upper">{product.name}</p>
-            <p className="m-0">{product.detail}</p>
+            {/* <p className="m-0">{product.detail}</p> */}
             {product.type === "Product" && (
               <p>{formatPrice(product.price)} THB</p>
             )}
