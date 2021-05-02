@@ -45,6 +45,20 @@ export const getServerSideProps = async (context) => {
   };
 };
 
+const StatCard = ({ title, value, unit }) => {
+  return (
+    <Card style={{ width: "100%" }} className="w-100">
+      <Card.Body>
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>
+          <h1 className="d-inline">{value}</h1>{" "}
+          <small className="text-muted">{unit}</small>
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
+
 const AdminPage = ({ data }) => {
   var profit = 0;
   const product = data.products;
@@ -89,45 +103,29 @@ const AdminPage = ({ data }) => {
       <h2>Dashboard</h2>
       <Container>
         <Row className="mt-5">
-          <Col md={2}>
-            <Card style={{ height: "20vh", width: "12vw" }}>
-              <Card.Body>
-                <Card.Title>สินค้าทั้งหมด</Card.Title>
-                <Card.Text>
-                  <h1>{data.products.length}</h1>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+          <Col md={3}>
+            <StatCard
+              title="Total Products"
+              value={data.products.length}
+              unit="items"
+            />
           </Col>
-          <Col md={{ span: 2, offset: 1 }}>
-            <Card style={{ height: "20vh", width: "12vw" }}>
-              <Card.Body>
-                <Card.Title>โปรโมชั่นทั้งหมด</Card.Title>
-                <Card.Text>
-                  <h1>{data.promotions.length}</h1>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+          <Col md={3}>
+            <StatCard
+              title="Total Promotions"
+              value={data.promotions.length}
+              unit="items"
+            />
           </Col>
-          <Col md={{ span: 2, offset: 1 }}>
-            <Card style={{ height: "20vh", width: "12vw" }}>
-              <Card.Body>
-                <Card.Title>ยอดขาย</Card.Title>
-                <Card.Text>
-                  <h1>{data.orders.length}</h1>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+          <Col md={3}>
+            <StatCard
+              title="Total Orders"
+              value={data.orders.length}
+              unit="orders"
+            />
           </Col>
-          <Col md={{ span: 2, offset: 1 }}>
-            <Card style={{ height: "20vh", width: "12vw" }}>
-              <Card.Body>
-                <Card.Title>รายรับ</Card.Title>
-                <Card.Text>
-                  <h1>{profit}</h1>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+          <Col md={3}>
+            <StatCard title="Income" value={profit} unit="THB" />
           </Col>
         </Row>
         <Row className="mt-5">
