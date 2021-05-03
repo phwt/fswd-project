@@ -3,7 +3,7 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import { serverApollo } from "@modules/Apollo";
 import { useMemo } from "react";
 import Link from "next/link";
-import { formatPrice } from "@modules/Utils";
+import { formatNumber } from "@modules/Utils";
 import OrderStatusLabel from "@components/admin/order/OrderStatusLabel";
 import { requireAuthentication } from "@modules/Auth";
 
@@ -66,7 +66,7 @@ const StatCard = ({ title, value, unit, href }) => {
       >
         <Card.Body>
           <Card.Title>{title}</Card.Title>
-          <h1 className="d-inline">{formatPrice(value)}</h1>{" "}
+          <h1 className="d-inline">{formatNumber(value)}</h1>{" "}
           <small className="text-muted">{unit}</small>
         </Card.Body>
       </Card>

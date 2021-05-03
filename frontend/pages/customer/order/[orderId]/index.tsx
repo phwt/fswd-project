@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   calculateTotalPrice,
   discountPrice,
-  formatPrice,
+  formatNumber,
 } from "@modules/Utils";
 import { serverApollo } from "@modules/Apollo";
 import { useMemo } from "react";
@@ -74,7 +74,7 @@ const ProductCard = ({ product, isPromotion = false }) => {
       </div>
       <div className="col-3 d-flex align-items-center justify-content-center">
         {!isPromotion && (
-          <h5 className="float-right">{formatPrice(product.price)} THB</h5>
+          <h5 className="float-right">{formatNumber(product.price)} THB</h5>
         )}
 
         {isPromotion && "discountPercentage" in product && (
@@ -83,10 +83,10 @@ const ProductCard = ({ product, isPromotion = false }) => {
               className="mb-0 d-inline mr-2"
               style={{ textDecoration: "line-through" }}
             >
-              {formatPrice(product.price)}
+              {formatNumber(product.price)}
             </h5>
             <h5 className="mb-0 d-inline">
-              {formatPrice(
+              {formatNumber(
                 discountPrice(product.price, product.discountPercentage)
               )}{" "}
               THB
@@ -155,7 +155,7 @@ const CustomerOrderPage = ({ order }: Props) => {
           <hr />
           <div className="d-flex flex-fill justify-content-end mx-5 mt-3">
             <h5>
-              <b>Total:</b> {formatPrice(totalPrice)} THB
+              <b>Total:</b> {formatNumber(totalPrice)} THB
             </h5>
           </div>
         </div>

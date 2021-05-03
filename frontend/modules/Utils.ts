@@ -19,7 +19,7 @@ export const promotionTotal = (promotions: Promotion[]) => {
   return 0;
 };
 
-export const formatPrice = (price: number) =>
+export const formatNumber = (price: number) =>
   new Intl.NumberFormat("en-IN").format(price);
 
 export const discountPrice = (price: number, discountPercentage: number) =>

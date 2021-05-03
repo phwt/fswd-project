@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import CartItem from "@components/common/CartItem";
-import { formatPrice, productTotal, promotionTotal } from "@modules/Utils";
+import { formatNumber, productTotal, promotionTotal } from "@modules/Utils";
 import Link from "next/link";
 import { getCartItems } from "@modules/Cart";
 import PageTitle from "@components/common/PageTitle";
@@ -39,7 +39,7 @@ const SummaryBlock = ({
         </Col>
         <Col md={4} className="text-right">
           <small className="text-muted">THB</small>
-          <h4 className="d-inline ml-1">{formatPrice(total)}</h4>
+          <h4 className="d-inline ml-1">{formatNumber(total)}</h4>
         </Col>
         <Col md={12}>
           <Link href="/checkout">

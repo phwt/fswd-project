@@ -3,7 +3,7 @@ import {
   calculateTotalPrice,
   calculateTotalWeight,
   discountPrice,
-  formatPrice,
+  formatNumber,
 } from "@modules/Utils";
 import { Table } from "react-bootstrap";
 
@@ -38,9 +38,9 @@ const ProductTable = ({ products, promotions }) => {
             <td>{index + 1}</td>
             <td>{product.sku}</td>
             <td>{product.name}</td>
-            <td>{formatPrice(product.weight)} g</td>
+            <td>{formatNumber(product.weight)} g</td>
             <td>-</td>
-            <td>{formatPrice(product.price)} THB</td>
+            <td>{formatNumber(product.price)} THB</td>
           </tr>
         ))}
         {promotions.map((promotion, index) => (
@@ -48,10 +48,10 @@ const ProductTable = ({ products, promotions }) => {
             <td>{index + 1 + products.length}</td>
             <td>{promotion.sku}</td>
             <td>{promotion.name}</td>
-            <td>{formatPrice(promotion.weight)} g</td>
+            <td>{formatNumber(promotion.weight)} g</td>
             <td>{promotion.discountPercentage}%</td>
             <td>
-              {formatPrice(
+              {formatNumber(
                 discountPrice(promotion.price, promotion.discountPercentage)
               )}{" "}
               THB
@@ -68,7 +68,7 @@ const ProductTable = ({ products, promotions }) => {
           <td>
             <b>Subtotal</b>
           </td>
-          <td>{formatPrice(totalPrice)} THB</td>
+          <td>{formatNumber(totalPrice)} THB</td>
         </tr>
       </tbody>
     </Table>

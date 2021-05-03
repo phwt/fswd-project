@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { Button, Col, Row } from "react-bootstrap";
-import { formatPrice } from "@modules/Utils";
+import { formatNumber } from "@modules/Utils";
 import { serverApollo } from "@modules/Apollo";
 import Link from "next/link";
 import PageTitle from "@components/admin/PageTitle";
@@ -43,7 +43,7 @@ const AdminProductsPage = ({ products }) => {
           <Link href={"/admin/product/" + product._id}>{product.name}</Link>
         </td>
         <td>{product.detail}</td>
-        <td>{formatPrice(product.price)}</td>
+        <td>{formatNumber(product.price)}</td>
         <td>{product.stock}</td>
         <td className="text-right">
           <Link href={"/admin/product/" + product._id}>

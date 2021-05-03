@@ -9,7 +9,7 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
-import { formatPrice, productTotal, promotionTotal } from "@modules/Utils";
+import { formatNumber, productTotal, promotionTotal } from "@modules/Utils";
 import { Product, Promotion } from "@type/SchemaModel";
 import { clearCart, getCartItems } from "@modules/Cart";
 import { useSession } from "@modules/SessionContext";
@@ -255,7 +255,7 @@ const PaymentPage = () => {
               <h5 className="d-inline mr-3">Total</h5>
             </Col>
             <Col className="text-right">
-              <h2 className="d-inline mr-1">{formatPrice(total)}</h2>
+              <h2 className="d-inline mr-1">{formatNumber(total)}</h2>
               <small className="text-muted">THB</small>
             </Col>
 

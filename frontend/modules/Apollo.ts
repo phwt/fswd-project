@@ -26,11 +26,18 @@ const createApolloClient = (authLink) =>
     credentials: "include",
   });
 
+/**
+ * Apollo Client to be used client-side
+ */
 export const clientApollo = () => {
   const authLink = createAuthLink(Cookies.get("token"));
   return createApolloClient(authLink);
 };
 
+/**
+ * Apollo Client to be used server-side
+ * @param context Context object from getServerSideProps
+ */
 export const serverApollo = (context) => {
   const authLink = createAuthLink(cookies(context).token);
   return createApolloClient(authLink);

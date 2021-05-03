@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { Button, Col, Row } from "react-bootstrap";
-import { formatPrice } from "@modules/Utils";
+import { formatNumber } from "@modules/Utils";
 import { serverApollo } from "@modules/Apollo";
 import Link from "next/link";
 import PageTitle from "@components/admin/PageTitle";
@@ -46,7 +46,7 @@ const AdminPromotionsPage = ({ promotions }) => {
           </Link>
         </td>
         <td>{promotion.detail}</td>
-        <td>{formatPrice(promotion.price)}</td>
+        <td>{formatNumber(promotion.price)}</td>
         <td>{promotion.stock}</td>
         <td>{promotion.discountPercentage}%</td>
         <td className="text-right">

@@ -1,7 +1,7 @@
 import { Product, Promotion } from "@type/SchemaModel";
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import { removeCartItem } from "@modules/Cart";
-import { discountPrice, formatPrice } from "@modules/Utils";
+import { discountPrice, formatNumber } from "@modules/Utils";
 import Link from "next/link";
 
 interface Props {
@@ -72,17 +72,17 @@ const CartItem = ({
                 className="mb-0 d-inline mr-2 text-danger"
                 style={{ textDecoration: "line-through" }}
               >
-                {formatPrice(product.price)}
+                {formatNumber(product.price)}
               </h5>
               <h3 className="mb-0 d-inline">
-                {formatPrice(
+                {formatNumber(
                   discountPrice(product.price, product.discountPercentage)
                 )}
               </h3>
             </div>
           )}
           {!isPromotion && (
-            <h3 className="mb-0">{formatPrice(product.price)}</h3>
+            <h3 className="mb-0">{formatNumber(product.price)}</h3>
           )}
 
           <small className="text-muted">THB</small>

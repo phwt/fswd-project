@@ -1,7 +1,7 @@
 import { Button, Row, Col, Image, Badge } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { formatPrice } from "@modules/Utils";
+import { formatNumber } from "@modules/Utils";
 import { addCartItem } from "@modules/Cart";
 import { useRouter } from "next/router";
 import { Product, Promotion } from "@type/SchemaModel";
@@ -23,16 +23,16 @@ const ProductDetail = ({ product, isPromotion = false }: Props) => {
         <Col>
           <h3 className="raleway-6">{product.name}</h3>
           <p>{product.detail}</p>
-          {!isPromotion && <p>{formatPrice(product.price)} THB</p>}
+          {!isPromotion && <p>{formatNumber(product.price)} THB</p>}
 
           {isPromotion && "discountPercentage" in product && (
             <>
               <del>
-                <p className="m-0">{formatPrice(product.price)} THB</p>
+                <p className="m-0">{formatNumber(product.price)} THB</p>
               </del>
               <h5>
                 <Badge variant="danger">
-                  {formatPrice(
+                  {formatNumber(
                     product.price -
                       (product.price * product.discountPercentage) / 100
                   )}
