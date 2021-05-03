@@ -17,6 +17,7 @@ export const getServerSideProps = async (context) => {
           price
           _id
           imageLocation
+          stock
         }
         promotionFindOne(filter: { sku: $sku }) {
           name
@@ -25,6 +26,7 @@ export const getServerSideProps = async (context) => {
           _id
           imageLocation
           discountPercentage
+          stock
         }
       }
     `,

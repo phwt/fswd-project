@@ -51,6 +51,7 @@ const ProductDetail = ({ product, isPromotion = false }: Props) => {
               else addCartItem(product._id);
               router.push("/cart");
             }}
+            disabled={product.stock <= 0}
           >
             <FontAwesomeIcon icon={faShoppingCart} />
             &nbsp;&nbsp;ADD TO CART
